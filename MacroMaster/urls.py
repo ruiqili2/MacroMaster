@@ -21,7 +21,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', include('polls.urls')),
-    url(r'^admin/', include('admin.site.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 ]
 
 
