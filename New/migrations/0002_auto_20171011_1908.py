@@ -16,26 +16,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='ingredient',
-            name='CreatorID',
-        ),
-        migrations.RemoveField(
-            model_name='ingredient',
-            name='IID',
-        ),
-        migrations.RemoveField(
-            model_name='meals',
-            name='MID',
-        ),
-        migrations.RemoveField(
-            model_name='recipes',
-            name='CreatorID',
-        ),
-        migrations.RemoveField(
-            model_name='recipes',
-            name='RID',
-        ),
         migrations.AddField(
             model_name='ingredient',
             name='Creator',
@@ -85,5 +65,25 @@ class Migration(migrations.Migration):
             model_name='rcontains',
             name='RID',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='New.Recipes'),
+        ),
+        migrations.RemoveField(
+             model_name='ingredient',
+             name='CreatorID',
+        ),
+         migrations.RemoveField(
+             model_name='ingredient',
+             name='IID',
+        ),
+        migrations.RemoveField(
+             model_name='meals',
+             name='MID',
+        ),
+        migrations.RemoveField(
+             model_name='recipes',
+             name='CreatorID',
+        ),
+        migrations.RemoveField(
+             model_name='recipes',
+             name='RID',
         ),
     ]
