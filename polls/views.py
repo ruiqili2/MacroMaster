@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from New.models import Recipes
+from schema.models import Recipes
 from django.core.exceptions import *
 
 
