@@ -1,9 +1,0 @@
-{% if meal_list %}
-    <ul>
-    {% for meal in meal_list %}
-        <li><a href="/mmapp/{{ meal.id }}/">{{ meal.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No meals are available.</p>
-{% endif %}
