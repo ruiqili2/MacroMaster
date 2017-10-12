@@ -21,7 +21,7 @@ from polls.views import search
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', include(polls.views.home)),
+    url(r'^$', include('polls.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
