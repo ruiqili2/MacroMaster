@@ -23,14 +23,16 @@ import tornado.web
 import tornado.wsgi
 import os
 
-define('port', type=int, default=8080)
+
+
+define("port", type=int, default=8080)
 
 class HelloHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write('Hello from tornado')
+		self.write("Hello from tornado")
 
 def main():
-	os.environ['DJANGO_SETTINGS_MODULE'] = 'MacroMaster.settings' # path to your settings module
+	os.environ["DJANGO_SETTINGS_MODULE"] = "MacroMaster.settings" # path to your settings module
 	settings = {
 		"static_path": os.path.join(os.path.dirname(__file__), "static"),
 	}
@@ -39,12 +41,17 @@ def main():
 	get_wsgi_application())
 	tornado_app = tornado.web.Application(
 	[
-		('/hello-tornado', HelloHandler),
-		('.*', tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
-		(r'/static/(.*)', tornado.web.StaticFileHandler, {'path': "/home/me/Downloads/javaAutoGraderBuilding/django-tornado-demo-master/testsite/static"}),
+		
+		("/hello-tornado", HelloHandler),
+		#("/favicon.ico", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/favicon.ico"}),
+		(r"/static/(.*)", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static"}),
+		#(r"/", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/"}),
+
+		(r"/(.*)", tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
+		
 	])
 	server = tornado.httpserver.HTTPServer(tornado_app)
 	server.listen(options.port)
 	tornado.ioloop.IOLoop.instance().start()
-if __name__ == '__main__':
+if __name__ == "__main__":
 	main()
