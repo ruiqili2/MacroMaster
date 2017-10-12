@@ -17,7 +17,6 @@ from django.conf.urls import *
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from users.views import SignUpView
-from polls.views import search
 admin.autodiscover()
 
 urlpatterns = [
