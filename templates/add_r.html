@@ -5,7 +5,7 @@
 </p>
 <p> 
 <form action="/pour">
-
+{% csrf_token %}
 Recipe name: <input type="text" name="name"><br>
 Is it vegetarian?<br>
   <input type="radio" name="vege" value="T"> True<br>
