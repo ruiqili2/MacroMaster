@@ -4,7 +4,7 @@
 	Add Your Ingredient
 </p>
 <p> 
-<form method="POST" action="/pour">
+<form method="POST" action="./pour">
 {% csrf_token %}
 Ingredient name: <input type="text" name="name"><br>
 Is it a snack? <br>
@@ -18,7 +18,7 @@ Protein: <input type="number" name="protein"><br>
 Fat: <input type="number" name="fat"><br>
 Sodium: <input type="number" name="sodium"><br>
 
-<input name="type" type="submit" value="ingredient">
+<input name="type" type="submit" value="add ingredient">
 </form>
 </p>
 
