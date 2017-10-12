@@ -25,7 +25,7 @@ SECRET_KEY = '4%k0=$h4jn^_=!*unyqj^-l(a0*iko=kteoa!v*aj0!yd1y9_h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'fa17-cs411-08.cs.illinois.edu', 'localhost']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #'New.apps.NewConfig',
-    'New',
+    'schema',
     'polls',
 ]
 
@@ -80,9 +80,11 @@ WSGI_APPLICATION = 'MacroMaster.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
+        'NAME': 'mmapp',
         'USER': 'root',
-        'PASSWORD': 'MyNewPass',
+        'PASSWORD': '7426',
+	'HOST':'127.0.0.1',
+	'PORT':'',
     }
 }
 

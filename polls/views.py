@@ -25,9 +25,11 @@ def search(request):
         rname = request.POST.get('recipe_name', None)
         try:
         	#string = Recipes.objects.
-       		rnames = [c.name for c in Recipes.objects.filter(name = rname)]
-        	html = ("<H1>%s</H1>", rnames[0])
-            #html = ("<H1>%s</H1>", rname)
+       		rnames = Recipes.objects.filter(name = rname)
+		if len(rnames) == 0:
+			return HttpResponse("no such recipe")
+        	html = ("<H1>%s</H1>", rnames)
+           	 #html = ("<H1>%s</H1>", rname)
         	return HttpResponse(html)
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
