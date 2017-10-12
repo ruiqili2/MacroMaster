@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+ {% block content %}
+<p style="margin-top: 1em">
+	Add Your Meal
+</p>
+<p> 
+<form action="/pour">
+
+Recipe name: <input type="text" name="name"><br>
+Any description? <input type="text" name="desc"><br>
+Calories: <input type="number" name="calorie"><br>
+Protein: <input type="number" name="protein"><br>
+Fat: <input type="number" name="fat"><br>
+Sodium: <input type="number" name="sodium"><br>
+
+<input name="type" type="submit" value="meal">
+</form>
+</p>
+
+{% endblock content %}

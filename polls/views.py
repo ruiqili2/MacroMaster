@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes
+from schema.models import Recipes, Ingredient, Meals
 from django.core.exceptions import *
 
 
@@ -35,3 +35,33 @@ def search(request):
             return HttpResponse("no such recipe")  
     else:
         return render(request, 'search.html')
+
+def enter(request):
+    return render(request, "add.html")
+
+def pour(request):
+    if request.method == 'POST':
+        kind = request.POST.get('type')
+        name = request.POST.get('name')
+        desc = request.POST.get('desc', '')
+        cal = request.POST.get('calorie')
+        pro = request.POST.get('protein')
+        fat = request.POST.get('fat')
+        sod = request.POST.get('sodium')
+        if kind == "ingredient":
+            snack = request.POST.get('snack') == "T"
+            vege = request.POST.get('vege') == "T"
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
+            i.save()
+        if kind == "recipe":
+            vege = request.POST.get('vege') == "T"
+            r = Recipes(name = name, vege = vege, description = desc,calories = cal,protein = pro,fat = fat, sodium = sod)
+            r.save()
+        if kind == "meal":
+            m = Meals(name = name, description = desc,calories = cal,protein = pro,fat = fat, sodium = sod)
+            m.save()
+        return HttpResponse("Success")  
+    else:
+        return render(request, 'add.html')
+
+    return;
