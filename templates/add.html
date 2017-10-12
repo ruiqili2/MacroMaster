@@ -3,9 +3,9 @@
 <p style="margin-top: 1em">
 	What kind of thing  are you going to add?
 </p>
-<p> <a  href="add_i.html">Ingredient</a> or
-	<a  href="add_r.html">Recipe</a> or
-	<a  href="add_m.html">Meal</a>
+<p> <a  href="{% url 'add_i' %}">Ingredient</a> or
+	<a  href="{% url 'add_r' %}">Recipe</a> or
+	<a  href="{% url 'add_m' %}">Meal</a>
 </p>
 
 {% endblock content %}

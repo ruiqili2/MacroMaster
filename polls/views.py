@@ -38,6 +38,12 @@ def search(request):
 
 def enter(request):
     return render(request, "add.html")
+def ai(request):
+    return render(request, "add_i.html")
+def ar(request):
+    return render(request, "add_r.html")
+def am(request):
+    return render(request, "add_m.html")
 
 def pour(request):
     if request.method == 'POST':
