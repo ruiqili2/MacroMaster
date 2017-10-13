@@ -5,7 +5,8 @@
 
 {% block content %}
 
-{% load django_tables2 %} 
+{% load render_table from django_tables2 %}
+ 
 {% render_table table %}
     
 {% endblock content %}

@@ -37,9 +37,9 @@ def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
         try:
-       		rnames = Recipes.objects.filter(name = rname)
+       	    rnames = Recipes.objects.filter(name = rname)
             table = RecipeTable(rnames)
-        	return render(request, "show_result.html", {'table' : table})
+            return render(request, "show_result.html", {'table' : table})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
