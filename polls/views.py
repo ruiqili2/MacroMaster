@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes
+from schema.models import Recipes, Ingredient, Meals
 from django.core.exceptions import *
 
 
@@ -23,15 +23,50 @@ def search_page(request):
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
+##	print "rname is: "+ rname
         try:
-        	#string = Recipes.objects.
        		rnames = Recipes.objects.filter(name = rname)
 		if len(rnames) == 0:
 			return HttpResponse("no such recipe")
-        	html = ("<H1>%s</H1>", rnames)
-           	 #html = ("<H1>%s</H1>", rname)
-        	return HttpResponse(html)
+        	html = ("<H1>%s</H1>", rnames[0].name)
+        	return render(request, "home.html")
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
         return render(request, 'search.html')
+
+def enter(request):
+    return render(request, "add.html")
+def ai(request):
+    return render(request, "add_i.html")
+def aj(request):
+    return render(request, "add_r.html")
+def am(request):
+    return render(request, "add_m.html")
+
+def pour(request):
+    if request.method == 'POST':
+        kind = request.POST.get('type')
+        name = request.POST.get('name')
+        desc = request.POST.get('desc', '')
+        cal = request.POST.get('calorie')
+        pro = request.POST.get('protein')
+        fat = request.POST.get('fat')
+        sod = request.POST.get('sodium')
+        if kind == "add ingredient":
+            snack = request.POST.get('snack') == "T"
+            vege = request.POST.get('vege') == "T"
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
+            i.save()
+        if kind == "add recipe":
+            vege = request.POST.get('vege') == "T"
+            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod)
+            r.save()
+        if kind == "add meal":
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod)
+            m.save()
+        return HttpResponse("Success")  
+    else:
+        return render(request, 'add.html')
+
+    return;
