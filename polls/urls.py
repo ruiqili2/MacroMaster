@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^add_j/', views.aj, name='add_j'),
     url(r'^add_m/', views.am, name='add_m'),
     url(r'^pour/', views.pour),
-    url(r'^result$', views.search),
+    url(r'^result/', views.search),
 ]

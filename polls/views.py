@@ -29,7 +29,6 @@ def search(request):
 		if len(rnames) == 0:
 			return HttpResponse("no such recipe")
         	html = ("<H1>%s</H1>", rnames)
-           	 #html = ("<H1>%s</H1>", rname)
         	return HttpResponse(html)
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
