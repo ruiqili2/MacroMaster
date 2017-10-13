@@ -48,23 +48,24 @@ def am(request):
 def pour(request):
     if request.method == 'POST':
         kind = request.POST.get('type')
+	print "kind is: "+ kind
         name = request.POST.get('name')
         desc = request.POST.get('desc', '')
         cal = request.POST.get('calorie')
         pro = request.POST.get('protein')
         fat = request.POST.get('fat')
         sod = request.POST.get('sodium')
-        if kind == "ingredient":
+        if kind == "add ingredient":
             snack = request.POST.get('snack') == "T"
             vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, CreatorID = 0)
             i.save()
-        if kind == "recipe":
+        if kind == "add recipe":
             vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,calories = cal,protein = pro,fat = fat, sodium = sod)
+            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, CreatorID = 0)
             r.save()
-        if kind == "meal":
-            m = Meals(name = name, description = desc,calories = cal,protein = pro,fat = fat, sodium = sod)
+        if kind == "add meal":
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, 0, CreatorID = 0)
             m.save()
         return HttpResponse("Success")  
     else:
