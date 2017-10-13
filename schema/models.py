@@ -22,7 +22,7 @@ class Ingredient(models.Model):
     protein = models.IntegerField()
     fat = models.IntegerField()
     sodium = models.IntegerField()
-    Creator = models.ForeignKey(User, default=None)
+   # Creator = models.ForeignKey(User, default=None)
 
 class Recipes(models.Model):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -34,7 +34,7 @@ class Recipes(models.Model):
     protein = models.IntegerField()
     fat = models.IntegerField()
     sodium = models.IntegerField()
-    Creator = models.ForeignKey(User, default=None)
+   # Creator = models.ForeignKey(User, default=None)
 
 class Meals(models.Model):
     mid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -44,7 +44,7 @@ class Meals(models.Model):
     protein = models.IntegerField()
     fat = models.IntegerField()
     sodium = models.IntegerField()
-    Creator = models.ForeignKey(User, default=None)
+   # Creator = models.ForeignKey(User, default=None)
 
 #class Mcontains(models.Model):
 #    MID = models.IntegerField(primary_key=True)

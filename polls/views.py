@@ -23,13 +23,13 @@ def search_page(request):
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
+##	print "rname is: "+ rname
         try:
-        	#string = Recipes.objects.
        		rnames = Recipes.objects.filter(name = rname)
 		if len(rnames) == 0:
 			return HttpResponse("no such recipe")
-        	html = ("<H1>%s</H1>", rnames)
-        	return HttpResponse(html)
+        	html = ("<H1>%s</H1>", rnames[0].name)
+        	return render(request, "home.html")
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
@@ -47,7 +47,6 @@ def am(request):
 def pour(request):
     if request.method == 'POST':
         kind = request.POST.get('type')
-	print "kind is: "+ kind
         name = request.POST.get('name')
         desc = request.POST.get('desc', '')
         cal = request.POST.get('calorie')
