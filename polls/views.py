@@ -58,14 +58,14 @@ def pour(request):
         if kind == "add ingredient":
             snack = request.POST.get('snack') == "T"
             vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, CreatorID = 0)
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
             i.save()
         if kind == "add recipe":
             vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, CreatorID = 0)
+            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod)
             r.save()
         if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, CreatorID = 0)
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod)
             m.save()
         return HttpResponse("Success")  
     else:
