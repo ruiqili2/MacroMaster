@@ -65,7 +65,7 @@ def pour(request):
             r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, CreatorID = 0)
             r.save()
         if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, 0, CreatorID = 0)
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, CreatorID = 0)
             m.save()
         return HttpResponse("Success")  
     else:
