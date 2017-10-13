@@ -5,6 +5,19 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from schema.models import Recipes, Ingredient, Meals
 from django.core.exceptions import *
+import django_tables2 as tables
+
+class RecipeTable(tables.Table):
+    class Meta:
+        model =  Recipes
+
+class IngreTable(tables.Table):
+    class Meta:
+        model =  Ingredient
+
+class MealTable(tables.Table):
+    class Meta:
+        model =  Meals
 
 
 def index(request):
@@ -23,13 +36,10 @@ def search_page(request):
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
-##	print "rname is: "+ rname
         try:
        		rnames = Recipes.objects.filter(name = rname)
-		if len(rnames) == 0:
-			return HttpResponse("no such recipe")
-        	html = ("<H1>%s</H1>", rnames[0].name)
-        	return render(request, "home.html")
+            table = RecipeTable(rnames)
+        	return render(request, "show_result.html", {'table' : table})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
