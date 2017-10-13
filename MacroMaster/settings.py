@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'New.apps.NewConfig',
     'schema',
     'polls',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
