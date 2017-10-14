@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+ {% block content %}
+<p>the only record in the database is the recipe with name "test recipe"</p>
+<p>please add some recipe first using <a href="{%url 'add something'%}">here</a></p>
+<form method="POST" action="../result/">
+{% csrf_token %}
+<input type="text" name="recipe_name">
+<button type="submit">Search Recipe!</button>
+</form>
+{% endblock content %}

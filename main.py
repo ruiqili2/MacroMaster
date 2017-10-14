@@ -8,7 +8,7 @@ import os
 
 
 
-define("port", type=int, default=8080)
+define("port", type=int, default=8000)
 
 class HelloHandler(tornado.web.RequestHandler):
 	def get(self):
