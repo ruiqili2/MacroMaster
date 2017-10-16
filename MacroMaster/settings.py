@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'schema',
     'polls',
     'django_tables2',
+   ## 'crispy_forms',
 ]
 
 MIDDLEWARE = [
