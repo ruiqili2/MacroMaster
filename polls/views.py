@@ -38,13 +38,12 @@ def search(request):
         rname = request.POST.get('recipe_name', None)
         try:
        	    rnames = Recipes.objects.filter(name = rname)
-           # table = RecipeTable(rnames)
-	    if len(rnames) == 0:
-		return HttpResponse("no such recipe")
-	    html = ("<p>the name is: %s</p>",rnames[0].name)           
-# return render(request, "show_result.html", {'table' : table})
-#	    return render(request, "show_result.html")
-	    return HttpResponse(html)
+            table = RecipeTable(rnames)
+            if len(rnames) == 0:
+                return HttpResponse("no such recipe")
+	    #html = ("<p>the name is: %s</p>",rnames[0].name)           
+            return render(request, "show_result.html", {'table' : table})
+	    #return HttpResponse(html)
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:

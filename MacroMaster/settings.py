@@ -79,6 +79,8 @@ WSGI_APPLICATION = 'MacroMaster.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
+# Production database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -89,6 +91,22 @@ DATABASES = {
 	'PORT':'',
     }
 }
+
+
+'''
+# Develope database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'CS411',
+        'USER': 'root',
+        'PASSWORD': 'MyNewPass',
+    'HOST':'127.0.0.1',
+    'PORT':'',
+    }
+}
+'''
+
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'

@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% block title %}Boardgames Demo application{% endblock title %}</title>
+        <title>{% block title %}Macro Master Demo{% endblock title %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -22,11 +22,11 @@
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-              <a class="navbar-brand" href="#">Home</a>
+              <a class="navbar-brand" href="{% url 'explore' %}">Home</a>
         </div>
 
           <ul class="nav navbar-nav">
-            <li><a href="#">Just Explore</a></li>
+            <li><a href="{% url 'explore' %}"> Just Explore</a></li>
           </ul>
 		  
           <ul class="nav navbar-nav navbar-right">
