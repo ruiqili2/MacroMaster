@@ -30,18 +30,18 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
+            {% if user.is_authenticated  %}
+                <li> User: {{user.get_username}} </li>
+                <li> <a href = "{%url 'logout'%}"> Log out </a>
+            {% else %}
+                <li> <a href = "{%url 'login'%}"> Log in </a>
+            {% endif %}
           </ul>
       </div>
     </div>
       
     <div class="container">
         {% block content %}
-	{% if user.is_authenticated  %}
-		<li> User: {{user.get_username}} </li>
-		<li> <a href = "{%url 'logout'%}"> Log out </a>
-	{% else %}
-		<li> <a href = "{%url 'login'%}"> Log in </a>
-	{% endif %}
         {% endblock content %}
     </div>
 
