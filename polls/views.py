@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from schema.models import Recipes, Ingredient, Meals
 from django.core.exceptions import *
+from django.template.loader import render_to_string, get_template
+from django_tables2 import RequestConfig
 import django_tables2 as tables
 
 class RecipeTable(tables.Table):
@@ -39,11 +41,11 @@ def search(request):
         try:
        	    rnames = Recipes.objects.filter(name = rname)
             table = RecipeTable(rnames)
+	    RequestConfig(request).configure(table)
             if len(rnames) == 0:
-                return HttpResponse("no such recipe")
-	    #html = ("<p>the name is: %s</p>",rnames[0].name)           
-            return render(request, "show_result.html", {'table' : table})
-	    #return HttpResponse(html)
+                return HttpResponse("no such recipe")           
+            return render(request, "show_result.html", {"table":table,})
+	   # return render_to_string("show_result.html", dict)
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
