@@ -15,8 +15,8 @@ New user signup
             <div class="panel-body">
                 <form action="" method="post">
                     {% csrf_token %}
-                    {{ form}}
-                    <p><input type="submit" value="Sign Up" /></p>
+                    {{ form.as_p}}
+                    <button type="submit">Sign Up</button>
                 </form>
             </div>
         </fieldset>

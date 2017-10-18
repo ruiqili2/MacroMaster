@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import *
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from users.views import SignUpView
+from users.views import signup as user_signup
 admin.autodiscover()
 
 urlpatterns = [
@@ -28,7 +28,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^login/$', login, name='user_login'),
     url(r'^logout/$', logout, name='user_logout'), 
-    url(r'^signup$', SignUpView.as_view(), name='user_signup'), 
+    url(r'^signup$', user_signup, name='user_signup'), 
 ]
 
 urlpatterns += [

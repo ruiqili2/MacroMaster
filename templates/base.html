@@ -31,10 +31,10 @@
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
             {% if user.is_authenticated  %}
-                <li> User: {{user.get_username}} </li>
-                <li> <a href = "{%url 'logout'%}"> Log out </a>
+                <li> <a href = "#">User: {{user.get_username}} </a></li>
+                <li> <a href = "{%url 'logout'%}"> Log out </a></li>
             {% else %}
-                <li> <a href = "{%url 'login'%}"> Log in </a>
+                <li> <a href = "{%url 'login'%}"> Log in </a></li>
             {% endif %}
           </ul>
       </div>
