@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-	<p>test</p>
-	<form method="POST" action="./result">
+	<p>Try search "test recipe" below</p>
+	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
+	<form method="POST" action="../result/">
 		{% csrf_token %}
 		<input type="text" name="recipe_name">
-		<button type="submit">Search Recipe!</button>
+		<button type="submit">Go Recipes!!</button>
 	</form>
 {% endblock content %}
