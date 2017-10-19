@@ -3,14 +3,33 @@
 
 {% block content %}
     <div class="jumbotron">
+
+        {% if user.is_authenticated  %}
+        <p>
+            Welcome, {{user.username}}.
+        </p>
+
+        <p style="margin-top: 1em">
+            <a href="{% url 'explore' %}">  Want to browse?  </a> 
+        </p>
+        <p style="margin-top: 1em">
+            <a href="{% url 'add something' %}">  Want to add something? </a> 
+        </p>
+
+        {% else %}
         <p style="margin-top: 1em">
             <a  href="{% url 'user_login' %}">Click here to login</a> or <a  href="{% url 'user_signup' %}">Sign up!</a>
         </p>
         <p style="margin-top: 1em">
-        	<a href="{% url 'explore' %}">  Just want to browse?  </a> 
+            <a href="{% url 'explore' %}">  Just want to browse?  </a> 
         </p>
-        <p style="margin-top: 1em">
-        	<a href="{% url 'add something' %}">  Want to add something? </a> 
-        </p>
+        {% endif %}
+
+
+
+
+
+        
+
     </div>
 {% endblock content %}

@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from schema.models import Recipes, Ingredient, Meals
 from django.core.exceptions import *
+from django.template.loader import render_to_string, get_template
+from django_tables2 import RequestConfig
 import django_tables2 as tables
 
 class RecipeTable(tables.Table):
@@ -38,13 +40,10 @@ def search(request):
         rname = request.POST.get('recipe_name', None)
         try:
        	    rnames = Recipes.objects.filter(name = rname)
-           # table = RecipeTable(rnames)
-	    if len(rnames) == 0:
-		return HttpResponse("no such recipe")
-	    html = ("<p>the name is: %s</p>",rnames[0].name)           
-# return render(request, "show_result.html", {'table' : table})
-#	    return render(request, "show_result.html")
-	    return HttpResponse(html)
+            # table = RecipeTable(rnames)
+            if len(rnames) == 0:
+                return HttpResponse("no such recipe")           
+            return render(request, "show_result.html", {"results":rnames,"name":rname})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")  
     else:
@@ -61,6 +60,7 @@ def am(request):
 
 def pour(request):
     if request.method == 'POST':
+	username = request.user.username
         kind = request.POST.get('type')
         name = request.POST.get('name')
         desc = request.POST.get('desc', '')
@@ -71,17 +71,15 @@ def pour(request):
         if kind == "add ingredient":
             snack = request.POST.get('snack') == "T"
             vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
             i.save()
         if kind == "add recipe":
             vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod)
+            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
             r.save()
         if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod)
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
             m.save()
-        return HttpResponse("Success")  
+        return redirect("home.html");  
     else:
-        return render(request, 'add.html')
-
-    return;
+        return render(request, 'add.html');
