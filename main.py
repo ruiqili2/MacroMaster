@@ -5,10 +5,10 @@ import tornado.ioloop
 import tornado.web
 import tornado.wsgi
 import os
+import sys
 
 
-
-define("port", type=int, default=8000)
+define("port", type=int, default=sys.argv[1])
 
 class HelloHandler(tornado.web.RequestHandler):
 	def get(self):
