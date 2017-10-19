@@ -60,6 +60,7 @@ def am(request):
 
 def pour(request):
     if request.method == 'POST':
+	username = request.user.username
         kind = request.POST.get('type')
         name = request.POST.get('name')
         desc = request.POST.get('desc', '')
@@ -70,15 +71,15 @@ def pour(request):
         if kind == "add ingredient":
             snack = request.POST.get('snack') == "T"
             vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod)
+            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
             i.save()
         if kind == "add recipe":
             vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod)
+            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
             r.save()
         if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod)
+            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
             m.save()
-        return HttpResponse("Success")  
+        return redirect("home.html");  
     else:
         return render(request, 'add.html');
