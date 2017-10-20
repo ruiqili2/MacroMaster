@@ -6,10 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.db import connection
 
 @login_required
 def get_user_home(request):
-    context = {}
+    cur = request.user
+    context = {'user': cur}
     return render(request, "user_home.html", context)
 
 
@@ -27,3 +29,10 @@ def signup(request):
     else:
 	form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+def get_my_recipes(request):
+    username = request.user.username
+    cursor = connection.cursor()
+    result = cursor.callproc('get_my_recipes',[username,])
+    return render(request, 'user_recipes.html', {'table': result})

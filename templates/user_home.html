@@ -6,8 +6,20 @@
 
 {# TODO check empty for all lists #}
 {% block content %}
+    <p> 
     <div class="well col-sm-6">
-        Nothing here yet.
-    </div> 
+        {{user.username}}'s Home Page
+    </div>
+    </p> 
+    <p>email address: {{user.eamil}} </p>
+
+ <p>
+<form method="POST" action="../my_recipes/">
+{%csrf_token %}
+<button type="submit"> 
+See my recipes
+</button>
+</form>
+</p>
     
 {% endblock content %}

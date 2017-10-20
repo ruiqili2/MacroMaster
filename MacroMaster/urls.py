@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import *
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from users.views import signup as user_signup
+from users.views import signup as user_signup, get_user_home, get_my_recipes
 admin.autodiscover()
 
 urlpatterns = [
+   # url(r'^home/', include('polls.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
@@ -33,4 +34,6 @@ urlpatterns += [
 
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/profile/', get_user_home ,name='home_user'),
+    url(r'^accounts/my_recipes/', get_my_recipes),
 ]

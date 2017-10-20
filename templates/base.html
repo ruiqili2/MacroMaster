@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load render_table from django_tables2 %}
 
 
 <!DOCTYPE html>
@@ -33,7 +32,7 @@
             <li><a href="about.html">About</a></li>
             <li><a href="#">Contact</a></li>
             {% if user.is_authenticated  %}
-                <li> <a href = "#">User: {{user.get_username}} </a></li>
+                <li> <a href = "{%url 'home_user'%}">User: {{user.get_username}} </a></li>
                 <li> <a href = "{%url 'logout'%}"> Log out </a></li>
             {% else %}
                 <li> <a href = "{%url 'login'%}"> Log in </a></li>
@@ -44,6 +43,7 @@
       
     <div class="container">
         {% block content %}
+	<p>this block is for here.</p>
         {% endblock content %}
     </div>
 
