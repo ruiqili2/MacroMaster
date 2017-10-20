@@ -40,7 +40,8 @@ def search(request):
         rname = request.POST.get('recipe_name', None)
         try:
        	    rnames = Recipes.objects.filter(name = rname)
-            # table = RecipeTable(rnames)
+	    print rname
+		# table = RecipeTable(rnames)
             if len(rnames) == 0:
                 return HttpResponse("no such recipe")           
             return render(request, "show_result.html", {"results":rnames,"name":rname})
