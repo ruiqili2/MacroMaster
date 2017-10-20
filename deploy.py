@@ -46,4 +46,16 @@ if out != '':
 else:
 	print "== PORT CLEAN RUNNING DIRECTLY =="
 
-os.system("nohup python main.py 8000 > running_pid.txt&")
+child = os.fork()
+if child == 0:
+	print "== SUBPROCESS FOR DEPLOY =="
+	os.system("nohup python main.py 8000&")
+else:
+	print "== PARENT PROCESS FOR RECORDING PID =="
+	print "+++++++++ pid +++++++++\n"
+	print "|        ", child, "       |\n"
+	print "+++++++++++++++++++++++\n"
+	with open("running_pid.txt", "w") as f:
+		f.write(str(child))
+	f.close()
+		
