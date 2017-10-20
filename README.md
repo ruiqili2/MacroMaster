@@ -9,3 +9,9 @@ each person works on his or her own branch, and submit a pull request from maste
 # Require packages
 wget 
 conda install django
+
+# TODO List
+1. Import data
+2. Add feature
+3. Add content
+4. Style
