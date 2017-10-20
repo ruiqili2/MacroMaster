@@ -49,7 +49,7 @@ else:
 child = os.fork()
 if child == 0:
 	print "== SUBPROCESS FOR DEPLOY =="
-	os.system("nohup python main.py 8000&")
+	os.system("nohup python main.py 8000")
 else:
 	print "== PARENT PROCESS FOR RECORDING PID =="
 	print "+++++++++ pid +++++++++\n"
