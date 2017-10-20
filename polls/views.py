@@ -65,19 +65,14 @@ def am(request):
 
 def pour(request):
     if request.method == 'POST':
-	form = UserCreationForm(request.POST)
-	if form.is_valid():
-		form.save()
-	else:
-		form = UserCreationForm()
-	#username = request.user.username
-        #kind = request.POST.get('type')
-        #name = request.POST.get('name')
-        #esc = request.POST.get('desc', '')
-        #cal = request.POST.get('calorie')
-        #pro = request.POST.get('protein')
-        #fat = request.POST.get('fat')
-        #sod = request.POST.get('sodium')
+	username = request.user.username
+        kind = request.POST.get('type')
+        name = request.POST.get('name')
+        esc = request.POST.get('desc', '')
+        cal = request.POST.get('calorie')
+        pro = request.POST.get('protein')
+        fat = request.POST.get('fat')
+        sod = request.POST.get('sodium')
        	if kind == "add ingredient":
        	    snack = request.POST.get('snack') == "T"
        	    vege = request.POST.get('vege') == "T"
