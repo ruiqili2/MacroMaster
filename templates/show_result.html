@@ -9,18 +9,20 @@
 
 <div>
     <p>
-	Name: {{row.name}}
+	{{results}}
+	Name: {{results.name}}
 	<br>
-	Calories: {{row.calories}}
+	Calories: {{results.calories}}
 	<br>
-	Protein: {{row.protein}}
+	Protein: {{results.protein}}
 	<br>
-	Fat: {{row.fat}}
+	Fat: {{results.fat}}
 	<br>
-	Sodium: {{row.sodium}}
+	Sodium: {{results.sodium}}
+	<br>
+	Created by: {{results.creator}}
     </p>
 </div>
-{%endfor%}
 
 
 <div>

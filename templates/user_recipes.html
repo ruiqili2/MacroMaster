@@ -18,7 +18,8 @@ Result for Ingredients:
 {%for row in in_table %}
 <p>	 
 <form method='GET' action="../../polls/result">
-<input name='check'  type='submit' value={{row.name}} id={{row}}>
+<input name='v' type='hidden' value={{row}}>
+<input name='check'  type='submit' value={{row.name}}>
 </form>
 </p>
 {%endfor%}
@@ -29,7 +30,9 @@ Result for Recipes:
 {%for row in re_table %}
 <p>	 
 <form method='GET' action="../../polls/result">
-<input name='check'  type='submit' value={{row.name}} id={{row}}>
+{{row}}
+<input name='v' type='hidden' value={{row}}>
+<input name='check'  type='submit' value={{row.name}}>
 </form>
 </p>
 {%endfor%}
