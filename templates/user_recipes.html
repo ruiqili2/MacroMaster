@@ -18,7 +18,11 @@ Result for Ingredients:
 {%for row in in_table %}
 <p>	 
 <form method='GET' action="../../polls/result">
-<input name='v' type='hidden' value={{row}}>
+<input name='cal' type='hidden' value={{row.calories}}>
+<input name='pro' type='hidden' value={{row.protein}}>
+<input name='fat' type='hidden' value={{row.fat}}>
+<input name='sod' type='hidden' value={{row.sodium}}>
+<input name='creator' type='hidden' value={{row.creator}}>
 <input name='check'  type='submit' value={{row.name}}>
 </form>
 </p>
@@ -31,7 +35,11 @@ Result for Recipes:
 <p>	 
 <form method='GET' action="../../polls/result">
 {{row}}
-<input name='v' type='hidden' value={{row}}>
+<input name='cal' type='hidden' value={{row.calories}}>
+<input name='pro' type='hidden' value={{row.protein}}>
+<input name='fat' type='hidden' value={{row.fat}}>
+<input name='sod' type='hidden' value={{row.sodium}}>
+<input name='creator' type='hidden' value={{row.creator}}>
 <input name='check'  type='submit' value={{row.name}}>
 </form>
 </p>

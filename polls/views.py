@@ -47,10 +47,21 @@ def search(request):
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
-	rname = request.GET.get('v', None)
-        print type(rname)
-       # rnames = Recipes.objects.filter(name = rname)
-	return render(request, "show_result.html", {"results":rname})
+	      name = request.GET.get('check')
+        cal = request.GET.get('cal')
+        pro = request.GET.get('pro')
+        fat = request.GET.get('fat')
+        sod = request.GET.get('sod')
+        creator = request.GET.get('creator')
+        diction = {
+            "name":name,
+            "calories":cal,
+            "protein":pro,
+            "fat":fat,
+            "sodium":sod,
+            "creator":creator
+        }
+	      return render(request, "show_result.html", diction)
     else:
         return render(request, 'search.html')
 
@@ -65,7 +76,7 @@ def am(request):
 
 def pour(request):
     if request.method == 'POST':
-	username = request.user.username
+	      username = request.user.username
         kind = request.POST.get('type')
         name = request.POST.get('name')
         esc = request.POST.get('desc', '')

@@ -9,20 +9,25 @@
 
 <div>
     <p>
-	{{results}}
-	Name: {{results.name}}
+	Name: {{name}}
 	<br>
-	Calories: {{results.calories}}
+	Calories: {{calories}}
 	<br>
-	Protein: {{results.protein}}
+	Protein: {{protein}}
 	<br>
-	Fat: {{results.fat}}
+	Fat: {{fat}}
 	<br>
-	Sodium: {{results.sodium}}
+	Sodium: {{sodium}}
 	<br>
-	Created by: {{results.creator}}
+	Created by: {{creator}}
     </p>
 </div>
+
+{%if user.username == creator%}
+<p>
+change
+</p>
+{%end if%}
 
 
 <div>
