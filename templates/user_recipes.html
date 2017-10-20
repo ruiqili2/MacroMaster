@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%block content %}
+{%if usr%}
 <div>
 	{%for row in table %}
 <p>	 
@@ -10,4 +11,12 @@
 </p>
 	{%endfor%}
 </div>
+
+{%else%}
+<div>
+Ingredients:
+</div>
+{%endif %}
+
+
 {%endblock content%}
