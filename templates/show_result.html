@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content%}
+<div>
+<h1>
+Search Result for {{name}}
+</h1>
+</div>
+{%for row in results%}
+<div>
+    <p>
+	Name: {{row.name}}
+	<br>
+	Calories: {{row.cal}}
+	<br>
+	Protein: {{row.pro}}
+	<br>
+	Fat: {{row.fat}}
+	<br>
+	Sodium: {{row.sod}}
+    </p>
+</div>
+{%endfor%}
+
+
+<div>
+
+{%endblock content  %}       
