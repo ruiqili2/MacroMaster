@@ -35,5 +35,6 @@ def get_my_recipes(request):
     username = request.user.username
     cursor = connection.cursor()
     cursor.callproc('get_my_recipes',[username,])
-    result = [item[1] for item in cursor.fetchall()]
-    return render(request, 'user_recipes.html', {'table': result, "usr":True})
+    result = cursor.fetchall()
+    names = [item[1] for item in result]
+    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})

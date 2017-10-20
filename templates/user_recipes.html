@@ -5,7 +5,12 @@
 {%for row in table %}
 <p>	 
 <form method='GET' action="../../polls/result">
-<input name='check'  type='submit' value={{row}}>
+<input name='cal' type='hidden' value={{row.5}}>
+<input name='pro' type='hidden' value={{row.6}}>
+<input name='fat' type='hidden' value={{row.7}}>
+<input name='sod' type='hidden' value={{row.8}}>
+<input name='creator' type='hidden' value={{row.9}}>
+<input name='check'  type='submit' value={{row.1}}>
 </form>
 
 </p>
@@ -34,7 +39,6 @@ Result for Recipes:
 {%for row in re_table %}
 <p>	 
 <form method='GET' action="../../polls/result">
-{{row}}
 <input name='cal' type='hidden' value={{row.calories}}>
 <input name='pro' type='hidden' value={{row.protein}}>
 <input name='fat' type='hidden' value={{row.fat}}>

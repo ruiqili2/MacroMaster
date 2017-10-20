@@ -25,9 +25,13 @@
 
 {%if user.username == creator%}
 <p>
-change
+<form method='POST' action='#'>
+{% csrf_token %}
+<input type='submit', value='change'>
+</form>
 </p>
-{%end if%}
+
+{%endif%}
 
 
 <div>
