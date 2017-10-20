@@ -1,0 +1,5 @@
+[I 171020 12:15:21 wsgi:355] 200 GET /polls/home/ (10.192.106.113) 40.24ms
+[I 171020 12:15:21 web:2063] 304 GET /static/bootstrap/css/bootstrap.min.css (10.192.106.113) 5.61ms
+[I 171020 12:15:21 web:2063] 304 GET /static/jquery-2.0.3.min.js (10.192.106.113) 0.71ms
+[I 171020 12:15:21 web:2063] 304 GET /static/bootstrap/js/bootstrap.min.js (10.192.106.113) 0.56ms
+[I 171020 12:15:21 wsgi:355] 200 GET /polls/home/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js (10.192.106.113) 7.70ms
