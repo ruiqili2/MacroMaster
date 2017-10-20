@@ -8,7 +8,11 @@ Search Result for {{name}}
 </div>
 {%for row in results%}
 <div>
-    <p>Name: {{row.name}}
+    <p>
+	Name: {{row.name}}
+	<br>
+	Calories: {{row.cal}}
+    </p>
 </div>
 {%endfor%}
 
