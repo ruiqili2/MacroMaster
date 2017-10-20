@@ -2,7 +2,7 @@
 {%block content %}
 {%if usr%}
 <div>
-	{%for row in table %}
+{%for row in table %}
 <p>	 
 <form method='GET' action="../../polls/result">
 <input name='check'  type='submit' value={{row}}>
@@ -14,8 +14,27 @@
 
 {%else%}
 <div>
-Ingredients:
+Result for Ingredients:
+{%for row in in_table %}
+<p>	 
+<form method='GET' action="../../polls/result">
+<input name='check'  type='submit' value={{row.name}} id={{row}}>
+</form>
+</p>
+{%endfor%}
 </div>
+
+<div>
+Result for Recipes:
+{%for row in re_table %}
+<p>	 
+<form method='GET' action="../../polls/result">
+<input name='check'  type='submit' value={{row.name}} id={{row}}>
+</form>
+</p>
+{%endfor%}
+</div>
+
 {%endif %}
 
 

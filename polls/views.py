@@ -39,14 +39,15 @@ def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
         try:
-       	    rnames = Recipes.objects.filter(name = rname)
-            if len(rnames) == 0:
-                return HttpResponse("no such recipe")           
-            return render(request, "user_recipes.html", {"table":rnames,"usr":False})
+       	    re_table = Recipes.objects.filter(name = rname)
+            in_table = Ingredient.objects.filter(name = rname)
+            if len(re_table) + len(in_table) == 0:
+                return HttpResponse("no such recipe nor ingredient")           
+            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
-	rname = request.GET.get('check', None)
+	      rname = request.GET.get('check', None)
         rnames = Recipes.objects.filter(name = rname)
 	return render(request, "show_result.html", {"results":rnames})
     else:
