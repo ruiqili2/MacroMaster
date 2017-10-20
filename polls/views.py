@@ -45,7 +45,11 @@ def search(request):
                 return HttpResponse("no such recipe")           
             return render(request, "show_result.html", {"results":rnames,"name":rname})
         except Recipes.DoesNotExist:
-            return HttpResponse("no such recipe")  
+            return HttpResponse("no such recipe")
+    elif request.method == 'GET':
+	rname = request.GET.get('check', None)
+        rnames = Recipes.objects.filter(name = rname)
+	return render(request, "show_result.html", {"results":rnames})
     else:
         return render(request, 'search.html')
 

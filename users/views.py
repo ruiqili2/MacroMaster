@@ -34,5 +34,6 @@ def signup(request):
 def get_my_recipes(request):
     username = request.user.username
     cursor = connection.cursor()
-    result = cursor.callproc('get_my_recipes',[username,])
+    cursor.callproc('get_my_recipes',[username,])
+    result = [item[1] for item in cursor.fetchall()]
     return render(request, 'user_recipes.html', {'table': result})
