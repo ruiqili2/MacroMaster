@@ -64,26 +64,31 @@ def am(request):
 
 def pour(request):
     if request.method == 'POST':
-	username = request.user.username
-        kind = request.POST.get('type')
-        name = request.POST.get('name')
-        desc = request.POST.get('desc', '')
-        cal = request.POST.get('calorie')
-        pro = request.POST.get('protein')
-        fat = request.POST.get('fat')
-        sod = request.POST.get('sodium')
-        if kind == "add ingredient":
-            snack = request.POST.get('snack') == "T"
-            vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
-            i.save()
-        if kind == "add recipe":
-            vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-            r.save()
-        if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-            m.save()
-        return redirect("home.html");  
+	form = UserCreationForm(request.POST)
+	if form.is_valid():
+		form.save()
+	else:
+		form = UserCreationForm()
+	#username = request.user.username
+        #kind = request.POST.get('type')
+        #name = request.POST.get('name')
+        #esc = request.POST.get('desc', '')
+        #cal = request.POST.get('calorie')
+        #pro = request.POST.get('protein')
+        #fat = request.POST.get('fat')
+        #sod = request.POST.get('sodium')
+       	if kind == "add ingredient":
+       	    snack = request.POST.get('snack') == "T"
+       	    vege = request.POST.get('vege') == "T"
+       	    i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
+       	    i.save()
+       	if kind == "add recipe":
+       	    vege = request.POST.get('vege') == "T"
+       	    r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    r.save()
+       	if kind == "add meal":
+       	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    m.save()
+       	return redirect("home.html")
     else:
         return render(request, 'add.html');
