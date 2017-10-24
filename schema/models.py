@@ -23,7 +23,6 @@ class Ingredient(models.Model):
     fat = models.IntegerField()
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
-   # Creator = models.ForeignKey(User, null=None, blank = True)
 
 class Recipes(models.Model):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -37,7 +36,6 @@ class Recipes(models.Model):
     fat = models.IntegerField()
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
-   # Creator = models.ForeignKey(User, null=True, blank = True)
 
 class Meals(models.Model):
     mid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -49,7 +47,11 @@ class Meals(models.Model):
     fat = models.IntegerField()
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
-   # Creator = models.ForeignKey(User, null=True, blank = True)
+
+
+class like_recipe(models.Model):
+    userName = models.CharField(max_length=50)
+    recipeName = models.CharField(max_length=50)
 
 #class Mcontains(models.Model):
 #    MID = models.IntegerField(primary_key=True)
