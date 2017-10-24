@@ -7,6 +7,16 @@
 </h1>
 </div>
 
+{% if user.is_authenticated  %}
+<p>
+<form method='POST' action='../add_to_my_favorite/'>
+{% csrf_token %}
+<input type='submit', value='Add to My Favoite !'>
+</form>
+</p>
+{%endif%}
+
+
 <div>
     <p>
 	Name: {{name}}
@@ -30,7 +40,6 @@
 <input type='submit', value='change'>
 </form>
 </p>
-
 {%endif%}
 
 
