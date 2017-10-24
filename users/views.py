@@ -45,3 +45,10 @@ def get_my_favorites(request):
     result = like_recipe.objects.filter(userName = username) 
     names = [item['recipeName'] for item in result]
     return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
+
+def add_to_favorites(request):
+    username = request.user.username
+    recipeName = request.POST.get('recipeName')
+    like = like_recipe(userName = username, recipeName = recipeName)
+    like.save()
+    return render(request, 'success.html')

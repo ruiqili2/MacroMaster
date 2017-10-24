@@ -35,6 +35,10 @@ def search_page(request):
 ## search recipes based on name
 	return render(request, "search.html")
 
+def return_success(request):
+  return render(request, "success.html")
+
+
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)

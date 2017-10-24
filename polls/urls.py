@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^add_m/', views.am, name='add_m'),
     url(r'^pour/', views.pour),
     url(r'^result/', views.search),
+    url(r'^success/', views.return_success),
 ]
