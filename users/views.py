@@ -41,9 +41,7 @@ def get_my_recipes(request):
     return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
 
 def get_my_favorites(request):
-    username = request.usr.username
-    result = like_recipe.objects.filter(userName = username)
-    if len(like_table) == 0:
-        return HttpResponse("nothing here yet") 
+    username = request.user.username
+    result = like_recipe.objects.filter(userName = username) 
     names = [item['recipeName'] for item in result]
     return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
