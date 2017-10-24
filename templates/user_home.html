@@ -20,6 +20,15 @@
 See my recipes
 </button>
 </form>
+
+<form method="POST" action="../my_recipes/">
+{%csrf_token %}
+<button type="submit"> 
+See my favorites
+</button>
+</form>
+
+
 </p>
     
 {% endblock content %}
