@@ -2,43 +2,56 @@
 {%block content %}
 {%if usr%}
 <div>
-{%for row in table %}
-<p>	 
-<form method='GET' action="../../polls/result">
-<input name='cal' type='hidden' value={{row.5}}>
-<input name='pro' type='hidden' value={{row.6}}>
-<input name='fat' type='hidden' value={{row.7}}>
-<input name='sod' type='hidden' value={{row.8}}>
-<input name='creator' type='hidden' value={{row.9}}>
-<input name='check'  type='submit' value={{row.1}}>
-</form>
-
-</p>
+  {%if not favorite%}
+	{%for row in table %}
+	<p>	 
+	<form method='GET' action="../../polls/result/">
+	<input name='already' type='hidden' value=True>
+	<input name='cal' type='hidden' value={{row.5}}>
+	<input name='pro' type='hidden' value={{row.6}}>
+	<input name='fat' type='hidden' value={{row.7}}>
+	<input name='sod' type='hidden' value={{row.8}}>
+	<input name='creator' type='hidden' value={{row.9}}>
+	<input name='check'  type='submit' value={{row.1}}>
+	</form>
+	</p>
 	{%endfor%}
+  {%else%}
+  	{%for row in names %}
+	<p>	 
+	<form method='GET' action="../../polls/result/">
+	<input name='Recipe' type='hidden' value=True>
+	<input name='already' type='hidden' value=False>
+	<input name='check' type='submit' value={{row}}>
+	</form>
+	</p>
+	{%endfor%}
+  {%endif%}
 </div>
 
 {%else%}
 <div>
-Result for Ingredients:
-{%for row in in_table %}
-<p>	 
-<form method='GET' action="../../polls/result">
-<input name='cal' type='hidden' value={{row.calories}}>
-<input name='pro' type='hidden' value={{row.protein}}>
-<input name='fat' type='hidden' value={{row.fat}}>
-<input name='sod' type='hidden' value={{row.sodium}}>
-<input name='creator' type='hidden' value={{row.creator}}>
-<input name='check'  type='submit' value={{row.name}}>
-</form>
-</p>
-{%endfor%}
+	Result for Ingredients:
+	{%for row in in_table %}
+	<p>	 
+	<form method='GET' action="../../polls/result/">
+	<input name='cal' type='hidden' value={{row.calories}}>
+	<input name='pro' type='hidden' value={{row.protein}}>
+	<input name='fat' type='hidden' value={{row.fat}}>
+	<input name='sod' type='hidden' value={{row.sodium}}>
+	<input name='creator' type='hidden' value={{row.creator}}>
+	<input name='check'  type='submit' value={{row.name}}>
+	</form>
+	</p>
+	{%endfor%}
 </div>
+
 
 <div>
 Result for Recipes:
 {%for row in re_table %}
 <p>	 
-<form method='GET' action="../../polls/result">
+<form method='GET' action="../../polls/result/">
 <input name='cal' type='hidden' value={{row.calories}}>
 <input name='pro' type='hidden' value={{row.protein}}>
 <input name='fat' type='hidden' value={{row.fat}}>

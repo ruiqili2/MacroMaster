@@ -35,32 +35,48 @@ def search_page(request):
 ## search recipes based on name
 	return render(request, "search.html")
 
+def return_success(request):
+  return render(request, "success.html")
+
+
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
         try:
-       	    re_table = Recipes.objects.filter(name = rname)
             in_table = Ingredient.objects.filter(name = rname)
+       	    re_table = Recipes.objects.filter(name = rname)
             if len(re_table) + len(in_table) == 0:
-                return HttpResponse("no such recipe nor ingredient")           
-            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
+                return HttpResponse("no such recipe nor ingredient")          
+            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False, "onlyR": only_recipe})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
-	name = request.GET.get('check')
-        cal = request.GET.get('cal')
-        pro = request.GET.get('pro')
-        fat = request.GET.get('fat')
-        sod = request.GET.get('sod')
-        creator = request.GET.get('creator')
+	rname = request.GET.get('check')	
+	already = request.GET.get('already')
+	print already
+	if not already:
+	    rec = Recipes.objects.filter(name = rname)[:1].get()
+	    print rec
+	    cal = rec.calories
+            pro = rec.protein
+	    fat = rec.fat
+	    sod = rec.sodium
+	    creator = rec.creator
+        else:
+            cal = request.GET.get('cal')
+            pro = request.GET.get('pro')
+            fat = request.GET.get('fat')
+            sod = request.GET.get('sod')
+            creator = request.GET.get('creator')
         diction = {
-            "name":name,
+            "name":rname,
             "calories":cal,
             "protein":pro,
             "fat":fat,
             "sodium":sod,
             "creator":creator
         }
+	print 'sent'
 	return render(request, "show_result.html", diction)
     else:
         return render(request, 'search.html')

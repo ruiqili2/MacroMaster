@@ -7,6 +7,17 @@
 </h1>
 </div>
 
+{% if user.is_authenticated  %}
+<p>
+<form method='POST' action='../../accounts/add_to_my_favorite/'>
+{% csrf_token %}
+<input type='submit', value='Add to My Favoite !'>
+<input name = 'recipeName' type = "hidden" value = {{name}}> 
+</form>
+</p>
+{%endif%}
+
+
 <div>
     <p>
 	Name: {{name}}
@@ -28,9 +39,9 @@
 <form method='POST' action='#'>
 {% csrf_token %}
 <input type='submit', value='change'>
+<input name = 'recipeName2' type = "hidden" value = {{name}}> 
 </form>
 </p>
-
 {%endif%}
 
 

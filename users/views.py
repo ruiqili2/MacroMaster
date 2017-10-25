@@ -7,6 +7,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
+from schema.models import like_recipe
 
 @login_required
 def get_user_home(request):
@@ -37,4 +38,17 @@ def get_my_recipes(request):
     cursor.callproc('get_my_recipes',[username,])
     result = cursor.fetchall()
     names = [item[1] for item in result]
-    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
+    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":False})
+
+def get_my_favorites(request):
+    username = request.user.username
+    result = like_recipe.objects.filter(userName = username) 
+    names = [item.recipeName for item in result]
+    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":True})
+
+def add_to_favorites(request):
+    username = request.user.username
+    recipeName = request.POST.get('recipeName')
+    like = like_recipe(userName = username, recipeName = recipeName)
+    like.save()
+    return render(request, 'success.html')
