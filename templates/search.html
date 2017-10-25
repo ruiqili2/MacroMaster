@@ -5,6 +5,7 @@
 	<form method="POST" action="../result/">
 		{% csrf_token %}
 		<input type="text" name="recipe_name">
+		<input name="onlyRecipe" type="hidden" value=False>
 		<button type="submit">Go Recipes!!</button>
 	</form>
 {% endblock content %}
