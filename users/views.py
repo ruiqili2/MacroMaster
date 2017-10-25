@@ -38,13 +38,14 @@ def get_my_recipes(request):
     cursor.callproc('get_my_recipes',[username,])
     result = cursor.fetchall()
     names = [item[1] for item in result]
-    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
+    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite"=False})
 
 def get_my_favorites(request):
     username = request.user.username
     result = like_recipe.objects.filter(userName = username) 
-    names = [item['recipeName'] for item in result]
-    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result})
+    names = [item.recipeName for item in result]
+    print names
+    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite"=True})
 
 def add_to_favorites(request):
     username = request.user.username

@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 {%block content %}
 {%if usr%}
-<div>
-{%for row in table %}
-<p>	 
-<form method='GET' action="../../polls/result">
-<input name='cal' type='hidden' value={{row.5}}>
-<input name='pro' type='hidden' value={{row.6}}>
-<input name='fat' type='hidden' value={{row.7}}>
-<input name='sod' type='hidden' value={{row.8}}>
-<input name='creator' type='hidden' value={{row.9}}>
-<input name='check'  type='submit' value={{row.1}}>
-</form>
 
-</p>
+  {%if favorite%}
+	<div>
+	{%for row in table %}
+	<p>	 
+	<form method='GET' action="../../polls/result">
+	<input name='cal' type='hidden' value={{row.5}}>
+	<input name='pro' type='hidden' value={{row.6}}>
+	<input name='fat' type='hidden' value={{row.7}}>
+	<input name='sod' type='hidden' value={{row.8}}>
+	<input name='creator' type='hidden' value={{row.9}}>
+	<input name='check'  type='submit' value={{row.1}}>
+	</form>
+	</p>
 	{%endfor%}
+  {%else%}
+	
+  {%endif%}
 </div>
 
 {%else%}
