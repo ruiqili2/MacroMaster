@@ -42,12 +42,17 @@ def return_success(request):
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
+        only_recipe = request.POST.get('onlyRecipe', False)
         try:
+            in_table = {}
+            if onlyRecipe:
+                in_table = {}
+            else:
+                in_table = Ingredient.objects.filter(name = rname)
        	    re_table = Recipes.objects.filter(name = rname)
-            in_table = Ingredient.objects.filter(name = rname)
             if len(re_table) + len(in_table) == 0:
                 return HttpResponse("no such recipe nor ingredient")           
-            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
+            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False, "onlyR": only_recipe})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':

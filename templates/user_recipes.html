@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {%block content %}
 {%if usr%}
-
+<div>
   {%if favorite%}
-	<div>
 	{%for row in table %}
 	<p>	 
 	<form method='GET' action="../../polls/result">
@@ -17,11 +16,20 @@
 	</p>
 	{%endfor%}
   {%else%}
-	
+  	{%for row in names %}
+	<p>	 
+	<form method='POST' action="../../polls/result">
+	<input name='check'  type='submit' value={{row}}>
+	<input name='onlyRecipe' type='hidden' value=True>
+	</form>
+	</p>
   {%endif%}
 </div>
 
 {%else%}
+
+
+{%if not onlyR%}
 <div>
 Result for Ingredients:
 {%for row in in_table %}
@@ -37,6 +45,7 @@ Result for Ingredients:
 </p>
 {%endfor%}
 </div>
+{%endif%}
 
 <div>
 Result for Recipes:
