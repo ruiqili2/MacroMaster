@@ -37,3 +37,4 @@ urlpatterns += [
     url(r'^accounts/profile/', get_user_home ,name='home_user'),
     url(r'^accounts/my_recipes/', get_my_recipes),
 ]
+
