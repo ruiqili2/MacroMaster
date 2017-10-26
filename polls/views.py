@@ -47,16 +47,17 @@ def search(request):
        	    re_table = Recipes.objects.filter(name = rname)
             if len(re_table) + len(in_table) == 0:
                 return HttpResponse("no such recipe nor ingredient")          
-            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False, "onlyR": only_recipe})
+            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
 	rname = request.GET.get('check')	
 	already = request.GET.get('already')
-	print already
-	if not already:
-	    rec = Recipes.objects.filter(name = rname)[:1].get()
-	    print rec
+	if already =="True":
+            print "already have data"
+	if already == "False":
+	    print "rname is :" + rname
+	    rec = Recipes.objects.filter(name = rname)[:1].get() 
 	    cal = rec.calories
             pro = rec.protein
 	    fat = rec.fat
