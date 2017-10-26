@@ -52,3 +52,21 @@ def add_to_favorites(request):
     like = like_recipe(userName = username, recipeName = recipeName)
     like.save()
     return render(request, 'success.html')
+
+def go_to_change_page(request):
+    return render(request, 'change_recipe.html')
+
+def change_my_recipe(request):
+    recipeName = request.POST.get('recipeName2')
+    vege = request.POST.get('vege')
+    name = request.POST.get('name')
+    desc = request.POST.get('desc', '')
+    cal = request.POST.get('calorie')
+    pro = request.POST.get('protein')
+    fat = request.POST.get('fat')
+    sod = request.POST.get('sodium')
+    cursor = connection.cursor()
+    cursor.callproc('sp_changeRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod])
+    return render(request, 'success.html')
+
+

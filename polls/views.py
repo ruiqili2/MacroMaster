@@ -96,7 +96,7 @@ def pour(request):
 	username = request.user.username
         kind = request.POST.get('type')
         name = request.POST.get('name')
-        esc = request.POST.get('desc', '')
+        desc = request.POST.get('desc', '')
         cal = request.POST.get('calorie')
         pro = request.POST.get('protein')
         fat = request.POST.get('fat')
