@@ -116,3 +116,6 @@ def pour(request):
        	return redirect("home.html")
     else:
         return render(request, 'add.html');
+
+def contact(request):
+    return render(request, "contact.html")

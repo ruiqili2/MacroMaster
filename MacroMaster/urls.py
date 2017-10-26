@@ -41,3 +41,4 @@ urlpatterns += [
     url(r'^accounts/change_page', go_to_change_page),
     url(r'^accounts/change_my_recipe', change_my_recipe),
 ]
+
