@@ -39,3 +39,4 @@ urlpatterns += [
     url(r'^accounts/my_favorites/', get_my_favorites),
     url(r'^accounts/add_to_my_favorite/', add_to_favorites),
 ]
+

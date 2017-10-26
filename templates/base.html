@@ -14,6 +14,7 @@
 
         {% block styling %}
             <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
         {% endblock styling %}
 
     </head>
@@ -30,7 +31,7 @@
 		  
           <ul class="nav navbar-nav navbar-right">
             <li><a href="about.html">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
             {% if user.is_authenticated  %}
                 <li> <a href = "{%url 'home_user'%}">User: {{user.get_username}} </a></li>
                 <li> <a href = "{%url 'logout'%}"> Log out </a></li>
