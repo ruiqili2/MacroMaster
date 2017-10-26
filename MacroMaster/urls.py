@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import *
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from users.views import signup as user_signup, get_user_home, get_my_recipes, get_my_favorites, add_to_favorites
+from users.views import signup as user_signup, get_user_home, get_my_recipes, get_my_favorites, add_to_favorites, change_my_recipe
 admin.autodiscover()
 
 urlpatterns = [
@@ -38,4 +38,5 @@ urlpatterns += [
     url(r'^accounts/my_recipes/', get_my_recipes),
     url(r'^accounts/my_favorites/', get_my_favorites),
     url(r'^accounts/add_to_my_favorite/', add_to_favorites),
+    url('r^accounts/change_my_recipe', change_my_recipe),
 ]

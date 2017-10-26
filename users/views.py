@@ -52,3 +52,12 @@ def add_to_favorites(request):
     like = like_recipe(userName = username, recipeName = recipeName)
     like.save()
     return render(request, 'success.html')
+
+def go_to_change_page(request):
+    return render(request, 'change_recipe.html')
+
+def change_my_recipe(request):
+    recipeName = request.POST.get('recipeName')
+    return
+
+
