@@ -35,21 +35,50 @@ def search_page(request):
 ## search recipes based on name
 	return render(request, "search.html")
 
+def return_success(request):
+  return render(request, "success.html")
+
+
 def search(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
         try:
-       	    rnames = Recipes.objects.filter(name = rname)
-            # table = RecipeTable(rnames)
-            if len(rnames) == 0:
-                return HttpResponse("no such recipe")           
-            return render(request, "show_result.html", {"results":rnames,"name":rname})
+            in_table = Ingredient.objects.filter(name = rname)
+       	    re_table = Recipes.objects.filter(name = rname)
+            if len(re_table) + len(in_table) == 0:
+                return HttpResponse("no such recipe nor ingredient")          
+            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
-	rname = request.GET.get('check', None)
-        rnames = Recipes.objects.filter(name = rname)
-	return render(request, "show_result.html", {"results":rnames})
+	rname = request.GET.get('check')	
+	already = request.GET.get('already')
+	if already =="True":
+            print "already have data"
+	if already == "False":
+	    print "rname is :" + rname
+	    rec = Recipes.objects.filter(name = rname)[:1].get() 
+	    cal = rec.calories
+            pro = rec.protein
+	    fat = rec.fat
+	    sod = rec.sodium
+	    creator = rec.creator
+        else:
+            cal = request.GET.get('cal')
+            pro = request.GET.get('pro')
+            fat = request.GET.get('fat')
+            sod = request.GET.get('sod')
+            creator = request.GET.get('creator')
+        diction = {
+            "name":rname,
+            "calories":cal,
+            "protein":pro,
+            "fat":fat,
+            "sodium":sod,
+            "creator":creator
+        }
+	print 'sent'
+	return render(request, "show_result.html", diction)
     else:
         return render(request, 'search.html')
 
@@ -67,24 +96,24 @@ def pour(request):
 	username = request.user.username
         kind = request.POST.get('type')
         name = request.POST.get('name')
-        desc = request.POST.get('desc', '')
+        esc = request.POST.get('desc', '')
         cal = request.POST.get('calorie')
         pro = request.POST.get('protein')
         fat = request.POST.get('fat')
         sod = request.POST.get('sodium')
-        if kind == "add ingredient":
-            snack = request.POST.get('snack') == "T"
-            vege = request.POST.get('vege') == "T"
-            i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
-            i.save()
-        if kind == "add recipe":
-            vege = request.POST.get('vege') == "T"
-            r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-            r.save()
-        if kind == "add meal":
-            m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-            m.save()
-        return redirect("home.html");  
+       	if kind == "add ingredient":
+       	    snack = request.POST.get('snack') == "T"
+       	    vege = request.POST.get('vege') == "T"
+       	    i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
+       	    i.save()
+       	if kind == "add recipe":
+       	    vege = request.POST.get('vege') == "T"
+       	    r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    r.save()
+       	if kind == "add meal":
+       	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    m.save()
+       	return redirect("home.html")
     else:
         return render(request, 'add.html');
 

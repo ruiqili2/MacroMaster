@@ -6,19 +6,28 @@
 
 {# TODO check empty for all lists #}
 {% block content %}
-    <p> 
-	    <div class="well col-sm-6">
-	        <h3>{{user.username}}'s Home Page</h3>
-	         <p>email address: {{user.email}} </p> 
-			 <p>
-				<form method="POST" action="../my_recipes/">
-					{%csrf_token %}
-					<button type="submit"> 
-						See my recipes
-					</button>
-				</form>
-			</p>
-	    </div>
-    </p> 
-    
+
+<div class="well col-sm-6" style="width: 80%; margin: auto;">
+   {{user.username}}'s Home Page
+</div>
+
+
+<div class="well col-sm-4 col-sm-push-1">
+<div class="list-group">
+<form method="POST" action="../my_recipes/">
+{%csrf_token %}
+<button type="submit">
+See my recipes
+</button>
+</form>
+</div>
+<div class="list-group">
+<form method="POST" action="../my_favorites/">
+{%csrf_token %}
+<button type="submit"> 
+See my favorites
+</button>
+</form>
+</div>
+</div>
 {% endblock content %}

@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^pour/', views.pour),
     url(r'^result/', views.search),
     url(r'^contact/', views.contact, name='contact'),
+    url(r'^success/', views.return_success)
 ]
