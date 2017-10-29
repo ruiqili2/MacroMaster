@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+	<p style="margin-top: 1em">
+		Change Your Recipe
+	</p>
+	{% if form.errors %}
+		<p class="text-warning">Please fill the required area</p>
+	{% endif %}
+
+	<p> 
+	<form  method="POST" action="../../accounts/change_my_recipe">
+	{% csrf_token %}
+		Recipe old name: {{rname}} <br>
+		<input type="hidden" name="recipe" value={{rname}}>
+		Recipe name: <input type="text" name="name"><br>
+		Is it vegetarian?<br>
+		  <input type="radio" name="vege" value="T"> True<br>
+		  <input type="radio" name="vege" value="F"> False<br>
+		Any description? <input type="text" name="desc"><br>
+		Calories: <input type="number" name="calorie"><br>
+		Protein: <input type="number" name="protein"><br>
+		Fat: <input type="number" name="fat"><br>
+		Sodium: <input type="number" name="sodium"><br>
+		
+		<input name="type" type="submit" value="change recipe">
+	</form>
+	</p>
+
+{% endblock content %}

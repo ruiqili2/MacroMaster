@@ -36,7 +36,7 @@
 
 {%if user.username == creator%}
 <p>
-<form method='POST' action='#'>
+<form method='POST' action='../../accounts/change_page'>
 {% csrf_token %}
 <input type='submit', value='change'>
 <input name = 'recipeName2' type = "hidden" value = {{name}}> 
