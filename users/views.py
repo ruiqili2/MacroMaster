@@ -58,6 +58,7 @@ def go_to_change_page(request):
     return render(request, 'change_recipe.html', {'rname':rname})
 
 def change_my_recipe(request):
+    userName = request.user.username
     recipeName = request.POST.get('recipe')
     vege = request.POST.get('vege')
     name = request.POST.get('name')
@@ -67,11 +68,13 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod])
+    cursor.callproc('sp_updateRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod,])
+    cursor.callproc('sp_updateLikeRecipeName', [recipeName, name,])
     return render(request, 'success.html')
 
 def delete_recipe(request):
     recipeName = request.POST.get('recipeName2')
     cursor = connection.cursor()
     cursor.callproc('sp_deleteRecipe', [recipeName, ])
+    cursor.callproc('sp_deleteRecipeRelation', [recipeName, ])
     return render(request, 'success.html')
