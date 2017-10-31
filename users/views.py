@@ -70,4 +70,8 @@ def change_my_recipe(request):
     cursor.callproc('sp_updateRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod])
     return render(request, 'success.html')
 
-
+def delete_recipe(request):
+    recipeName = request.POST.get('recipeName2')
+    cursor = connection.cursor()
+    cursor.callproc('sp_deleteRecipe', [recipeName, ])
+    return render(request, 'success.html')
