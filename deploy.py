@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import subprocess
 import shlex
@@ -55,7 +56,4 @@ else:
 	print "+++++++++ pid +++++++++\n"
 	print "|        ", child, "       |\n"
 	print "+++++++++++++++++++++++\n"
-	with open("running_pid.txt", "w") as f:
-		f.write(str(child))
-	f.close()
-		
+	
