@@ -2,3 +2,6 @@
 *.out
 *.log
 *.txt
+*.csv
+data/
+running_pid.txt

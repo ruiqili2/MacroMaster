@@ -53,11 +53,8 @@ def search(request):
     elif request.method == 'GET':
 	rname = request.GET.get('check')	
 	already = request.GET.get('already')
-	if already =="True":
-            print "already have data"
 	if already == "False":
-	    print "rname is :" + rname
-	    rec = Recipes.objects.filter(name = rname)[:1].get() 
+	    rec = Recipes.objects.get(name=rname) 
 	    cal = rec.calories
             pro = rec.protein
 	    fat = rec.fat
@@ -116,3 +113,6 @@ def pour(request):
        	return redirect("home.html")
     else:
         return render(request, 'add.html');
+
+def contact(request):
+    return render(request, "contact.html")

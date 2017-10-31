@@ -10,6 +10,14 @@ each person works on his or her own branch, and submit a pull request from maste
 wget 
 conda install django
 
+
+# Tasks
+1. Import data
+2. Edit data
+3. user profile, reset, comfirmation email etc.
+4. Search meal, ingredient
+5. Show ingredients of a meal
+
 # TODO List
 1. Import data
 2. Add feature
