@@ -16,8 +16,6 @@ import uuid
 class Ingredient(models.Model):
     iid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
-    snack = models.BooleanField(default=False)
-    vege = models.BooleanField(default=False)
     calories = models.IntegerField()
     protein = models.IntegerField()
     fat = models.IntegerField()
@@ -27,7 +25,6 @@ class Ingredient(models.Model):
 class Recipes(models.Model):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
-    vege = models.BooleanField(default=False)
     rating = models.DecimalField(decimal_places=3, max_digits=4)
     rating_num = models.IntegerField(default = 0)
     description = models.TextField()

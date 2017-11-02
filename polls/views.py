@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals
+from schema.models import Recipes, Ingredient, Meals, like_recipe
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
@@ -39,45 +39,44 @@ def return_success(request):
   return render(request, "success.html")
 
 
-def search(request):
+def get_list(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
-        try:
-            in_table = Ingredient.objects.filter(name = rname)
-       	    re_table = Recipes.objects.filter(name = rname)
-            if len(re_table) + len(in_table) == 0:
-                return HttpResponse("no such recipe nor ingredient")          
-            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
-        except Recipes.DoesNotExist:
-            return HttpResponse("no such recipe")
-    elif request.method == 'GET':
-	rname = request.GET.get('check')	
-	already = request.GET.get('already')
-	if already == "False":
-	    rec = Recipes.objects.get(name=rname) 
-	    cal = rec.calories
-            pro = rec.protein
-	    fat = rec.fat
-	    sod = rec.sodium
-	    creator = rec.creator
-        else:
-            cal = request.GET.get('cal')
-            pro = request.GET.get('pro')
-            fat = request.GET.get('fat')
-            sod = request.GET.get('sod')
-            creator = request.GET.get('creator')
-        diction = {
-            "name":rname,
-            "calories":cal,
-            "protein":pro,
-            "fat":fat,
-            "sodium":sod,
-            "creator":creator
-        }
-	print 'sent'
-	return render(request, "show_result.html", diction)
+        in_table = Ingredient.objects.filter(name = rname)
+       	re_table = Recipes.objects.filter(name = rname)
+        if len(re_table) + len(in_table) == 0:
+            return HttpResponse("no such recipe nor ingredient")          
+        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
         return render(request, 'search.html')
+
+def show_result(request):
+    if request.method != 'POST':
+    	return render(request, 'home.html')
+    print "handling show_result"
+    rname = request.POST.get('check')  
+    already = request.POST.get('already')
+    if already == "False":
+        rec = Recipes.objects.get(name=rname) 
+        cal = rec.calories
+        pro = rec.protein
+        fat = rec.fat
+        sod = rec.sodium
+        creator = rec.creator
+        rname = rec.name
+    else:
+        cal = request.POST.get('cal')
+        pro = request.POST.get('pro')
+        fat = request.POST.get('fat')
+        sod = request.POST.get('sod')
+        creator = request.POST.get('creator')
+    diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorites": False}
+    f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
+    diction["myFavorites"] = len(f) != 0
+    print diction["myFavorites"]
+    print rname
+    return render(request, "show_result.html", diction)  
+
 
 def enter(request):
     return render(request, "add.html")
@@ -99,13 +98,10 @@ def pour(request):
         fat = request.POST.get('fat')
         sod = request.POST.get('sodium')
        	if kind == "add ingredient":
-       	    snack = request.POST.get('snack') == "T"
-       	    vege = request.POST.get('vege') == "T"
-       	    i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
+       	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
-       	    vege = request.POST.get('vege') == "T"
-       	    r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    r = Recipes(name = name, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
        	if kind == "add meal":
        	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)

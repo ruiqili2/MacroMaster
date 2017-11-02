@@ -11,9 +11,6 @@
 	<form  method="POST" action="../pour/">
 	{% csrf_token %}
 		Recipe name: <input type="text" name="name"><br>
-		Is it vegetarian?<br>
-		  <input type="radio" name="vege" value="T"> True<br>
-		  <input type="radio" name="vege" value="F"> False<br>
 		Any description? <input type="text" name="desc"><br>
 		Calories: <input type="number" name="calorie"><br>
 		Protein: <input type="number" name="protein"><br>
