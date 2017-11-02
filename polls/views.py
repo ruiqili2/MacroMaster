@@ -39,71 +39,43 @@ def return_success(request):
   return render(request, "success.html")
 
 
-def search(request):
+def get_list(request):
     if request.method == 'POST':
-        print "Enter POST part of search"
         rname = request.POST.get('recipe_name', None)
-        try:
-            in_table = Ingredient.objects.filter(name = rname)
-       	    re_table = Recipes.objects.filter(name = rname)
-            if len(re_table) + len(in_table) == 0:
-                return HttpResponse("no such recipe nor ingredient")          
-            return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
-        except Recipes.DoesNotExist:
-            return HttpResponse("no such recipe")
-    elif request.method == 'GET':
-        print "Enter GET part of search"
-	rname = request.GET.get('check')	
-	already = request.GET.get('already')
-	if already == "False":
-	    rec = Recipes.objects.get(name=rname) 
-	    cal = rec.calories
-            pro = rec.protein
-	    fat = rec.fat
-	    sod = rec.sodium
-	    creator = rec.creator
-	    rname = rec.name
-            print "inside, rname is:"
-            print rname
-        else:
-            cal = request.GET.get('cal')
-            pro = request.GET.get('pro')
-            fat = request.GET.get('fat')
-            sod = request.GET.get('sod')
-            creator = request.GET.get('creator')
-        diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorite": False}
-	print "rame is"
-        print rname
-	if request.user.username:
-	    f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
-	    diction["myFavorite"] = len(f) != 0
-            print len(f)
-	return render(request, "show_result.html", diction)
+        in_table = Ingredient.objects.filter(name = rname)
+       	re_table = Recipes.objects.filter(name = rname)
+        if len(re_table) + len(in_table) == 0:
+            return HttpResponse("no such recipe nor ingredient")          
+        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
         return render(request, 'search.html')
 
 def show_result(request):
-  rname = request.POST.get('check')  
-  already = request.POST.get('already')
-  if already == "False":
-    rec = Recipes.objects.get(name=rname) 
-    cal = rec.calories
-    pro = rec.protein
-    fat = rec.fat
-    sod = rec.sodium
-    creator = rec.creator
-    rname = rec.name
-  else:
-    cal = request.POST.get('cal')
-    pro = request.POST.get('pro')
-    fat = request.POST.get('fat')
-    sod = request.POST.get('sod')
-    creator = request.POST.get('creator')
-  diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorite": False}
-  if request.user.username:
+    if request.method != 'POST':
+    	return render(request, 'home.html')
+    print "handling show_result"
+    rname = request.POST.get('check')  
+    already = request.POST.get('already')
+    if already == "False":
+        rec = Recipes.objects.get(name=rname) 
+        cal = rec.calories
+        pro = rec.protein
+        fat = rec.fat
+        sod = rec.sodium
+        creator = rec.creator
+        rname = rec.name
+    else:
+        cal = request.POST.get('cal')
+        pro = request.POST.get('pro')
+        fat = request.POST.get('fat')
+        sod = request.POST.get('sod')
+        creator = request.POST.get('creator')
+    diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorites": False}
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
-    diction["myFavorite"] = len(f) != 0
-  return render(request, "show_result.html", diction)  
+    diction["myFavorites"] = len(f) != 0
+    print diction["myFavorites"]
+    print rname
+    return render(request, "show_result.html", diction)  
 
 
 def enter(request):

@@ -44,6 +44,7 @@ def get_my_favorites(request):
     username = request.user.username
     result = like_recipe.objects.filter(userName = username) 
     names = [item.recipeName for item in result]
+    print "Got my favorites"
     return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":True})
 
 def add_to_favorites(request):
