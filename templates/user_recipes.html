@@ -5,24 +5,26 @@
   {%if not favorite%}
 	{%for row in table %}
 	<p>	 
-	<form method='GET' action="../../polls/result/">
+	<form method='POST' action="../../polls/show/">
+	{% csrf_token %}
 	<input name='already' type='hidden' value="True">
 	<input name='cal' type='hidden' value={{row.5}}>
 	<input name='pro' type='hidden' value={{row.6}}>
 	<input name='fat' type='hidden' value={{row.7}}>
 	<input name='sod' type='hidden' value={{row.8}}>
 	<input name='creator' type='hidden' value={{row.9}}>
-	<input name='check'  type='submit' value={{row.1}}>
+	<input name='check'  type='submit' value='{{row.1}}'>
 	</form>
 	</p>
 	{%endfor%}
   {%else%}
   	{%for row in names %}
 	<p>	 
-	<form method='GET' action="../../polls/result/">
+	<form method='POST' action="../../polls/show/">
+	{% csrf_token %}
 	<input name='Recipe' type='hidden' value=True>
 	<input name='already' type='hidden' value="False">
-	<input name='check' type='submit' value={{row}}>
+	<input name='check' type='submit' value='{{row}}'>
 	</form>
 	</p>
 	{%endfor%}
@@ -32,7 +34,8 @@
 {%else%}
 <div>
 	Result for Ingredients:
-	<form method='GET' action="../../polls/result/">
+	<form method='POST' action="../../polls/show/">
+	{% csrf_token %}
 	<input name='already' type='hidden' value="True">
 	<input name='in_table' type='hidden' value={{in_table}}>
 	{%for row in in_table %}
@@ -42,7 +45,7 @@
 	<input name='fat' type='hidden' value={{row.fat}}>
 	<input name='sod' type='hidden' value={{row.sodium}}>
 	<input name='creator' type='hidden' value={{row.creator}}>
-	<input name='check'  type='submit' value={{row.name}}>
+	<input name='check'  type='submit' value='{{row.name}}'>
 	</p>
 	{%endfor%}
 	</form>
@@ -52,7 +55,8 @@
 <div>
 Result for Recipes:
 
-<form method='GET' action="../../polls/result/">
+<form method='POST' action="../../polls/show/">
+{% csrf_token %}
 <input name = 'already' type='hidden' value="True">
 <input name = 're_table' type='hidden' value= {{re_table}}>
 {%for row in re_table %}
@@ -62,7 +66,7 @@ Result for Recipes:
 <input name='fat' type='hidden' value={{row.fat}}>
 <input name='sod' type='hidden' value={{row.sodium}}>
 <input name='creator' type='hidden' value={{row.creator}}>
-<input name='check'  type='submit' value={{row.name}}>i
+<input name='check'  type='submit' value='{{row.name}}'>
 </p>
 {%endfor%}
 </form>
