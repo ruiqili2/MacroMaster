@@ -98,13 +98,10 @@ def pour(request):
         fat = request.POST.get('fat')
         sod = request.POST.get('sodium')
        	if kind == "add ingredient":
-       	    snack = request.POST.get('snack') == "T"
-       	    vege = request.POST.get('vege') == "T"
-       	    i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
+       	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
-       	    vege = request.POST.get('vege') == "T"
-       	    r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    r = Recipes(name = name, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
        	if kind == "add meal":
        	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
