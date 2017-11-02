@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 from tornado.options import options, define, parse_command_line
 from django.core.wsgi import get_wsgi_application
 import tornado.httpserver

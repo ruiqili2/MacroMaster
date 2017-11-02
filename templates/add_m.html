@@ -3,6 +3,10 @@
 	<p style="margin-top: 1em">
 		Add Your Meal
 	</p>
+	{% if form.errors %}
+                <p class="text-warning">Please fill the required area</p>
+        {% endif %}
+
 	<p> 
 	<form  method="POST" action="../pour/">
 	{% csrf_token %}

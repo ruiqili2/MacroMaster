@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from schema.models import Recipes, Ingredient, Meals
@@ -102,14 +102,25 @@ def pour(request):
        	    snack = request.POST.get('snack') == "T"
        	    vege = request.POST.get('vege') == "T"
        	    i = Ingredient(name = name,snack = snack,vege = vege,calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
-       	    i.save()
+	    try:
+		i.save()
+	    except ValueError:
+		return render(request, 'add_i.html', {'form': i})
        	if kind == "add recipe":
        	    vege = request.POST.get('vege') == "T"
        	    r = Recipes(name = name, vege = vege, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-       	    r.save()
+	    try:
+                r.save()
+            except ValueError:
+                return render(request, 'add_r.html', {'form': r})
+
        	if kind == "add meal":
        	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
-       	    m.save()
+       	    try:
+                m.save()
+            except ValueError:
+                return render(request, 'add_m.html', {'form': m})
+
        	return redirect("home.html")
     else:
         return render(request, 'add.html');
