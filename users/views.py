@@ -80,3 +80,10 @@ def delete_recipe(request):
     cursor.callproc('sp_deleteRecipe', [recipeName, ])
     cursor.callproc('sp_deleteRecipeRelation', [recipeName, ])
     return render(request, 'success.html')
+
+def rate_recipe(request):
+    rating = 0
+    recipeName = ""
+    cursor = connection.cursor()
+    cursor.callproc('sp_updateRecipesRating', [recipeName, rating,])
+    return render(request, 'success.html')
