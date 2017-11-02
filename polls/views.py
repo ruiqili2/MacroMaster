@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals
+from schema.models import Recipes, Ingredient, Meals, like_recipe
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
@@ -41,6 +41,7 @@ def return_success(request):
 
 def search(request):
     if request.method == 'POST':
+        print "Enter POST part of search"
         rname = request.POST.get('recipe_name', None)
         try:
             in_table = Ingredient.objects.filter(name = rname)
@@ -51,6 +52,7 @@ def search(request):
         except Recipes.DoesNotExist:
             return HttpResponse("no such recipe")
     elif request.method == 'GET':
+        print "Enter GET part of search"
 	rname = request.GET.get('check')	
 	already = request.GET.get('already')
 	if already == "False":
@@ -60,21 +62,22 @@ def search(request):
 	    fat = rec.fat
 	    sod = rec.sodium
 	    creator = rec.creator
+	    rname = rec.name
+            print "inside, rname is:"
+            print rname
         else:
             cal = request.GET.get('cal')
             pro = request.GET.get('pro')
             fat = request.GET.get('fat')
             sod = request.GET.get('sod')
             creator = request.GET.get('creator')
-        diction = {
-            "name":rname,
-            "calories":cal,
-            "protein":pro,
-            "fat":fat,
-            "sodium":sod,
-            "creator":creator
-        }
-	print 'sent'
+        diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorite": False}
+	print "rame is"
+        print rname
+	if request.user.username:
+	    f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
+	    diction["myFavorite"] = len(f) != 0
+            print len(f)
 	return render(request, "show_result.html", diction)
     else:
         return render(request, 'search.html')
