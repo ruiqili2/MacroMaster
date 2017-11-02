@@ -82,6 +82,30 @@ def search(request):
     else:
         return render(request, 'search.html')
 
+def show_result(request):
+  rname = request.POST.get('check')  
+  already = request.POST.get('already')
+  if already == "False":
+    rec = Recipes.objects.get(name=rname) 
+    cal = rec.calories
+    pro = rec.protein
+    fat = rec.fat
+    sod = rec.sodium
+    creator = rec.creator
+    rname = rec.name
+  else:
+    cal = request.POST.get('cal')
+    pro = request.POST.get('pro')
+    fat = request.POST.get('fat')
+    sod = request.POST.get('sod')
+    creator = request.POST.get('creator')
+  diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorite": False}
+  if request.user.username:
+    f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
+    diction["myFavorite"] = len(f) != 0
+  return render(request, "show_result.html", diction)  
+
+
 def enter(request):
     return render(request, "add.html")
 def ai(request):
