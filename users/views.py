@@ -50,8 +50,7 @@ def get_my_favorites(request):
 def add_to_favorites(request):
     username = request.user.username
     recipeName = request.POST.get('recipeName')
-    print 'in add_to_favorite'
-    print 'recipe name:' + recipeName
+    print 'add_to_favorite'
     like = like_recipe(userName = username, recipeName = recipeName)
     like.save()
     return render(request, 'success.html')
