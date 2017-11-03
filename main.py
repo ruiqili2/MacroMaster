@@ -26,7 +26,7 @@ def main():
 		
 		("/hello-tornado", HelloHandler),
 		#("/favicon.ico", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/favicon.ico"}),
-		(r"/static/(.*)", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static"}),
+		(r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.environ['HOME'],"cs411-project/static")}),
 		#(r"/", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/"}),
 
 		(r"/(.*)", tornado.web.FallbackHandler, dict(fallback=wsgi_app)),
