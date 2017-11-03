@@ -42,15 +42,18 @@ def get_my_recipes(request):
 
 def get_my_favorites(request):
     username = request.user.username
-    result = like_recipe.objects.filter(userName = username) 
+    result = like_recipe.objects.filter(userName = username)
+    print "in get_my_favorite"
     names = [item.recipeName for item in result]
-    print "Got my favorites"
+    for thing in names:
+        print thing
     return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":True})
 
 def add_to_favorites(request):
     username = request.user.username
     recipeName = request.POST.get('recipeName')
     print 'add_to_favorite'
+    print recipeName
     like = like_recipe(userName = username, recipeName = recipeName)
     like.save()
     return render(request, 'success.html')
@@ -62,7 +65,6 @@ def go_to_change_page(request):
 def change_my_recipe(request):
     userName = request.user.username
     recipeName = request.POST.get('recipe')
-    vege = request.POST.get('vege')
     name = request.POST.get('name')
     desc = request.POST.get('desc', '')
     cal = request.POST.get('calorie')
@@ -70,7 +72,7 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod,])
+    cursor.callproc('sp_updateRecipes',[recipeName, name, desc, cal, pro, fat, sod,])
     cursor.callproc('sp_updateLikeRecipeName', [recipeName, name,])
     return render(request, 'success.html')
 

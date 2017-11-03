@@ -18,13 +18,14 @@
 	</p>
 	{%endfor%}
   {%else%}
-  	{%for row in names %}
+  	{%for row in table %}
 	<p>	 
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
+        {{row.recipeName}}
 	<input name='Recipe' type='hidden' value=True>
 	<input name='already' type='hidden' value="False">
-	<input name='check' type='submit' value='{{row}}'>
+	<input name='check' type='submit' value='{{row.recipeName}}'>
 	</form>
 	</p>
 	{%endfor%}
