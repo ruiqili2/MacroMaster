@@ -59,6 +59,16 @@
         <br>
 	Created by: {{creator}}
     </p>
+    
+    
+    <p>
+    test block
+    <br>
+    {%for key, value in diction %}
+    {{key}} : {{value}}
+    <br>
+    {%endfor%}
+    </p>
 </div>
 
 {%if user.username == creator%}
