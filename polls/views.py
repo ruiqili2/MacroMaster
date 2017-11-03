@@ -75,7 +75,11 @@ def show_result(request):
              "Fat":fat,
              "Sodium":sod,
              "Created by":creator}
-    diction = {"myFavorites": False, "table":table}
+    diction = {"myFavorites": False,
+               "table":table,
+               "Name":rame
+               "rating":"80%"
+    }
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
     diction["myFavorites"] = len(f) != 0
     return render(request, "show_result.html", diction)  
