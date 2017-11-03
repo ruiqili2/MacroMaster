@@ -77,7 +77,7 @@ def show_result(request):
              "Created by":creator}
     diction = {"myFavorites": False,
                "table":table,
-               "Name":rame,
+               "Name":rname,
                "rating":"80%"
     }
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
