@@ -69,7 +69,7 @@ def show_result(request):
         fat = request.POST.get('fat')
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
-    trial = {"Name":rname,
+    table = {"Name":rname,
              "Calories":cal,
              "Protein":pro,
              "Fat":fat,
