@@ -70,11 +70,10 @@ def show_result(request):
         fat = request.POST.get('fat')
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
-    diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorites": False}
+    trial = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator}
+    diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorites": False, "trial"=trial}
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
     diction["myFavorites"] = len(f) != 0
-    print diction["myFavorites"]
-    print rname
     return render(request, "show_result.html", diction)  
 
 
