@@ -47,27 +47,10 @@
                 <input type="radio" id="srating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
 		</fieldset> -->
 
-	Name: {{name}}
-	<br>
-	Calories: {{calories}}
-	<br>
-	Protein: {{protein}}
-	<br>
-	Fat: {{fat}}
-	<br>
-	Sodium: {{sodium}}
+    {%for key, value in table %}
+        {{key}} : {{value}}
         <br>
-	Created by: {{creator}}
-    </p>
-    
-    
-    <p>
-    test block
-    <br>
-    {%for key, value in trial %}
-    {{key}} : {{value}}
-    <br>
-    {%endfor%}
+   {%endfor%}
     </p>
 </div>
 

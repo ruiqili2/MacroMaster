@@ -53,7 +53,6 @@ def get_list(request):
 def show_result(request):
     if request.method != 'POST':
     	return render(request, 'home.html')
-    print "handling show_result"
     rname = request.POST.get('check')  
     already = request.POST.get('already')
     if already == "False":
@@ -70,8 +69,13 @@ def show_result(request):
         fat = request.POST.get('fat')
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
-    trial = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator}
-    diction = {"name":rname,"calories":cal,"protein":pro,"fat":fat,"sodium":sod,"creator":creator,"myFavorites": False, "trial":trial}
+    trial = {"Name":rname,
+             "Calories":cal,
+             "Protein":pro,
+             "Fat":fat,
+             "Sodium":sod,
+             "Created by":creator}
+    diction = {"myFavorites": False, "table":table}
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
     diction["myFavorites"] = len(f) != 0
     return render(request, "show_result.html", diction)  
