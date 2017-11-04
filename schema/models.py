@@ -22,6 +22,12 @@ class Ingredient(models.Model):
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
 
+    def _str_(self):
+        return self.name
+
+    def get_id(self):
+        return self.iid
+
 class Recipes(models.Model):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
@@ -34,6 +40,14 @@ class Recipes(models.Model):
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
 
+    def _str_(self):
+        return self.name
+
+    def get_id(self):
+        return self.rid
+
+
+
 class Meals(models.Model):
     mid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     text = models.CharField(max_length=50)
@@ -45,16 +59,15 @@ class Meals(models.Model):
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
 
-
 class like_recipe(models.Model):
-    userName = models.CharField(max_length=50)
-    recipeName = models.CharField(max_length=50)
+    user_id = models.ForeignKey(User)
+    r_id = models.ForeignKey(Recipes)
 
-#class Mcontains(models.Model):
-#    MID = models.IntegerField(primary_key=True)
+class Recipes_tag(models.Model):
+    detail = models.CharField(max_length=50)
+
+class contain_tag(models.Model):
+    r_id = models.ForeignKey(Recipes)
+    t_id = models.ForeignKey(Recipes_tag)
 
 
-
-#class Rcontains(models.Model):
-#    RID = models.IntegerField(primary_key=True)
-#    IIDS = models.ManyToManyField(Ingredient)

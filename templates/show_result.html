@@ -32,7 +32,13 @@
         <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 	</div>
-	<div id="rating-user">My Rating: </div>
+	<div id="rating-user">Rate this recipe! </div>
+    
+    
+    
+    
+</div>
+<div>
     <p>
 	<!-- <fieldset class="rate">
                 <input type="radio" id="srating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
@@ -46,15 +52,16 @@
                 <input type="radio" id="srating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
                 <input type="radio" id="srating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
 		</fieldset> -->
-
+    
+    Nutrition Facts:
     {%for key, value in table.items %}
         {{key}} : {{value}}
         <br>
-   {%endfor%}
+    {%endfor%}
     </p>
 </div>
 
-{%if user.username == creator%}
+{%if user.username == creator %}
 <p>
 <form method='POST' action='../../accounts/change_page'>
 {% csrf_token %}
@@ -63,6 +70,17 @@
 </form>
 </p>
 
+<div>
+    {% if user.is_authenticated  %}
+    <form method='POST' action='../../recipe/detail'>
+        {% csrf_token %}
+        
+    
+    {% else %}
+    <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
+    {% endif %}
+</div>
+
 <p>
 <form method='POST' action='../../accounts/delete'>
 {% csrf_token %}
@@ -70,7 +88,7 @@
 <input name='recipeName2' type="hidden" value = {{name}}>
 </p>
 {%endif%}
-		<script src="{% static 'styles/main.js' %}"></script>
+<script src="{% static 'styles/main.js' %}"></script>
 
 {%endblock content  %}      
 
