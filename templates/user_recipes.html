@@ -8,6 +8,7 @@
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
 	<input name='already' type='hidden' value="True">
+    <input name='rating' type='hidden' value={{row.3}}>
 	<input name='cal' type='hidden' value={{row.4}}>
 	<input name='pro' type='hidden' value={{row.5}}>
 	<input name='fat' type='hidden' value={{row.6}}>
@@ -39,7 +40,8 @@
 	<input name='already' type='hidden' value="True">
 	<input name='in_table' type='hidden' value={{in_table}}>
 	{%for row in in_table %}
-	<p>	 
+	<p>
+    <input name='rating' type='hidden' value={{row.rating}}>
 	<input name='cal' type='hidden' value={{row.calories}}>
 	<input name='pro' type='hidden' value={{row.protein}}>
 	<input name='fat' type='hidden' value={{row.fat}}>
@@ -60,7 +62,8 @@ Result for Recipes:
 <input name = 'already' type='hidden' value="True">
 <input name = 're_table' type='hidden' value= {{re_table}}>
 {%for row in re_table %}
-<p>	 
+<p>
+<input name='rating' type='hidden' value={{row.rating}}>
 <input name='cal' type='hidden' value={{row.calories}}>
 <input name='pro' type='hidden' value={{row.protein}}>
 <input name='fat' type='hidden' value={{row.fat}}>

@@ -65,14 +65,12 @@ def show_result(request):
         rname = rec.name
         raw_rate = rec.rating
     else:
-        re_table = request.POST.get('table')
-        for item in re_table:
-            print item.name
         cal = request.POST.get('cal')
         pro = request.POST.get('pro')
         fat = request.POST.get('fat')
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
+        raw_rate = request.POST.get('rating')
     rating = string(raw_rate) + "%"
     table = {"Name":rname,
              "Calories":cal,
