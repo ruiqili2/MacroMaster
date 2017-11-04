@@ -56,7 +56,8 @@ def show_result(request):
     rname = request.POST.get('check')  
     already = request.POST.get('already')
     if already == "False":
-        rec = Recipes.objects.get(name=rname) 
+        rec = Recipes.objects.get(name=rname)
+        id = rec.rid
         cal = rec.calories
         pro = rec.protein
         fat = rec.fat
@@ -72,16 +73,17 @@ def show_result(request):
         creator = request.POST.get('creator')
         raw_rate = request.POST.get('rating')
     rating = str(raw_rate) + "%"
-    table = {"Name":rname,
-             "Calories":cal,
+    table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
-             "Sodium":sod,
-             "Created by":creator}
+             "Sodium":sod
+    }
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
-               "rating": rating
+               "rating":rating,
+               "creator":creator,
+               "recipeID": id
     }
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
     diction["myFavorites"] = len(f) != 0
