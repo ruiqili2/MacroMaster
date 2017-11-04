@@ -8,7 +8,7 @@
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
 	<input name='already' type='hidden' value="True">
-    <input name='rating' type='hidden' value={{row.3}}>
+    <input name='rating' type='hidden' value={{row.2}}>
 	<input name='cal' type='hidden' value={{row.4}}>
 	<input name='pro' type='hidden' value={{row.5}}>
 	<input name='fat' type='hidden' value={{row.6}}>
