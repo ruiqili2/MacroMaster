@@ -7,7 +7,6 @@
 	<p>	 
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
-    <input name='table' type='hidden' value={{table}}>
 	<input name='already' type='hidden' value="True">
 	<input name='cal' type='hidden' value={{row.4}}>
 	<input name='pro' type='hidden' value={{row.5}}>
@@ -23,7 +22,6 @@
     <form method='POST' action="../../polls/show/">
     <p>
         {% csrf_token %}
-        {{row.recipeName}}
 	<input name='Recipe' type='hidden' value=True>
 	<input name='already' type='hidden' value="False">
 	<input name='check' type='submit' value='{{row.recipeName}}'>
