@@ -150,5 +150,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(
 	os.environ['HOME'],
+<<<<<<< HEAD
 	"cs411-project/static",
+=======
+	"cs411-project/static"
+>>>>>>> 6d8e1ea1e67d0dd4f2ecb3b003ee8a46dd401b88
 ),)
