@@ -43,8 +43,11 @@ def get_my_recipes(request):
 def get_my_favorites(request):
     uid = request.user.id
     cursor = connection.cursor()
-    cursor.callproc('sp_getUserFAvorite', [uid,])
+    cursor.callproc('sp_getUserFavorite', [uid,])
     result = cursor.fetchall()
+    for i in recult:
+        print i[0]
+        print i[1]
     cursor.close()
     diction = {'usr':True,
                'table':result,
