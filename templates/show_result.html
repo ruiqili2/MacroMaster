@@ -13,7 +13,8 @@
 	<form method='POST' action='../../accounts/add_to_my_favorite/'>
 	{% csrf_token %}
 	<input type='submit', value='Add to My Favoite !'>
-	<input name = 'recipeName' type = 'hidden' value = '{{name}}'> 
+	<input name = 'recipeName' type = 'hidden' value = '{{name}}'>
+    <input name='recipeID' type='hidden'value={{recipeID}}>
 	</form>
 	{%else %}
 	My Favorite Dish
@@ -66,7 +67,8 @@
 <form method='POST' action='../../accounts/change_page'>
 {% csrf_token %}
 <input name='botton' type='submit', value='change'>
-<input name = 'recipeName2' type = "hidden" value = {{name}}> 
+<input name = 'recipeName2' type = "hidden" value = {{name}}>
+<input name='recipeID' type='hidden'value={{recipeID}}>
 </form>
 </p>
 
@@ -74,8 +76,7 @@
     {% if user.is_authenticated  %}
     <form method='POST' action='../../recipe/detail'>
         {% csrf_token %}
-        
-    
+        need "check instructions" here
     {% else %}
     <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
     {% endif %}
@@ -84,7 +85,8 @@
 <p>
 <form method='POST' action='../../accounts/delete'>
 {% csrf_token %}
-<input name='botton' type='submit', value='delete'>
+<input name='recipeID' type='hidden'value={{recipeID}}>
+<input name='botton' type='submit' value='delete'>
 <input name='recipeName2' type="hidden" value = {{name}}>
 </p>
 {%endif%}
