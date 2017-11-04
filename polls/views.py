@@ -71,7 +71,7 @@ def show_result(request):
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
         raw_rate = request.POST.get('rating')
-    rating = string(raw_rate) + "%"
+    rating = str(raw_rate) + "%"
     table = {"Name":rname,
              "Calories":cal,
              "Protein":pro,
