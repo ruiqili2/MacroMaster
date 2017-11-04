@@ -63,12 +63,17 @@ def show_result(request):
         sod = rec.sodium
         creator = rec.creator
         rname = rec.name
+        raw_rate = rec.rating
     else:
+        re_table = request.POST.get('re_table')
+        for item in re_table:
+            print item.name
         cal = request.POST.get('cal')
         pro = request.POST.get('pro')
         fat = request.POST.get('fat')
         sod = request.POST.get('sod')
         creator = request.POST.get('creator')
+    rating = string(raw_rate) + "%"
     table = {"Name":rname,
              "Calories":cal,
              "Protein":pro,
@@ -78,7 +83,7 @@ def show_result(request):
     diction = {"myFavorites": False,
                "table":table,
                "Name":rname,
-               "rating":"80%"
+               "rating": rating
     }
     f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
     diction["myFavorites"] = len(f) != 0
