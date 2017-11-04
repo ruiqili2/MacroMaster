@@ -43,21 +43,25 @@ def get_list(request):
     if request.method == 'POST':
         rname = request.POST.get('recipe_name', None)
         in_table = Ingredient.objects.filter(name = rname)
-       	re_table = Recipes.objects.filter(name = rname)
+       	re_table = Recipes.objects.filter(name__icontains = rname).order_by("rating")[:10]
         if len(re_table) + len(in_table) == 0:
             return HttpResponse("no such recipe nor ingredient")          
         return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
         return render(request, 'search.html')
 
+def show_ingredient(request):
+    return redirect("home.html")
+
+
 def show_result(request):
     if request.method != 'POST':
     	return render(request, 'home.html')
-    rname = request.POST.get('check')  
+    rname = request.POST.get('check')
+    id = request.POST.get('recipeID')
     already = request.POST.get('already')
     if already == "False":
-        rec = Recipes.objects.get(name=rname)
-        id = rec.rid
+        rec = Recipes.objects.get(rid=id)
         cal = rec.calories
         pro = rec.protein
         fat = rec.fat
@@ -85,7 +89,7 @@ def show_result(request):
                "creator":creator,
                "recipeID": id
     }
-    f = like_recipe.objects.filter(userName = request.user.username, recipeName = rname)
+    f = like_recipe.objects.filter(user_id = request.user.id, r_id = id)
     diction["myFavorites"] = len(f) != 0
     return render(request, "show_result.html", diction)  
 
