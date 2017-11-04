@@ -60,14 +60,14 @@ class Meals(models.Model):
     creator = models.CharField(max_length = 50, default = 'admin')
 
 class like_recipe(models.Model):
-    user_id = models.ForeignKey(null=True, User)
-    r_id = models.ForeignKey(null=True, Recipes)
+    user_id = models.ForeignKey(User, null = True)
+    r_id = models.ForeignKey(Recipes, null = True)
 
 class Recipes_tag(models.Model):
     detail = models.CharField(max_length=50)
 
 class contain_tag(models.Model):
-    r_id = models.ForeignKey(null=True, Recipes)
-    t_id = models.ForeignKey(null=True, Recipes_tag)
+    r_id = models.ForeignKey(Recipes, null = True)
+    t_id = models.ForeignKey(Recipes_tag, null = True)
 
 
