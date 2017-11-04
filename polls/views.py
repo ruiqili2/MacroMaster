@@ -65,7 +65,7 @@ def show_result(request):
         rname = rec.name
         raw_rate = rec.rating
     else:
-        re_table = request.POST.get('re_table')
+        re_table = request.POST.get('table')
         for item in re_table:
             print item.name
         cal = request.POST.get('cal')
