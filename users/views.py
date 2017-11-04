@@ -53,9 +53,8 @@ def get_my_favorites(request):
     return render(request, 'user_recipes.html', diction)
 
 def add_to_favorites(request):
-    uid = request.user.id
     rid = request.POST.get('recipeID')
-    like = like_recipe(user_id = uid, r_id = rid)
+    like = like_recipe(user_id = request.user, r_id = rid)
     like.save()
     return render(request, 'success.html')
 
@@ -65,8 +64,7 @@ def go_to_change_page(request):
     return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID})
 
 def change_my_recipe(request):
-    userName = request.user.username
-    recipeName = request.POST.get('recipeID')
+    rid = request.POST.get('recipeID')
     name = request.POST.get('name')
     desc = request.POST.get('desc', '')
     cal = request.POST.get('calorie')
