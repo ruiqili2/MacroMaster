@@ -54,7 +54,8 @@ def get_my_favorites(request):
 
 def add_to_favorites(request):
     rid = request.POST.get('recipeID')
-    like = like_recipe(user_id = request.user, r_id = rid)
+    recipe = Recipes.objects.get(rid = rid)
+    like = like_recipe(user_id = request.user, r_id = recipe)
     like.save()
     return render(request, 'success.html')
 
