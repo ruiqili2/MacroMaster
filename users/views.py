@@ -45,9 +45,6 @@ def get_my_favorites(request):
     cursor = connection.cursor()
     cursor.callproc('sp_getUserFavorite', [uid,])
     result = cursor.fetchall()
-    for i in result:
-        print i[0]
-        print i[1]
     cursor.close()
     diction = {'usr':True,
                'table':result,

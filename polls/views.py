@@ -7,6 +7,7 @@ from schema.models import Recipes, Ingredient, Meals, like_recipe
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
+from django.db import connection
 import django_tables2 as tables
 
 class RecipeTable(tables.Table):
@@ -82,12 +83,17 @@ def show_result(request):
              "Fat":fat,
              "Sodium":sod
     }
+    cursor = connection.cursor()
+    cursor.callproc("sp_getRecipeTags",[id, ])
+    result = cursor.fetchall()
+    tags = [item[1] for item in result]
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
                "rating":rating,
                "creator":creator,
-               "recipeID": id
+               "recipeID": id,
+               "tags" : tags
     }
     f = like_recipe.objects.filter(user_id = request.user.id, r_id = id)
     diction["myFavorites"] = len(f) != 0
