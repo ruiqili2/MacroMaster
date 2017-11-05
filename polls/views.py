@@ -116,10 +116,10 @@ def pour(request):
        	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
-       	    r = Recipes(name = name, description = desc,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
        	if kind == "add meal":
-       	    m = Meals(name = name, description = desc,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
+       	    m = Meals(name = name,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    m.save()
        	return redirect("home.html")
     else:

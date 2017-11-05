@@ -33,7 +33,6 @@ class Recipes(models.Model):
     name = models.CharField(max_length=50)
     rating = models.DecimalField(decimal_places=3, max_digits=4)
     rating_num = models.IntegerField(default = 0)
-    description = models.TextField()
     calories = models.IntegerField()
     protein = models.IntegerField()
     fat = models.IntegerField()
@@ -63,11 +62,14 @@ class like_recipe(models.Model):
     user_id = models.ForeignKey(User, null = True)
     r_id = models.ForeignKey(Recipes, null = True)
 
+class Recipes_detail(models.Model):
+    r_id = models.ForeignKey(Recipes)
+    instructions = models.TextField()
+
 class Recipes_tag(models.Model):
     detail = models.CharField(max_length=50)
 
 class contain_tag(models.Model):
     r_id = models.ForeignKey(Recipes, null = True)
     t_id = models.ForeignKey(Recipes_tag, null = True)
-
 
