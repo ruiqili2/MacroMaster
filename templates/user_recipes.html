@@ -7,13 +7,6 @@
 	<p>	 
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
-    <input name='already' type='hidden' value='True'>
-    <input name='rating' type='hidden' value={{row.rating}}>
-    <input name='cal' type='hidden' value={{row.calories}}>
-    <input name='pro' type='hidden' value={{row.protein}}>
-    <input name='fat' type='hidden' value={{row.fat}}>
-    <input name='sod' type='hidden' value={{row.sodium}}>
-    <input name='creator' type='hidden' value={{row.creator}}>
     <input name='recipeID' type='hidden' value={{row.rid}}>
 	<input name='check'  type='submit' value='{{row.name}}'>
 	</form>
@@ -24,7 +17,6 @@
     <form method='POST' action="../../polls/show/">
     <p>
         {% csrf_token %}
-	<input name='already' type='hidden' value="False">
 	<input name='check' type='submit' value='{{row.1}}'>
     <input name='recipeID' type='hidden' value={{row.0}}>
 	</form>
@@ -60,16 +52,8 @@ Result for Recipes:
 
 <form method='POST' action="../../polls/show/">
 {% csrf_token %}
-<input name = 'already' type='hidden' value="True">
-<input name = 're_table' type='hidden' value= {{re_table}}>
 {%for row in re_table %}
 <p>
-<input name='rating' type='hidden' value={{row.rating}}>
-<input name='cal' type='hidden' value={{row.calories}}>
-<input name='pro' type='hidden' value={{row.protein}}>
-<input name='fat' type='hidden' value={{row.fat}}>
-<input name='sod' type='hidden' value={{row.sodium}}>
-<input name='creator' type='hidden' value={{row.creator}}>
 <input name='recipeID' type='hidden' value={{row.rid}}>
 <input name='check'  type='submit' value='{{row.name}}'>
 </p>
