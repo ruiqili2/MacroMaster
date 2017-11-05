@@ -30,7 +30,7 @@ class Ingredient(models.Model):
 
 class Recipes(models.Model):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
     rating = models.DecimalField(decimal_places=3, max_digits=4)
     rating_num = models.IntegerField(default = 0)
     calories = models.IntegerField()
@@ -49,7 +49,7 @@ class Recipes(models.Model):
 
 class Meals(models.Model):
     mid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    text = models.CharField(max_length=50)
+    text = models.CharField(max_length=255)
     rating = models.DecimalField(decimal_places=3, max_digits=4)
     rating_num = models.IntegerField(default = 0)
     calories = models.IntegerField()
