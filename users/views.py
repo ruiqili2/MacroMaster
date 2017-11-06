@@ -73,7 +73,7 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipes',[rid, name, desc, cal, pro, fat, sod,])
+    cursor.callproc('sp_updateRecipes',[rid, name, cal, pro, fat, sod,])
     cursor.close()
     return render(request, 'success.html')
 
@@ -82,14 +82,15 @@ def delete_recipe(request):
     cursor = connection.cursor()
     cursor.callproc('sp_deleteRecipe', [recipeID, ])
     cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
+    cursor.callproc('sp_deleteRecipeTag', [recipeID, ])
     cursor.close()
     ## need add sp: sp_deleteRecipeTag here
     return render(request, 'success.html')
 
 def rate_recipe(request):
     rating = 0
-    recipeName = ""
+    recipeID = request.POST.get('recipeID')
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipesRating', [recipeName, rating,])
+    cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
     cursor.close()
     return render(request, 'success.html')
