@@ -54,6 +54,7 @@ Result for Recipes:
 <p>
 <form method='POST' action="../../polls/show/">
 {% csrf_token %}
+{{row.rid}}
 <input name='recipeID' type='hidden' value='{{row.rid}}'>
 <input name='check'  type='submit' value='{{row.name}}'>
 </form>
