@@ -61,6 +61,7 @@ def show_result(request):
     rname = request.POST.get('check')
     print "rname is: " + rname
     id = request.POST.get('recipeID')
+    id = id.replace("-", "")
     print "id is :" + id
     already = request.POST.get('already')
     rec = Recipes.objects.get(rid=id)
