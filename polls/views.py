@@ -59,7 +59,9 @@ def show_result(request):
     if request.method != 'POST':
     	return render(request, 'home.html')
     rname = request.POST.get('check')
+    print "rname is: " + rname
     id = request.POST.get('recipeID')
+    print "id is :" + id
     already = request.POST.get('already')
     rec = Recipes.objects.get(rid=id)
     cal = rec.calories
