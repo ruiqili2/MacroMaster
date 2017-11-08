@@ -83,7 +83,9 @@
     {% if user.is_authenticated  %}
     <form method='POST' action='../../recipe/detail'>
         {% csrf_token %}
-        need "check instructions" here
+        <input type='submit' value='check how to cook it'>
+        <input name = 'recipeName' type = "hidden" value = {{name}}>
+        <input name='recipeID' type='hidden'value={{recipeID}}>
     {% else %}
     <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
     {% endif %}
