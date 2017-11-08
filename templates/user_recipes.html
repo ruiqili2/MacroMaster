@@ -56,9 +56,9 @@ Result for Recipes:
 {% csrf_token %}
 <input name='recipeID' type='hidden' value={{row.rid}}>
 <input name='check'  type='submit' value='{{row.name}}'>
+</form>
 </p>
 {%endfor%}
-</form>
 </div>
 
 {%endif %}
