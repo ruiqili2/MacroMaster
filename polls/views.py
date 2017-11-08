@@ -117,8 +117,12 @@ def pour(request):
        	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
+            instructions = request.POST.get('message')
        	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
+            id = r.rid
+            r_d = Recipes_detail(r_id = id, instructions= instructions)
+            r_d.save()
        	if kind == "add meal":
        	    m = Meals(name = name,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    m.save()
