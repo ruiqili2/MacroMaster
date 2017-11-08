@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals, like_recipe
+from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
@@ -128,22 +128,17 @@ def pour(request):
 
 
 def check_recipe_ins(request):
-    return redirect("home.html")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    recipeName = request.POST.get('recipeName')
+    recipeID= request.POST.get('recipeID')
+    recipeID = recipeID.replace("-", "")
+    detail = Recipes_detail.objects.get(r_id = recipeID)
+    text = detail.instructions
+    diction = {
+        'recipeName' : recipeName,
+        'recipeID' : recipeID,
+        'text' : text
+    }
+    return render(request, "recipe_instructions.html", diction)
 
 def contact(request):
     return render(request, "contact.html")

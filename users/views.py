@@ -92,7 +92,7 @@ def delete_recipe(request):
 def rate_recipe(request):
     rating = request.POST.get('rating-user')
     recipeID = request.POST.get('recipeID')
-    rid = rid.replace("-", "")
+    recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
     cursor.close()
