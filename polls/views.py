@@ -78,7 +78,9 @@ def show_result(request):
     cursor = connection.cursor()
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
+    print "got tags"
     tags = [item[1] for item in result]
+    print len(tags)
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,

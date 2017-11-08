@@ -84,11 +84,10 @@ def delete_recipe(request):
     cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
     cursor.callproc('sp_deleteRecipeTag', [recipeID, ])
     cursor.close()
-    ## need add sp: sp_deleteRecipeTag here
     return render(request, 'success.html')
 
 def rate_recipe(request):
-    rating = 0
+    rating = request.POST.get('rating-user')
     recipeID = request.POST.get('recipeID')
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
