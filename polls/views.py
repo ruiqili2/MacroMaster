@@ -138,7 +138,7 @@ def check_recipe_ins(request):
     try:
         detail = Recipes_detail.objects.get(r_id = recipeID)
         text = detail.instructions
-    except Recipes_detail.DoesNorExist:
+    except Recipes_detail.DoesNotExist:
         text = "we don't know"
     diction = {
         'recipeName' : recipeName,
