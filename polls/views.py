@@ -59,10 +59,8 @@ def show_result(request):
     if request.method != 'POST':
     	return render(request, 'home.html')
     rname = request.POST.get('check')
-    print "rname is: " + rname
     id = request.POST.get('recipeID')
     id = id.replace("-", "")
-    print "id is :" + id
     already = request.POST.get('already')
     rec = Recipes.objects.get(rid=id)
     cal = rec.calories
@@ -81,9 +79,7 @@ def show_result(request):
     cursor = connection.cursor()
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
-    print "got tags"
     tags = [item[1] for item in result]
-    print len(tags)
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
@@ -129,6 +125,25 @@ def pour(request):
        	return redirect("home.html")
     else:
         return render(request, 'add.html');
+
+
+def check_recipe_ins(request):
+    return redirect("home.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def contact(request):
     return render(request, "contact.html")

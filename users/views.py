@@ -54,6 +54,7 @@ def get_my_favorites(request):
 
 def add_to_favorites(request):
     rid = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
     recipe = Recipes.objects.get(rid = rid)
     like = like_recipe(user_id = request.user, r_id = recipe)
     like.save()
@@ -66,6 +67,7 @@ def go_to_change_page(request):
 
 def change_my_recipe(request):
     rid = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
     name = request.POST.get('name')
     desc = request.POST.get('desc', '')
     cal = request.POST.get('calorie')
@@ -78,7 +80,8 @@ def change_my_recipe(request):
     return render(request, 'success.html')
 
 def delete_recipe(request):
-    recipeName = request.POST.get('recipeID')
+    recipeID= request.POST.get('recipeID')
+    recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
     cursor.callproc('sp_deleteRecipe', [recipeID, ])
     cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
@@ -89,6 +92,7 @@ def delete_recipe(request):
 def rate_recipe(request):
     rating = request.POST.get('rating-user')
     recipeID = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
     cursor.close()
