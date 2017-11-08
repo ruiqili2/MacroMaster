@@ -136,6 +136,8 @@ def check_recipe_ins(request):
     recipeID= request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
     detail = Recipes_detail.objects.get(r_id = recipeID)
+    if len(detail) == 0:
+        text = "We don't know."
     text = detail.instructions
     diction = {
         'recipeName' : recipeName,
