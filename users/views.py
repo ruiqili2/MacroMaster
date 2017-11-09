@@ -86,9 +86,10 @@ def delete_recipe(request):
     recipeID= request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
-    cursor.callproc('sp_deleteRecipe', [recipeID, ])
     cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
     cursor.callproc('sp_deleteRecipeTag', [recipeID, ])
+    cursor.callproc('sp_deleteRecipeDetail', [recipeID, ])
+    cursor.callproc('sp_deleteRecipe', [recipeID, ])
     cursor.close()
     return render(request, 'success.html')
 
