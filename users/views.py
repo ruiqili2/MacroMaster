@@ -95,6 +95,8 @@ def delete_recipe(request):
 
 def rate_recipe(request):
     rating = request.POST.get('rating-user')
+    print "rating is"
+    print rating
     recipeID = request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
