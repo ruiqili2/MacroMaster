@@ -63,7 +63,10 @@ def add_to_favorites(request):
 def go_to_change_page(request):
     rname = request.POST.get('recipeName2')
     recipeID = request.POST.get('recipeID')
-    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID})
+    recipeID = recipeID.replace("-", "")
+    recipe = Recipes.objects.get(rid = recipeID)
+    instructions = Recipe_detai.objects.get(r_id = recipe)
+    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions})
 
 def change_my_recipe(request):
     rid = request.POST.get('recipeID')

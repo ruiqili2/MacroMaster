@@ -10,14 +10,14 @@
 	<p> 
 	<form  method="POST" action="../pour/">
 	{% csrf_token %}
-		Recipe name: <input type="text" name="name"><br>
-		Calories: <input type="number" name="calorie" min='0'><br>
-		Protein: <input type="number" name="protein" min='0'><br>
-		Fat: <input type="number" name="fat" min='0'><br>
-		Sodium: <input type="number" name="sodium" min='0'><br>
+		Recipe name: <input type="text" name="name" required="required"><br>
+		Calories: <input type="number" name="calorie" required="required" min='0'><br>
+		Protein: <input type="number" name="protein" required="required" min='0'><br>
+		Fat: <input type="number" name="fat" required="required" min='0'><br>
+		Sodium: <input type="number" name="sodium" required="required" min='0'><br>
         
         
-        <textarea name="message" rows="10" cols="50">How to cook this?</textarea>
+        <textarea name="message" required="required" rows="10" cols="50">How to cook this?</textarea>
         Please seperate steps by line.
 
         You can add some tags for your recipes here:<br>
