@@ -94,7 +94,7 @@ def delete_recipe(request):
     return render(request, 'success.html')
 
 def rate_recipe(request):
-    rating = request.POST.get('rating-user')
+    rating = request.POST.get('ratingUser')
     print "rating is"
     print rating
     recipeID = request.POST.get('recipeID')
