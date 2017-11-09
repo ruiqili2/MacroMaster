@@ -7,7 +7,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
-from schema.models import like_recipe, Recipes, Recipe_detail
+from schema.models import like_recipe, Recipes, Recipes_detail
 
 @login_required
 def get_user_home(request):
@@ -65,7 +65,7 @@ def go_to_change_page(request):
     recipeID = request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
     recipe = Recipes.objects.get(rid = recipeID)
-    instructions = Recipe_detail.objects.get(r_id = recipe)
+    instructions = Recipes_detail.objects.get(r_id = recipe)
     return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions})
 
 def change_my_recipe(request):
