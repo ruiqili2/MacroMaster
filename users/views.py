@@ -7,7 +7,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
-from schema.models import like_recipe
+from schema.models import like_recipe, Recipes, Recipes_detail
 
 @login_required
 def get_user_home(request):
@@ -34,35 +34,43 @@ def signup(request):
 
 def get_my_recipes(request):
     username = request.user.username
-    cursor = connection.cursor()
-    cursor.callproc('get_my_recipes',[username,])
-    result = cursor.fetchall()
-    names = [item[1] for item in result]
-    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":False})
+    result = Recipes.objects.filter(creator = username)
+    diction = {'usr':True,
+               'table':result,
+               'favorite':False}
+    return render(request, 'user_recipes.html', diction)
 
 def get_my_favorites(request):
-    username = request.user.username
-    result = like_recipe.objects.filter(userName = username) 
-    names = [item.recipeName for item in result]
-    print "Got my favorites"
-    return render(request, 'user_recipes.html', {'names': names, "usr":True, "table":result, "favorite":True})
+    uid = request.user.id
+    cursor = connection.cursor()
+    cursor.callproc('sp_getUserFavorite', [uid,])
+    result = cursor.fetchall()
+    cursor.close()
+    diction = {'usr':True,
+               'table':result,
+               'favorite':True
+               }
+    return render(request, 'user_recipes.html', diction)
 
 def add_to_favorites(request):
-    username = request.user.username
-    recipeName = request.POST.get('recipeName')
-    print 'add_to_favorite'
-    like = like_recipe(userName = username, recipeName = recipeName)
+    rid = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
+    recipe = Recipes.objects.get(rid = rid)
+    like = like_recipe(user_id = request.user, r_id = recipe)
     like.save()
     return render(request, 'success.html')
 
 def go_to_change_page(request):
     rname = request.POST.get('recipeName2')
-    return render(request, 'change_recipe.html', {'rname':rname})
+    recipeID = request.POST.get('recipeID')
+    recipeID = recipeID.replace("-", "")
+    recipe = Recipes.objects.get(rid = recipeID)
+    instructions = Recipes_detail.objects.get(r_id = recipe)
+    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions})
 
 def change_my_recipe(request):
-    userName = request.user.username
-    recipeName = request.POST.get('recipe')
-    vege = request.POST.get('vege')
+    rid = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
     name = request.POST.get('name')
     desc = request.POST.get('desc', '')
     cal = request.POST.get('calorie')
@@ -70,20 +78,25 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipes',[recipeName, name, vege, desc, cal, pro, fat, sod,])
-    cursor.callproc('sp_updateLikeRecipeName', [recipeName, name,])
+    cursor.callproc('sp_updateRecipes',[rid, name, cal, pro, fat, sod,])
+    cursor.close()
     return render(request, 'success.html')
 
 def delete_recipe(request):
-    recipeName = request.POST.get('recipeName2')
+    recipeID= request.POST.get('recipeID')
+    recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
-    cursor.callproc('sp_deleteRecipe', [recipeName, ])
-    cursor.callproc('sp_deleteRecipeRelation', [recipeName, ])
+    cursor.callproc('sp_deleteRecipe', [recipeID, ])
+    cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
+    cursor.callproc('sp_deleteRecipeTag', [recipeID, ])
+    cursor.close()
     return render(request, 'success.html')
 
 def rate_recipe(request):
-    rating = 0
-    recipeName = ""
+    rating = request.POST.get('rating-user')
+    recipeID = request.POST.get('recipeID')
+    recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipesRating', [recipeName, rating,])
+    cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
+    cursor.close()
     return render(request, 'success.html')

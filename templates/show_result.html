@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content%}
 <div>
 <h1>
@@ -13,7 +13,8 @@
 	<form method='POST' action='../../accounts/add_to_my_favorite/'>
 	{% csrf_token %}
 	<input type='submit', value='Add to My Favoite !'>
-	<input name = 'recipeName' type = 'hidden' value = {{name}}> 
+	<input name = 'recipeName' type = 'hidden' value = '{{name}}'>
+    <input name='recipeID' type='hidden'value={{recipeID}}>
 	</form>
 	{%else %}
 	My Favorite Dish
@@ -23,8 +24,22 @@
 
 
 <div>
+	<div class="star-ratings">
+        <div class="star-ratings top" style="width: {{rating}}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+	</div>
+    <div id="rating-avg">Average Rating: {{rating}} </div>
+	<div class="star-ratings mutable">
+        <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+	</div>
+	<div id="rating-user">Rate this recipe! </div>
+    
+    
+</div>
+<div>
     <p>
-	<fieldset class="rate">
+	<!-- <fieldset class="rate">
                 <input type="radio" id="srating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
                 <input type="radio" id="srating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
                 <input type="radio" id="srating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
@@ -35,40 +50,57 @@
                 <input type="radio" id="srating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
                 <input type="radio" id="srating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
                 <input type="radio" id="srating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
-        </fieldset>
-
-	Name: {{name}}
-	<br>
-	Calories: {{calories}}
-	<br>
-	Protein: {{protein}}
-	<br>
-	Fat: {{fat}}
-	<br>
-	Sodium: {{sodium}}
+		</fieldset> -->
+    
+    Nutrition Facts:
+    {%for key, value in table.items %}
+        {{key}} : {{value}}
         <br>
-	Created by: {{creator}}
+    {%endfor%}
     </p>
 </div>
 
-{%if user.username == creator%}
+<div>
+    Tags on this recipe:
+    {%for value in tags %}
+        {{value}}
+    <br>
+    {%endfor%}
+</div>
+
+
+<div>
+    {% if user.is_authenticated  %}
+    <form method='POST' action='../../recipe/detail'>
+        {% csrf_token %}
+        <input type='submit' value='check how to cook it'>
+            <input name = 'recipeName' type = "hidden" value = {{name}}>
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+                    </form>
+    {% else %}
+    <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
+    {% endif %}
+</div>
+
+{%if user.username == creator %}
 <p>
 <form method='POST' action='../../accounts/change_page'>
 {% csrf_token %}
 <input name='botton' type='submit', value='change'>
-<input name = 'recipeName2' type = "hidden" value = {{name}}> 
+<input name = 'recipeName2' type = "hidden" value = {{name}}>
+<input name='recipeID' type='hidden'value={{recipeID}}>
 </form>
 </p>
-
 <p>
 <form method='POST' action='../../accounts/delete'>
 {% csrf_token %}
-<input name='botton' type='submit', value='delete'>
+<input name='recipeID' type='hidden'value={{recipeID}}>
+<input name='botton' type='submit' value='delete'>
 <input name='recipeName2' type="hidden" value = {{name}}>
+</form>
 </p>
 {%endif%}
+<script src="{% static 'styles/main.js' %}"></script>
 
+{%endblock content  %}      
 
-<div>
-
-{%endblock content  %}       

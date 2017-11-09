@@ -1,8 +1,5 @@
 from django.conf.urls import url
-
 from . import views
-
-
 urlpatterns = [
     url(r'^index/', views.index, name='index'),
     url(r'^home/', views.home, name='home'),
@@ -14,6 +11,7 @@ urlpatterns = [
     url(r'^pour/', views.pour),
     url(r'^result/', views.get_list),
     url(r'^show/', views.show_result),
+    url(r'^show_ingredient/', views.show_ingredient),
     url(r'^contact/', views.contact, name='contact'),
     url(r'^success/', views.return_success)
 ]

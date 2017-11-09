@@ -15,6 +15,12 @@ class HelloHandler(tornado.web.RequestHandler):
 	def get(self):
 		self.write("Hello from tornado")
 
+# Prevent tornado caching static files. Comment out on deploy.
+class MyStaticFileHandler(tornado.web.StaticFileHandler):
+    def set_extra_headers(self, path):
+        # Disable cache
+        self.set_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+
 def main():
 	os.environ["DJANGO_SETTINGS_MODULE"] = "MacroMaster.settings" # path to your settings module
 	settings = {
@@ -27,7 +33,7 @@ def main():
 		
 		("/hello-tornado", HelloHandler),
 		#("/favicon.ico", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/favicon.ico"}),
-		(r"/static/(.*)", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static"}),
+		(r"/static/(.*)", tornado.web.StaticFileHandler, {"path": os.path.join(os.environ['HOME'],"cs411-project/static")}),
 		#(r"/", tornado.web.StaticFileHandler, {"path": "/home/ruiqili2/cs411-project/static/"}),
 
 		(r"/(.*)", tornado.web.FallbackHandler, dict(fallback=wsgi_app)),

@@ -7,24 +7,18 @@
 	<p>	 
 	<form method='POST' action="../../polls/show/">
 	{% csrf_token %}
-	<input name='already' type='hidden' value="True">
-	<input name='cal' type='hidden' value={{row.5}}>
-	<input name='pro' type='hidden' value={{row.6}}>
-	<input name='fat' type='hidden' value={{row.7}}>
-	<input name='sod' type='hidden' value={{row.8}}>
-	<input name='creator' type='hidden' value={{row.9}}>
-	<input name='check'  type='submit' value='{{row.1}}'>
+    <input name='recipeID' type='hidden' value={{row.rid}}>
+	<input name='check'  type='submit' value='{{row.name}}'>
 	</form>
 	</p>
 	{%endfor%}
   {%else%}
-  	{%for row in names %}
-	<p>	 
-	<form method='POST' action="../../polls/show/">
-	{% csrf_token %}
-	<input name='Recipe' type='hidden' value=True>
-	<input name='already' type='hidden' value="False">
-	<input name='check' type='submit' value='{{row}}'>
+    {%for row in table %}
+    <form method='POST' action="../../polls/show/">
+    <p>
+        {% csrf_token %}
+	<input name='check' type='submit' value='{{row.1}}'>
+    <input name='recipeID' type='hidden' value={{row.0}}>
 	</form>
 	</p>
 	{%endfor%}
@@ -34,12 +28,13 @@
 {%else%}
 <div>
 	Result for Ingredients:
-	<form method='POST' action="../../polls/show/">
+	<form method='POST' action="../../polls/show_ingredient/">
 	{% csrf_token %}
 	<input name='already' type='hidden' value="True">
 	<input name='in_table' type='hidden' value={{in_table}}>
 	{%for row in in_table %}
-	<p>	 
+	<p>
+    <input name='rating' type='hidden' value={{row.rating}}>
 	<input name='cal' type='hidden' value={{row.calories}}>
 	<input name='pro' type='hidden' value={{row.protein}}>
 	<input name='fat' type='hidden' value={{row.fat}}>
@@ -55,21 +50,15 @@
 <div>
 Result for Recipes:
 
+{%for row in re_table %}
+<p>
 <form method='POST' action="../../polls/show/">
 {% csrf_token %}
-<input name = 'already' type='hidden' value="True">
-<input name = 're_table' type='hidden' value= {{re_table}}>
-{%for row in re_table %}
-<p>	 
-<input name='cal' type='hidden' value={{row.calories}}>
-<input name='pro' type='hidden' value={{row.protein}}>
-<input name='fat' type='hidden' value={{row.fat}}>
-<input name='sod' type='hidden' value={{row.sodium}}>
-<input name='creator' type='hidden' value={{row.creator}}>
+<input name='recipeID' type='hidden' value='{{row.rid}}'>
 <input name='check'  type='submit' value='{{row.name}}'>
+</form>
 </p>
 {%endfor%}
-</form>
 </div>
 
 {%endif %}
