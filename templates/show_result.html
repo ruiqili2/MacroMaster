@@ -33,7 +33,12 @@
         <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 	</div>
-	<div id="rating-user">Rate this recipe! </div>
+    <form method="post" action="../../accounts/rating">
+        {% csrf_token %}
+        <label for="rating-user">My rating: </label>
+        <input id="rating-user" type="number" name="rating-user" value=0 disabled=true>
+        <input type='submit', value='Rate this recipe!'>
+    </form>
     
     
 </div>
