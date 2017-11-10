@@ -12,11 +12,11 @@
 	{% csrf_token %}
 		Recipe old name: {{rname}} <br>
         <input type="hidden" name="recipeID" value={{recipeID}}>
-            Recipe name: <input type="text" name="name" required="required"><br>
-		Calories: <input type="number" name="calorie" required="required">{{recipe.calories}}</input><br>
-		Protein: <input type="number" name="protein" required="required">{{recipe.protein}}</input><br>
-		Fat: <input type="number" name="fat" required="required">{{recipe.fat}}</input><br>
-		Sodium: <input type="number" name="sodium" required="required">{{recipe.sodium}}</input><br>
+            Recipe name: <input type="text" name="name" required="required" value='{{recipe.name}}'><br>
+                Calories: <input type="number" name="calorie" required="required" value = {{recipe.calories}}><br>
+		Protein: <input type="number" name="protein" required="required" value = {{recipe.protein}}><br>
+		Fat: <input type="number" name="fat" required="required" value = {{recipe.fat}}><br>
+            Sodium: <input type="number" name="sodium" required="required" value = {{recipe.sodium}}><br>
 		
         Instructions:
         <textarea name="message" required="required" rows="10" cols="50">{{instructions}}</textarea>
