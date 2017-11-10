@@ -347,6 +347,23 @@ CREATE PROCEDURE sp_deleteRecipeDetail
 //
 
 
+DELIMITER //
+CREATE PROCEDURE sp_updateRecipeDetail
+  (
+    IN recipeID varchar(32),
+    IN ins longtext
+  )
+
+    BEGIN
+    START TRANSACTION;
+
+    UPDATE schema_recipes_detail
+    SET instructions = ins
+    WHERE r_id_id  = recipeID;
+
+    commit;
+    END;
+//
 
 
 

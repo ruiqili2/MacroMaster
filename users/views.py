@@ -77,8 +77,10 @@ def change_my_recipe(request):
     pro = request.POST.get('protein')
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
+    instructions = request.POST.get('message')
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipes',[rid, name, cal, pro, fat, sod,])
+    cursor.callproc('sp_updateRecipeDetail', [rid, instructions,])
     cursor.close()
     return render(request, 'success.html')
 
@@ -94,7 +96,7 @@ def delete_recipe(request):
     return render(request, 'success.html')
 
 def rate_recipe(request):
-    rating = request.POST.get('ratingUser')
+    rating = request.POST.get('rating-user')
     print "rating is"
     print rating
     recipeID = request.POST.get('recipeID')
