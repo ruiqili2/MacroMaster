@@ -35,11 +35,13 @@ ul.nav.navbar-nav.navbar-right {
 }
 
 .star-ratings {
+	/*display: inline;*/
+	line-height: 1;
 	cursor: default;
 	unicode-bidi: bidi-override;
 	color: #c5c5c5;
 	font-size: 25px;
-	height: 30px;
+	height: 25px;
 	width: 125px;
 	margin: 0 auto;
 	position: relative;
@@ -66,3 +68,36 @@ ul.nav.navbar-nav.navbar-right {
 	top: 0;
     left: 0;
 }
+
+
+/*.four-cols {
+    margin: 0;
+    height: 100px;
+    width: 100%;
+    position: relative;
+}*/
+
+
+/*.cols-left{
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    float: left !important;
+    width: 25% !important;
+}
+Bootstrap is so broken.
+*/
+
+/*.user-rating{
+	display: flex;
+	flex-direction: column;
+	justify-content: center
+}*/
+
+
+
+/*.star-ratings.top span {
+	margin: 0;
+	padding: 0;
+}*/

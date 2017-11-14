@@ -22,10 +22,12 @@
 			<input name='recipeID' type='hidden' value={{row.0}}>
 		</form>
 	</p>
+</div>
 	{%endfor%}
 	{%endif%}
 </div>
 {%else%}
+<div class="jumbotron">
 <div>
 	Result for Ingredients:
 	<form method='POST' action="../../polls/show_ingredient/">
