@@ -65,7 +65,7 @@ def del_from_favorites(request):
     rid = rid.replace("-", "")
     print rid
     recipe = Recipes.objects.get(rid = rid)
-    like_recipe.filter(user_id = request.user, r_id = recipe).delete()
+    like_recipe.objects.filter(user_id = request.user, r_id = recipe).delete()
     return render(request, 'success.html')
 
 def go_to_change_page(request):
