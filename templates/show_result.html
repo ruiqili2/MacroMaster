@@ -37,7 +37,7 @@
         {% csrf_token %}
         <label for="rating-user">My rating: </label>
         <input name='recipeID' type='hidden' value={{recipeID}}>
-        <input id="rating-user" type="number" name="rating-user" value=0 disabled=true>
+        <input id="rating-user" type="integer" name="rating-user" value=0 min_value=0 max_value=99 readonly='readonly'>
         <input type='submit', value='Rate this recipe!'>
     </form>
     

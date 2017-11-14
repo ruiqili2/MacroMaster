@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^show/', views.show_result),
     url(r'^show_ingredient/', views.show_ingredient),
     url(r'^contact/', views.contact, name='contact'),
+    url(r'^about/', views.about, name='about'),
     url(r'^success/', views.return_success)
 ]
