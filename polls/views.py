@@ -138,6 +138,8 @@ def check_recipe_ins(request):
     try:
         detail = Recipes_detail.objects.get(r_id = recipeID)
         text = detail.instructions
+	##text = text.replace('\n', '<br>')
+	
     except Recipes_detail.DoesNotExist:
         text = "we don't know"
     diction = {
