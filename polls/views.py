@@ -70,6 +70,7 @@ def show_result(request):
     creator = rec.creator
     rname = rec.name
     raw_rate = rec.rating
+# rating = str(raw_rate) + "%"
     rating_display = str(raw_rate) + ""
     rating = str(raw_rate*10) + "%"
     table = {"Calories":cal,
@@ -84,7 +85,8 @@ def show_result(request):
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
-               "rating":rating,
+               # "rating":rating,
+               "rating": raw_rate,
                "creator":creator,
                "recipeID": id,
                "tags" : tags,
@@ -140,6 +142,8 @@ def check_recipe_ins(request):
     try:
         detail = Recipes_detail.objects.get(r_id = recipeID)
         text = detail.instructions
+	##text = text.replace('\n', '<br>')
+	
     except Recipes_detail.DoesNotExist:
         text = "we don't know"
     diction = {
