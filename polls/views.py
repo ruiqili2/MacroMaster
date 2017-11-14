@@ -70,7 +70,8 @@ def show_result(request):
     creator = rec.creator
     rname = rec.name
     raw_rate = rec.rating
-    rating = str(raw_rate) + "%"
+    rating_display = str(raw_rate) + ""
+    rating = str(raw_rate*10) + "%"
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
@@ -86,7 +87,8 @@ def show_result(request):
                "rating":rating,
                "creator":creator,
                "recipeID": id,
-               "tags" : tags
+               "tags" : tags,
+               "rating_display" : rating_display
     }
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
     diction["myFavorites"] = len(f) != 0

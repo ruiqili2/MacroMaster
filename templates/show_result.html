@@ -12,8 +12,8 @@
 	{% if myFavorites != True %}
 	<form method='POST' action='../../accounts/add_to_my_favorite/'>
 	{% csrf_token %}
-	<input type='submit', value='Add to My Favoite !'>
-	<input name = 'recipeName' type = 'hidden' value = '{{name}}'>
+	<input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
+	<input name ='recipeName' type = 'hidden' value = '{{name}}'>
     <input name='recipeID' type='hidden'value={{recipeID}}>
 	</form>
 	{%else %}
@@ -28,7 +28,7 @@
         <div class="star-ratings top" style="width: {{rating}}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 	</div>
-    <div id="rating-avg">Average Rating: {{rating}} </div>
+    <div id="rating-avg">Average Rating: {{rating_display}} </div>
 	<div class="star-ratings mutable">
         <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -38,7 +38,7 @@
         <label for="rating-user">My rating: </label>
         <input name='recipeID' type='hidden' value={{recipeID}}>
         <input id="rating-user" type="integer" name="rating-user" value=0 min_value=0 max_value=99 readonly='readonly'>
-        <input type='submit', value='Rate this recipe!'>
+        <input class="btn btn-default" type='submit', value='Rate this recipe!'>
     </form>
     
     
