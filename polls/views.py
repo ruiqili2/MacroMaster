@@ -71,8 +71,9 @@ def show_result(request):
     rname = rec.name
     raw_rate = rec.rating
 # rating = str(raw_rate) + "%"
-    rating_display = str(raw_rate) + ""
+    rating_display = str(raw_rate)
     rating = str(raw_rate*10) + "%"
+    print rating
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
@@ -85,7 +86,7 @@ def show_result(request):
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
-               # "rating":rating,
+               "rating_w":rating,
                "rating": raw_rate,
                "creator":creator,
                "recipeID": id,
