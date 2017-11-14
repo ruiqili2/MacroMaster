@@ -63,6 +63,7 @@ def add_to_favorites(request):
 def del_from_favorites(request):
     rid = request.POST.get('recipeID')
     rid = rid.replace("-", "")
+    print rid
     recipe = Recipes.objects.get(rid = rid)
     like = like_recipe(user_id = request.user, r_id = recipe)
     like.delete()
