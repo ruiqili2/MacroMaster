@@ -42,6 +42,12 @@
                 </form>
                 {%else %}
                 My Favorite Dish
+                <form method='POST' action='../../accounts/del_from_my_favorite/'>
+                    {% csrf_token %}
+                    <input class="btn btn-primary" type='submit', value='Not any more'>
+                    <input name ='recipeName' type = 'hidden' value = '{{name}}'>
+                    <input name='recipeID' type='hidden'value={{recipeID}}>
+                </form>
                 {%endif%}
             </p>
             {%endif%}

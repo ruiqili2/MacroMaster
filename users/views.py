@@ -60,6 +60,14 @@ def add_to_favorites(request):
     like.save()
     return render(request, 'success.html')
 
+def del_from_favorites(request):
+    rid = request.POST.get('recipeID')
+    rid = rid.replace("-", "")
+    recipe = Recipes.objects.get(rid = rid)
+    like = like_recipe(user_id = request.user, r_id = recipe)
+    like.delete()
+    return render(request, 'success.html')
+
 def go_to_change_page(request):
     rname = request.POST.get('recipeName2')
     recipeID = request.POST.get('recipeID')
