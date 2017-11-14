@@ -13,10 +13,10 @@
 			Recipe old name: {{rname}} <br>
 			<input type="hidden" name="recipeID" value={{recipeID}}>
 			Recipe name: <input type="text" name="name" required="required"><br>
-			Calories: <input type="number" name="calorie" required="required">{{recipe.calories}}<br>
-			Protein: <input type="number" name="protein" required="required">{{recipe.protein}}<br>
-			Fat: <input type="number" name="fat" required="required">{{recipe.fat}}<br>
-			Sodium: <input type="number" name="sodium" required="required">{{recipe.sodium}}<br>
+			Calories: <input type="number" name="calorie" value={{recipe.calories}} required="required"><br>
+			Protein: <input type="number" name="protein" value={{recipe.protein}} required="required"><br>
+			Fat: <input type="number" name="fat" value={{recipe.fat}} required="required"><br>
+			Sodium: <input type="number" name="sodium" value={{recipe.sodium}} required="required"><br>
 			
 			Instructions:
 			<textarea name="message" required="required" rows="10" cols="50">{{instructions}}</textarea>
