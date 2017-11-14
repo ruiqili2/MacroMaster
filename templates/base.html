@@ -16,7 +16,8 @@
             <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
             <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 	        <link rel="stylesheet" href="{% static 'styles/main.css' %}">       
- 
+            <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+            <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
        {% endblock styling %}
 
     </head>
@@ -24,14 +25,11 @@
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-              <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+              <a id="brand" class="navbar-brand" href="{% url 'home' %}">Macro Master</a>
         </div>
-
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'explore' %}"> Just Explore</a></li>
-          </ul>
-		  
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'home' %}"> Home</a></li>
+            <li><a href="{% url 'explore' %}"> Explore</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
             {% if user.is_authenticated  %}

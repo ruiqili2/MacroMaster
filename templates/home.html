@@ -1,27 +1,26 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-    <div class="jumbotron">
 
+    <div class="jumbotron" id="home-container">
         {% if user.is_authenticated  %}
-        <p>
+        <h1>
             Welcome, {{user.username}}.
-        </p>
+        </h1>
 
-        <p style="margin-top: 1em">
-            <a href="{% url 'explore' %}">  Want to browse?  </a> 
-        </p>
-        <p style="margin-top: 1em">
-            <a href="{% url 'add something' %}">  Want to add something? </a> 
-        </p>
+        <h2 style="margin-top: 1em">
+            <a href="{% url 'explore' %}">  Want to browse?  </a>
+        </h2>
+        <h2 style="margin-top: 1em">
+            <a href="{% url 'add something' %}">  Want to add something? </a>
+        </h2>
 
         {% else %}
         <p style="margin-top: 1em">
             <a  href="{% url 'user_login' %}">Click here to login</a> or <a  href="{% url 'user_signup' %}">Sign up!</a>
         </p>
         <p style="margin-top: 1em">
-            <a href="{% url 'explore' %}">  Just want to browse?  </a> 
+            <a href="{% url 'explore' %}">  Just want to browse?  </a>
         </p>
         {% endif %}
 

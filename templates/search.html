@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="jumbotron">
 	<p>Try search "test recipe" below</p>
 	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
 	<form class="form-inline" method="POST" action="../result/">
@@ -7,7 +8,8 @@
 		<div class="form-group">
 			<input class="form-control" type="text" name="recipe_name">
 			<input name="onlyRecipe" type="hidden" value=False>
-			<button class="btn btn-default" type="submit">Go Recipes!!</button>
+			<button class="btn btn-primary" type="submit">Go Recipes!!</button>
 		</div>
 	</form>
+</div>
 {% endblock content %}

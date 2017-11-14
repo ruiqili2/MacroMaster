@@ -2,6 +2,36 @@ body {
 	/*background-color: rgb(224, 185, 224); */
 	text-align: center;
 	 /*color: yellowgreen; */
+	background-image: url("../images/pic5.jpg");
+	background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 800px;
+}
+
+#brand {
+	font-size: 30px;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+	height: 80%;
+}
+
+.jumbotron {
+	opacity: 0.8;
+}
+
+#home-container {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+ul.nav.navbar-nav.navbar-right {
+	font-size:18px;
 }
 
 .star-ratings {
