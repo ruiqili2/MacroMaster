@@ -91,7 +91,7 @@
             <p>
                 <form method='POST' action='../../accounts/change_page'>
                     {% csrf_token %}
-                    <input name='botton' type='submit', value='change'>
+                    <input class="btn btn-default" name='botton' type='submit', value='change'>
                     <input name = 'recipeName2' type = "hidden" value = {{name}}>
                     <input name='recipeID' type='hidden'value={{recipeID}}>
                 </form>
@@ -100,7 +100,7 @@
                 <form method='POST' action='../../accounts/delete'>
                     {% csrf_token %}
                     <input name='recipeID' type='hidden'value={{recipeID}}>
-                    <input name='botton' type='submit' value='delete'>
+                    <input class="btn btn-default" name='botton' type='submit' value='delete'>
                     <input name='recipeName2' type="hidden" value = {{name}}>
                 </form>
             </p>

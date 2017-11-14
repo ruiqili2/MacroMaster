@@ -2,63 +2,58 @@
 {%block content %}
 {%if usr%}
 <div class="jumbotron">
-<div>
-	{%if not favorite%}
-	{%for row in table %}
-	<p>
+		{%if not favorite%}
+		{%for row in table %}
 		<form method='POST' action="../../polls/show/">
 			{% csrf_token %}
 			<input name='recipeID' type='hidden' value={{row.rid}}>
 			<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
 		</form>
-	</p>
-	{%endfor%}
-	{%else%}
-	{%for row in table %}
-	<form method='POST' action="../../polls/show/">
-		<p>
-			{% csrf_token %}
-			<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.1}}'>
-			<input name='recipeID' type='hidden' value={{row.0}}>
+		{%endfor%}
+		{%else%}
+		{%for row in table %}
+		<form method='POST' action="../../polls/show/">
+				{% csrf_token %}
+				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.1}}'>
+				<input name='recipeID' type='hidden' value={{row.0}}>
 		</form>
-	</p>
-</div>
 	{%endfor%}
-	{%endif%}
 </div>
+{%endif%}
 {%else%}
 <div class="jumbotron">
-<div>
-	Result for Ingredients:
-	<form method='POST' action="../../polls/show_ingredient/">
-		{% csrf_token %}
-		<input name='already' type='hidden' value="True">
-		<input name='in_table' type='hidden' value={{in_table}}>
-		{%for row in in_table %}
+	<div>
+		Result for Ingredients:
+		<form method='POST' action="../../polls/show_ingredient/">
+			{% csrf_token %}
+			<input name='already' type='hidden' value="True">
+			<input name='in_table' type='hidden' value={{in_table}}>
+			{%for row in in_table %}
+			<p>
+				<input name='rating' type='hidden' value={{row.rating}}>
+				<input name='cal' type='hidden' value={{row.calories}}>
+				<input name='pro' type='hidden' value={{row.protein}}>
+				<input name='fat' type='hidden' value={{row.fat}}>
+				<input name='sod' type='hidden' value={{row.sodium}}>
+				<input name='creator' type='hidden' value={{row.creator}}>
+				<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
+			</p>
+			{%endfor%}
+		</form>
+	</div>
+	<div>
+		Result for Recipes:
+		{%for row in re_table %}
 		<p>
-			<input name='rating' type='hidden' value={{row.rating}}>
-			<input name='cal' type='hidden' value={{row.calories}}>
-			<input name='pro' type='hidden' value={{row.protein}}>
-			<input name='fat' type='hidden' value={{row.fat}}>
-			<input name='sod' type='hidden' value={{row.sodium}}>
-			<input name='creator' type='hidden' value={{row.creator}}>
-			<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
+			<form method='POST' action="../../polls/show/">
+				{% csrf_token %}
+				<input name='recipeID' type='hidden' value='{{row.rid}}'>
+				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.name}}'>
+			</form>
 		</p>
 		{%endfor%}
-	</form>
-</div>
-<div>
-	Result for Recipes:
-	{%for row in re_table %}
-	<p>
-		<form method='POST' action="../../polls/show/">
-			{% csrf_token %}
-			<input name='recipeID' type='hidden' value='{{row.rid}}'>
-			<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.name}}'>
-		</form>
-	</p>
-	{%endfor%}
-</div>
+	</div>
 </div>
 {%endif %}
+
 {%endblock content%}
