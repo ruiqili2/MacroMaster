@@ -27,5 +27,5 @@ function ratingOutHandler() {
 }
 function ratingClickHandler() {
     latestRating = realTimeRating;
-    latestRatingStr = String(latestRating) + '%';
+    latestRatingStr = String(latestRating*10) + '%';
 }
