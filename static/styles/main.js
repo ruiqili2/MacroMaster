@@ -1,5 +1,3 @@
-console.log('hola')
-
 let ratingText = document.querySelector('#rating-user');
 let rating = document.querySelector('.star-ratings.mutable');
 let ratingTop = document.querySelector('.star-ratings.top.mutable');
@@ -9,14 +7,13 @@ let realTimeRatingStr = "0%";
 let realTimeRating = 0;
 rating.addEventListener("mousemove", ratingMoveHandler);
 rating.addEventListener("mouseout", ratingOutHandler);
-rating.addEventListener("click", ratingMouseUpHandler);
+rating.addEventListener("click", ratingClickHandler);
 let ratingPosLeft = rating.offsetLeft;
-console.log("rating left:", ratingPosLeft);
+// console.log("rating left:", ratingPosLeft);
 function ratingMoveHandler(e) {
-    //console.log("mouse location:", e.clientX, e.clientY);
-    realTimeRating = Math.round(((e.clientX - ratingPosLeft)/rating.clientWidth)*100);
-    realTimeRatingStr = String(realTimeRating) + '%';
-    console.log("rating data:", realTimeRating);
+    realTimeRating = Math.round(((e.clientX - ratingPosLeft)/rating.clientWidth)*10);
+    realTimeRatingStr = String(realTimeRating*10) + '%';
+    // console.log("rating data:", realTimeRating);
     // ratingData = ratingData / rating.width
     ratingTop.style.width = realTimeRatingStr;
     // ratingText.innerHTML = "My Rating: " + realTimeRating;
@@ -28,9 +25,7 @@ function ratingOutHandler() {
     ratingText.value = latestRating;
     // ratingText.innerHTML = "My Rating: " + realTimeRating;
 }
-function ratingMouseUpHandler() {
+function ratingClickHandler() {
     latestRating = realTimeRating;
     latestRatingStr = String(latestRating) + '%';
 }
-
-
