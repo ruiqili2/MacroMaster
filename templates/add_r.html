@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-	<p style="margin-top: 1em">
+	<h3>
 		Add Your Recipe
-	</p>
+	</h3>
 	{% if form.errors %}
 		<p class="text-warning">Please fill the required area</p>
 	{% endif %}
@@ -18,14 +18,14 @@
         
         
         <textarea name="message" required="required" rows="10" cols="50">How to cook this?</textarea>
+        <br>
         Please seperate steps by line.
-<!--
+        <br>
         You can add some tags for your recipes here:<br>
         <input name="tags" type="text"><br>
-        Please seperate tags using comma.
-    -->    
-<br>		
-		<input name="type" type="submit" value="add recipe">
+        <p>Please seperate tags using comma.</p>
+		<input class="btn btn-primary" name="type" type="submit" value="add recipe">
+
 	</form>
 	</p>
 

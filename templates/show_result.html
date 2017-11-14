@@ -2,99 +2,130 @@
 {% load static %}
 {% block content%}
 <div>
-<h1>
-{{name}}'s Detail
-</h1>
+    <h1>
+    {{name}}
+    </h1>
 </div>
-
 {% if user.is_authenticated  %}
-<p>
-	{% if myFavorites != True %}
-	<form method='POST' action='../../accounts/add_to_my_favorite/'>
-	{% csrf_token %}
-	<input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
-	<input name ='recipeName' type = 'hidden' value = '{{name}}'>
-    <input name='recipeID' type='hidden'value={{recipeID}}>
-	</form>
-	{%else %}
-	My Favorite Dish
-	{%endif%}
-</p>
-{%endif%}
+    <div class="jumbotron">
+            <div>
+                <div class="four-cols"">
+                    <div class="four-cols-left">
+                        <img src='{% static "images/food2.png" %}'/>
+                    </div>
+                    <div class="four-cols-left">
+                        <img src='{% static "images/food1.png" %}'/>
+                    </div>
+                    <div class="four-cols-left">
+                        <img src='{% static "images/oil.png" %}'/>
+                    </div>
+                    <div class="four-cols-left">
+                        <img src='{% static "images/salt.png" %}'/>
+                    </div>
+                </div>
 
+                <div class="four-cols">
+                    {%for key, value in table.items %}
+                    <div class="four-cols-left">
+                        <h3>{{key}} : {{value}}</h3>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        <p>
+            {% if myFavorites != True %}
+                <form method='POST' action='../../accounts/add_to_my_favorite/'>
+                    {% csrf_token %}
+                    <input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
+                    <input name ='recipeName' type = 'hidden' value = '{{name}}'>
+                    <input name='recipeID' type='hidden'value={{recipeID}}>
+                </form>
+                {%else %}
+                My Favorite Dish
+                {%endif%}
+            </p>
+            {%endif%}
+            <div>
+                <div class="star-ratings">
+                    <div class="star-ratings top" style="width: {{rating}}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                </div>
+                <div id="rating-avg">Average Rating: {{rating_display}} </div>
 
-<div>
-	<div class="star-ratings">
-        <div class="star-ratings top" style="width: {{rating}}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-	</div>
-    <div id="rating-avg">Average Rating: {{rating_display}} </div>
-	<div class="star-ratings mutable">
-        <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-			<div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-	</div>
-    <form method="post" action="../../accounts/rating">
-        {% csrf_token %}
-        <label for="rating-user">My rating: </label>
-        <input name='recipeID' type='hidden' value={{recipeID}}>
-        <input id="rating-user" type="integer" name="rating-user" value=0 min_value=0 max_value=99 readonly='readonly'>
-        <input class="btn btn-default" type='submit', value='Rate this recipe!'>
-    </form>
-    
-    
-</div>
-<div>
-    <p>
-    
-    Nutrition Facts:
-    {%for key, value in table.items %}
-        {{key}} : {{value}}
-        <br>
-    {%endfor%}
-    </p>
-</div>
-
-<div>
-    Tags on this recipe:
-    {%for value in tags %}
-        {{value}}
-    <br>
-    {%endfor%}
-</div>
-
-
-<div>
-    {% if user.is_authenticated  %}
-    <form method='POST' action='../../recipe/detail'>
-        {% csrf_token %}
-        <input type='submit' value='check how to cook it'>
-            <input name = 'recipeName' type = "hidden" value = {{name}}>
-                <input name='recipeID' type='hidden'value={{recipeID}}>
+                <form class="form-inline" method="post" action="../../accounts/rating">
+                    {% csrf_token %}
+                    <div class='user-rating'>
+                        <!-- <p for="rating-user inline">My rating: </p> -->
+                        <div class="star-ratings mutable inline">
+                            <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                            <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        </div>
+                        <input name='recipeID' type='hidden' value={{recipeID}}>
+                        <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+                        <input class="btn btn-default inline" type='submit', value='Rate this recipe!'>
+                    </div>
+                </form>
+                
+                
+            </div>
+            <div>
+                {% if user.is_authenticated  %}
+                    <form method='POST' action='../../recipe/detail'>
+                        {% csrf_token %}
+                        <input class="btn btn-info" type='submit' value='Check how to cook it'>
+                        <input name = 'recipeName' type = "hidden" value = {{name}}>
+                        <input name='recipeID' type='hidden'value={{recipeID}}>
                     </form>
-    {% else %}
-    <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
-    {% endif %}
-</div>
+                {% else %}
+                    <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
+                {% endif %}
+            </div>
+            <div>
+                Tags on this recipe:
+                {%for value in tags %}
+                <button class="btn btn-default disabled">{{value}}</button>
+                <!-- <br> -->
+                {%endfor%}
+            </div>
+            {%if user.username == creator %}
+            <p>
+                <form method='POST' action='../../accounts/change_page'>
+                    {% csrf_token %}
+                    <input class="btn btn-default" name='botton' type='submit', value='change'>
+                    <input name = 'recipeName2' type = "hidden" value = {{name}}>
+                    <input name='recipeID' type='hidden'value={{recipeID}}>
+                </form>
+            </p>
+            <p>
+                <form method='POST' action='../../accounts/delete'>
+                    {% csrf_token %}
+                    <input name='recipeID' type='hidden'value={{recipeID}}>
+                    <input class="btn btn-default" name='botton' type='submit' value='delete'>
+                    <input name='recipeName2' type="hidden" value = {{name}}>
+                </form>
+            </p>
+            {%endif%}
+        </div>
+        <script src="{% static 'styles/main.js' %}"></script>
+        <style>
+            .four-cols {
+                margin: 0;
+                height: 100px;
+                width: 100%;
+                position: relative;
+            }
 
-{%if user.username == creator %}
-<p>
-<form method='POST' action='../../accounts/change_page'>
-{% csrf_token %}
-<input name='botton' type='submit', value='change'>
-<input name = 'recipeName2' type = "hidden" value = {{name}}>
-<input name='recipeID' type='hidden'value={{recipeID}}>
-</form>
-</p>
-<p>
-<form method='POST' action='../../accounts/delete'>
-{% csrf_token %}
-<input name='recipeID' type='hidden'value={{recipeID}}>
-<input name='botton' type='submit' value='delete'>
-<input name='recipeName2' type="hidden" value = {{name}}>
-</form>
-</p>
-{%endif%}
-<script src="{% static 'styles/main.js' %}"></script>
-
+            .four-cols-left {
+                height: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                float: left !important;
+                width: 25% !important;
+            }
+            .four-cols-left img {
+                width: 100px;
+            }
+        </style>
 {%endblock content  %}      
 

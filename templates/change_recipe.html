@@ -1,29 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-	<p style="margin-top: 1em">
+<div class="jumbotron">
+	<h3>
 		Change Your Recipe
-	</p>
+	</h3>
 	{% if form.errors %}
 		<p class="text-warning">Please fill the required area</p>
 	{% endif %}
+	<p>
+		<form  method="POST" action="../../accounts/change_my_recipe">
+			{% csrf_token %}
+			Recipe old name: {{rname}} <br>
+			<input type="hidden" name="recipeID" value={{recipeID}}>
+			Recipe name: <input type="text" name="name" required="required"><br>
+			Calories: <input type="number" name="calorie" required="required">{{recipe.calories}}<br>
+			Protein: <input type="number" name="protein" required="required">{{recipe.protein}}<br>
+			Fat: <input type="number" name="fat" required="required">{{recipe.fat}}<br>
+			Sodium: <input type="number" name="sodium" required="required">{{recipe.sodium}}<br>
+			
+			Instructions:
+			<textarea name="message" required="required" rows="10" cols="50">{{instructions}}</textarea>
+			<br>
+			
+			<input class="btn btn-default" name="type" type="submit" value="change recipe">
+		</form>
 
-	<p> 
-	<form  method="POST" action="../../accounts/change_my_recipe">
-	{% csrf_token %}
-		Recipe old name: {{rname}} <br>
-        <input type="hidden" name="recipeID" value={{recipeID}}>
-            Recipe name: <input type="text" name="name" required="required" value='{{recipe.name}}'><br>
-                Calories: <input type="number" name="calorie" required="required" value = {{recipe.calories}}><br>
-		Protein: <input type="number" name="protein" required="required" value = {{recipe.protein}}><br>
-		Fat: <input type="number" name="fat" required="required" value = {{recipe.fat}}><br>
-            Sodium: <input type="number" name="sodium" required="required" value = {{recipe.sodium}}><br>
-		
-        Instructions:
-        <textarea name="message" required="required" rows="10" cols="50">{{instructions}}</textarea>
-        
-        
-		<input name="type" type="submit" value="change recipe">
-	</form>
 	</p>
+</div>
 
 {% endblock content %}
