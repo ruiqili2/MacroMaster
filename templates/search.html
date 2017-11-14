@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-	<p>Try search "test recipe" below</p>
-	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
+	<p>Looking for some goodness?</p>
+	<p>
+		Couldn't find what you are looking for? 
+		<br>	
+		Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
 	<form class="form-inline" method="POST" action="../result/">
 		{% csrf_token %}
 		<div class="form-group">
