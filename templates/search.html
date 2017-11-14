@@ -2,10 +2,12 @@
 {% block content %}
 	<p>Try search "test recipe" below</p>
 	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
-	<form method="POST" action="../result/">
+	<form class="form-inline" method="POST" action="../result/">
 		{% csrf_token %}
-		<input type="text" name="recipe_name">
-		<input name="onlyRecipe" type="hidden" value=False>
-		<button type="submit">Go Recipes!!</button>
+		<div class="form-group">
+			<input class="form-control" type="text" name="recipe_name">
+			<input name="onlyRecipe" type="hidden" value=False>
+			<button class="btn btn-default" type="submit">Go Recipes!!</button>
+		</div>
 	</form>
 {% endblock content %}
