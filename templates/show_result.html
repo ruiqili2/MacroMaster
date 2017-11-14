@@ -73,7 +73,7 @@
                     <form method='POST' action='../../recipe/detail'>
                         {% csrf_token %}
                         <input class="btn btn-info" type='submit' value='Check how to cook it'>
-                        <input name = 'recipeName' type = "hidden" value = {{name}}>
+                        <input name = 'recipeName' type = "hidden" value = '{{name}}'>
                         <input name='recipeID' type='hidden'value={{recipeID}}>
                     </form>
                 {% else %}
