@@ -57,7 +57,6 @@ def show_ingredient(request):
 
 
 def show_result(request):
-    print "烤鸭"
     if request.method != 'POST':
     	return render(request, 'home.html')
     rname = request.POST.get('check')
