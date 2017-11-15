@@ -9,7 +9,7 @@ each person works on his or her own branch, and submit a pull request from maste
 # Require packages
 wget 
 conda install django
-
+conda install -c trung wikipedia
 
 # Tasks
 1. Import data

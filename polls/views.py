@@ -9,6 +9,7 @@ from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
 from django.db import connection
 import django_tables2 as tables
+import wikipedia
 
 class RecipeTable(tables.Table):
     class Meta:
