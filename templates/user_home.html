@@ -17,8 +17,11 @@
 <div class="jumbotron">
 	<h2>{{user.username}}'s Home Page</h2>
     <div>
+        <div class="four-cols-left">
+           <img src="/pictures/UserPhoto/default_user.png"/>
+        </div>
         <img src="/pictures/UserPhoto/{{ user.get_profile.avatar }}">
-            <img src="/pictures/UserPhoto/default_user.png">
+            
          <!--
         <form method="POST" action="../user/uploadPhoto/">
             <input name = "action" type = "hidden" value = "change photo">
