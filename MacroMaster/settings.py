@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'New.apps.NewConfig',
     'schema',
     'polls',
+    'users',
     'django_tables2',
    ## 'crispy_forms',
 ]
