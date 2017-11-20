@@ -16,7 +16,34 @@
 <!-- <div class="list-group"> -->
 <div class="jumbotron">
 	<h2>{{user.username}}'s Home Page</h2>
-	<form method="POST" action="../my_recipes/">
+    <div>
+        <img src="/pictures/UserPhoto/{{ user.get_profile.avatar }}">
+         <!--
+        <form method="POST" action="../user/uploadPhoto/">
+            <input name = "action" type = "hidden" value = "change photo">
+            <button class="btn btn-link btn-lg" type="submit">
+                Change a photo
+            </button>
+        </form>
+        -->
+    </div>
+    
+    <div>
+        My Bio: {{user.profile.bio}}
+        <!--
+        <form method="POST" action="../user/editBio">
+            <button class="btn btn-link btn-lg" type="submit">
+                Edit Bio
+            </button>
+        </form>
+         -->
+    </div>
+    
+    
+    
+    
+    
+	<form method="POST" action="../user/my_recipes/">
 		{%csrf_token %}
 		<button class="btn btn-link btn-lg" type="submit">
 		See my recipes
@@ -24,7 +51,7 @@
 	</form>
 	<!-- </div> -->
 	<!-- <div class="list-group"> -->
-	<form method="POST" action="../my_favorites/">
+	<form method="POST" action="../user/my_favorites/">
 		{%csrf_token %}
 		<button class="btn btn-link btn-lg" type="submit">
 		See my favorites

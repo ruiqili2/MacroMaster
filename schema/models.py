@@ -13,6 +13,8 @@ import uuid
 #    followers = models.ManyToManyField("self")
 #    follower_num = models.IntegerField(default=0)
 
+
+
 class Ingredient(models.Model):
     iid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)

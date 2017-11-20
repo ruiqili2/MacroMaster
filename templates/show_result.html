@@ -34,7 +34,7 @@
             </div>
         <p>
             {% if myFavorites != True %}
-                <form method='POST' action='../../accounts/add_to_my_favorite/'>
+                <form method='POST' action='../../accounts/user/add_to_my_favorite/'>
                     {% csrf_token %}
                     <input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
                     <input name ='recipeName' type = 'hidden' value = '{{name}}'>
@@ -42,7 +42,7 @@
                 </form>
                 {%else %}
                 My Favorite Dish
-                <form method='POST' action='../../accounts/del_from_my_favorite/'>
+                <form method='POST' action='../../accounts/user/del_from_my_favorite/'>
                     {% csrf_token %}
                     <input class="btn btn-primary" type='submit', value='Not any more'>
                     <input name ='recipeName' type = 'hidden' value = '{{name}}'>
@@ -58,7 +58,7 @@
                 </div>
                 <div id="rating-avg">Average Rating: {{rating_display}} </div>
 
-                <form class="form-inline" method="post" action="../../accounts/rating">
+                <form class="form-inline" method="post" action="../../accounts/user/rating">
                     {% csrf_token %}
                     <div class='user-rating'>
                         <!-- <p for="rating-user inline">My rating: </p> -->
@@ -95,7 +95,7 @@
             </div>
             {%if user.username == creator %}
             <p>
-                <form method='POST' action='../../accounts/change_page'>
+                <form method='POST' action='../../accounts/user/change_page'>
                     {% csrf_token %}
                     <input class="btn btn-default" name='botton' type='submit', value='change'>
                     <input name = 'recipeName2' type = "hidden" value = {{name}}>
@@ -103,7 +103,7 @@
                 </form>
             </p>
             <p>
-                <form method='POST' action='../../accounts/delete'>
+                <form method='POST' action='../../accounts/user/delete'>
                     {% csrf_token %}
                     <input name='recipeID' type='hidden'value={{recipeID}}>
                     <input class="btn btn-default" name='botton' type='submit' value='delete'>

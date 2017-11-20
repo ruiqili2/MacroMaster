@@ -21,7 +21,6 @@ from polls.views import check_recipe_ins
 admin.autodiscover()
 
 urlpatterns = [
-   # url(r'^home/', include('polls.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
@@ -35,15 +34,7 @@ urlpatterns += [
 
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^accounts/profile/', get_user_home ,name='home_user'),
-    url(r'^accounts/my_recipes/', get_my_recipes),
-    url(r'^accounts/my_favorites/', get_my_favorites),
-    url(r'^accounts/add_to_my_favorite/', add_to_favorites),
-    url(r'^accounts/del_from_my_favorite/', del_from_favorites),
-    url(r'^accounts/change_page', go_to_change_page),
-    url(r'^accounts/change_my_recipe', change_my_recipe),
-    url(r'^accounts/delete', delete_recipe),
-    url(r'^accounts/rating', rate_recipe),
+    url(r'^accounts/user/', include('users.url')),
 ]
 
 urlpatterns += [

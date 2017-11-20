@@ -113,3 +113,10 @@ def rate_recipe(request):
     cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
     cursor.close()
     return render(request, 'success.html')
+
+def edit_profile(request):
+    return render(request, 'success.html')
+
+
+
+
