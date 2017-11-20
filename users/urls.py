@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-import .views
+import views
 
 urlpatterns = [
     url(r'^profile/', views.get_user_home ,name='home_user'),
