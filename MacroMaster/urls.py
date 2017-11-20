@@ -34,7 +34,7 @@ urlpatterns += [
 
 urlpatterns += [
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^accounts/user/', include('users.url')),
+    url(r'^accounts/user/', include('users.urls')),
 ]
 
 urlpatterns += [
