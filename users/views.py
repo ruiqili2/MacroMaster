@@ -119,14 +119,9 @@ def edit_profile(request):
     newBio = request.POST.get("bio")
     user = request.user
     u, created = UserProfile.objects.get_or_create(user = user)
-    if created:
-        created.avatar = newPhoto
-        created.bio = newBio
-        created.save()
-    else:
-        u.avatar = newPhoto
-        u.bio = newBio
-        u.save()
+    u.avatar = newPhoto
+    u.bio = newBio
+    u.save()
     return render(request, 'success.html')
 
 
