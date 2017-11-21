@@ -13,7 +13,9 @@ from models import UserProfile
 @login_required
 def get_user_home(request):
     cur = request.user
-    context = {'userName': cur}
+    img = request.user.profile.avatar
+    txt = '/pictures/UserPhoto' + img
+    context = {'avatar': txt}
     return render(request, "user_home.html", context)
 
 def signup(request):
