@@ -6,7 +6,7 @@
         Change My Profile
     </h3>
     
-    <form  method="POST" enctype="multipart/form-data" action="../editProfile">
+    <form  method="POST" enctype="multipart/form-data" action="../user/editProfile">
         {% csrf_token %}
     <p>
         <img src='{% static "pictures/UserPhoto/{{ user.profile.avatar }}" %}'/>
