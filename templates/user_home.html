@@ -17,8 +17,9 @@
 <div class="jumbotron">
 	<h2>{{user.username}}'s Home Page</h2>
     <div>
-        <img src='{% static "pictures/UserPhoto/default-user.png" %}'/>
-        {{user.profile.avatar}}
+        <img src='{% static "pictures/UserPhoto/default-user.png" %}' width="500px"/>
+        <img src='{% static "pictures/UserPhoto/{{user.profile.avatar.image.url}}" %}' width="500px"/>
+        {{user.profile.avatar.image}}
         My Bio: {{user.profile.bio}}
         <form method="POST" action="../change_my_profile">
             {% csrf_token %}
