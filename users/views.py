@@ -114,7 +114,7 @@ def go_to_change_profile(request):
     return render(request, 'change_profile.html')
 
 def edit_profile(request):
-    newPhoto = request.FILE.get("file")
+    newPhoto = request.FILES["file"]
     newBio = request.POST.get("bio")
     user = request.user
     u, created = UserProfile.objects.get_or_create(user = user)
