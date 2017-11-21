@@ -18,27 +18,14 @@
 	<h2>{{user.username}}'s Home Page</h2>
     <div>
         <img src='{% static "pictures/UserPhoto/default-user.png" %}'/>
-        <img src="../pictures/UserPhoto/{{ user.get_profile.avatar }}">
-            
-         <!--
-        <form method="POST" action="../user/uploadPhoto/">
-            <input name = "action" type = "hidden" value = "change photo">
-            <button class="btn btn-link btn-lg" type="submit">
-                Change a photo
-            </button>
-        </form>
-        -->
-    </div>
-    
-    <div>
+        <img src='{% static "pictures/UserPhoto/{{ user.profile.avatar }}" %}'/>
+        
         My Bio: {{user.profile.bio}}
-        <!--
-        <form method="POST" action="../user/editBio">
+        <form method="POST" action="../editBio">
             <button class="btn btn-link btn-lg" type="submit">
-                Edit Bio
+                Edit My Profile
             </button>
         </form>
-         -->
     </div>
     
     

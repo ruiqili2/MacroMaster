@@ -12,10 +12,8 @@ from schema.models import like_recipe, Recipes, Recipes_detail
 @login_required
 def get_user_home(request):
     cur = request.user
-    context = {'user': cur}
+    context = {'userName': cur}
     return render(request, "user_home.html", context)
-
-
 
 def signup(request):
     if request.method == 'POST':
@@ -112,7 +110,22 @@ def rate_recipe(request):
     cursor.close()
     return render(request, 'success.html')
 
+def go_to_change_profile(request):
+    return render(request, 'change_profile.html')
+
 def edit_profile(request):
+    newPhoto = request.FILE.get("file")
+    newBio = request.POST.get("bio")
+    user = request.user
+    u, created = UserProfile.objects.get_or_create(user = user)
+    if created:
+        created.avatar = newPhoto
+        created.bio = newBio
+        created.save()
+    else:
+        u.avatar = newPhoto
+        u.bio = newBio
+        u.save()
     return render(request, 'success.html')
 
 

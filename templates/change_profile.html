@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron">
+    <h3>
+        Change My Profile
+    </h3>
+    
+    <form  method="POST" enctype="multipart/form-data" action="../editProfile">
+        {% csrf_token %}
+    <p>
+        <img src='{% static "pictures/UserPhoto/{{ user.profile.avatar }}" %}'/>
+        Upload a New one here:
+        <input type="file" name="photo" />
+    </p>
+    <p>
+        <textarea name="bio" rows="10" cols="50">
+            {{user.profile.bio}}
+        </textarea>
+        
+        <button class="btn btn-link btn-lg" type="submit">
+            Submit
+        </button>
+    </p>
+    </form>
+
+</div>
+
+{% endblock content %}

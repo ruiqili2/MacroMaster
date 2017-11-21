@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^change_my_recipe', views.change_my_recipe),
     url(r'^delete', views.delete_recipe),
     url(r'^rating', views.rate_recipe),
+    url(r'^change_my_profile', views.go_to_change_profile),
     url(r'^editProfile', views.edit_profile),
 ]
