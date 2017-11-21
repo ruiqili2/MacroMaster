@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
 from schema.models import like_recipe, Recipes, Recipes_detail
+import .models
 
 @login_required
 def get_user_home(request):
