@@ -18,7 +18,6 @@
 	<h2>{{user.username}}'s Home Page</h2>
     <div>
         <img src='{% static "pictures/UserPhoto/default-user.png" %}'/>
-       <!-- <img src='{% static {{avatar}} %}'/> -->
         {{user.profile.avatar}}
         My Bio: {{user.profile.bio}}
         <form method="POST" action="../change_my_profile">
