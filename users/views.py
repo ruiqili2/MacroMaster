@@ -117,7 +117,9 @@ def go_to_change_profile(request):
     return render(request, 'change_profile.html')
 
 def edit_profile(request):
-    newPhoto = request.FILES.get("file")
+    newPhoto = request.FILES.get("photo")
+    if newPhoto is None:
+	print "not uploaded"
     newBio = request.POST.get("bio")
     user = request.user
     u, created = UserProfile.objects.get_or_create(user = user)
