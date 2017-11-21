@@ -14,7 +14,7 @@ from models import UserProfile
 def get_user_home(request):
     cur = request.user
     img = request.user.profile.avatar
-    txt = '/pictures/UserPhoto' + img
+    txt = '/pictures/UserPhoto'
     context = {'avatar': txt}
     return render(request, "user_home.html", context)
 
