@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-	<p>Looking for some goodness?</p>
-	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
-
+	<p>Looking for some delicious recipes?</p>
 	<form class="form-inline" method="POST" action="../result/">
 		{% csrf_token %}
 		<div class="form-group">
@@ -12,5 +10,18 @@
 			<button class="btn btn-primary" type="submit">Go Recipes!!</button>
 		</div>
 	</form>
+
+	<p>Couldn't remember the name? Try search the tags!</p>
+	<form class="form-inline" method="POST" action="../result_tag/">
+                {% csrf_token %}
+                <div class="form-group">
+                        <input class="form-control" type="text" name="tag_name">
+                        <input name="onlyTag" type="hidden" value=False>
+                        <button class="btn btn-primary" type="submit">Go Tags!!</button>
+                </div>
+        </form>
+	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
+
+
 </div>
 {% endblock content %}
