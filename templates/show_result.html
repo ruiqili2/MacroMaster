@@ -91,11 +91,16 @@
                 {% endif %}
             </div>
             <div>
-                Tags on this recipe:
+		<form method='POST' action="../result_tag/">
+                {% csrf_token %}
+		Tags on this recipe:
                 {%for value in tags %}
-                <button class="btn btn-default disabled">{{value}}</button>
+			<input class="btn btn-default" type='submit' value='{{value}}'>
+                	<input name = 'tag_name' type = "hidden" value = '{{value}}'>
+
                 <!-- <br> -->
                 {%endfor%}
+		</form>
             </div>
             {%if user.username == creator %}
             <p>
