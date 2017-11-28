@@ -8,13 +8,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
 from schema.models import like_recipe, Recipes, Recipes_detail
+from django.core.exceptions import ObjectDoesNotExist
 from models import UserProfile
 
 @login_required
 def get_user_home(request):
     cur = request.user
-    img = request.user.profile.avatar
-    if not img:
+    
+    try:
+        img = request.user.profile.avatar
+    except ObjectDoesNotExist:
         pf = UserProfile(user = user)
         pf.save()
     txt = '/pictures/UserPhoto'
