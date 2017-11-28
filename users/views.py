@@ -23,10 +23,11 @@ def signup(request):
 	form = UserCreationForm(request.POST)
 	if form.is_valid():
 	    form.save()
-	   # username = form.cleaned_data.get('username')
-	   # passwd = form.cleaned_data.get('password')
-	   # user = authenticate(username=username, password=passwd)
-	   # login(self.request, user)
+	    username = form.cleaned_data.get('username')
+	    passwd = form.cleaned_data.get('password')
+	    user = authenticate(username=username, password=passwd)
+        pf = UserProfile(user = user)
+        pf.save()
 	    return redirect('home')
     else:
 	form = UserCreationForm()
