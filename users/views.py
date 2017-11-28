@@ -14,11 +14,10 @@ from models import UserProfile
 @login_required
 def get_user_home(request):
     cur = request.user
-    
     try:
         img = request.user.profile.avatar
     except ObjectDoesNotExist:
-        pf = UserProfile(user = user)
+        pf = UserProfile(user = cur)
         pf.save()
     txt = '/pictures/UserPhoto'
     context = {'avatar': txt}
