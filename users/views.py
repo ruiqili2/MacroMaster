@@ -14,6 +14,9 @@ from models import UserProfile
 def get_user_home(request):
     cur = request.user
     img = request.user.profile.avatar
+    if not img:
+        pf = UserProfile(user = user)
+        pf.save()
     txt = '/pictures/UserPhoto'
     context = {'avatar': txt}
     return render(request, "user_home.html", context)
@@ -23,11 +26,11 @@ def signup(request):
 	form = UserCreationForm(request.POST)
 	if form.is_valid():
 	    form.save()
-	    username = form.cleaned_data.get('username')
-	    passwd = form.cleaned_data.get('password')
-	    user = authenticate(username=username, password=passwd)
-        pf = UserProfile(user = user)
-        pf.save()
+        #username = form.cleaned_data.get('username')
+        #passwd = form.cleaned_data.get('password')
+        #user = authenticate(username=username, password=passwd)
+        #pf = UserProfile(user = user)
+        #pf.save()
         return redirect('home')
     else:
         form = UserCreationForm()
