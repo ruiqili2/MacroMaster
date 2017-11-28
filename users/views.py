@@ -28,10 +28,10 @@ def signup(request):
 	    user = authenticate(username=username, password=passwd)
         pf = UserProfile(user = user)
         pf.save()
-	    return redirect('home')
+        return redirect('home')
     else:
-	form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
 
 
 def get_my_recipes(request):
