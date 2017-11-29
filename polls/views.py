@@ -10,6 +10,7 @@ from django_tables2 import RequestConfig
 from django.db import connection
 import django_tables2 as tables
 import wikipedia
+import math
 
 class RecipeTable(tables.Table):
     class Meta:
@@ -88,7 +89,7 @@ def show_result(request):
     creator = rec.creator
     rname = rec.name
     raw_rate = rec.rating
-    carb = (cal - pro * 4.0 + fat * 9.0) / 4.0
+    carb = int(math.ceil((cal - pro * 4.0 + fat * 9.0) / 4.0))
     if carb < 0:
 	carb = 0.0
 # rating = str(raw_rate) + "%"
