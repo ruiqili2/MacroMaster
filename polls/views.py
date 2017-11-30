@@ -116,9 +116,10 @@ def show_result(request):
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
 ##  One more hit
     r_hit, created = Recipes_HitCount.objects.get_or_create(recipe = rec)
-    r_hit += 1
-    r_hit.save()
     hit_count = r_hit.hitcount
+    hit_count += 1
+    r_hit.hitcount = hit_count
+    r_hit.save()
     diction = {"myFavorites": False,
         "table":table,
         "name":rname,
