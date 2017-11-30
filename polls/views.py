@@ -126,7 +126,8 @@ def show_result(request):
         "recipeID": id,
         "tags" : tags,
         "rating_display" : rating_display,
-        "hit_count" : hit_count
+        "hit_count" : hit_count,
+        "rec" : rec
     }
     diction["myFavorites"] = len(f) != 0
     return render(request, "show_result.html", diction)  

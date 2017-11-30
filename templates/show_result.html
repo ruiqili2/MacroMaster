@@ -80,7 +80,7 @@
                 
             </div>
             <div>
-                Total hit is : {{hit_count}}
+                Total hit is : {% get_hit_count for rec %}
             </div>
             <div>
                 {% if user.is_authenticated  %}
