@@ -47,6 +47,14 @@
 		See my favorites
 		</button>
 	</form>
+    
+    <form method="POST" action="../recommend/">
+        {%csrf_token %}
+        <button class="btn btn-link btn-lg" type="submit">
+            Give me some recommendations!
+        </button>
+    </form>
+    
 	<!-- </div> -->
 	<!-- </div> -->
 </div>
