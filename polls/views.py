@@ -64,13 +64,9 @@ def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
         tag = Recipes_tag.objects.get(detail = tname)
-    #tid = tag_table[0].id
     con_table = contain_tag.objects.filter(t_id = tag)[:10]
     re_table = [tag.r_id for tag in con_table]
-    in_table = {}
-    #nl = [tag.r_id.name for tag in con_table]
-    #    re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
-    #    in_table = Ingredient.objects.filter(name__in = nl)
+    in_table = []
     if len(re_table) + len(in_table) == 0:
             return HttpResponse("No other recipe found.")
     return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
@@ -107,10 +103,11 @@ def show_result(request):
              "Sodium":sod,
 	     "Carb": carb
     }
-    cursor = connection.cursor()
-    cursor.callproc("sp_getRecipeTags",[id, ])
-    result = cursor.fetchall()
-    tags = [item[1] for item in result]
+    #    cursor = connection.cursor()
+#cursor.callproc("sp_getRecipeTags",[id, ])
+    #result = cursor.fetchall()
+    result = contain_tag.objects.filter(r_id = rec)
+    tags = [item.t_id.detail for item in result]
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
 ##  One more hit
     r_hit, created = Recipes_HitCount.objects.get_or_create(recipe = rec)
@@ -132,7 +129,7 @@ def show_result(request):
         "comments" : comments
     }
     diction["myFavorites"] = len(f) != 0
-    cursor.close()
+#cursor.close()
     return render(request, "show_result.html", diction)  
 
 
