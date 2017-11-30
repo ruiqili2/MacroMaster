@@ -21,11 +21,18 @@
         <br>
         Please seperate steps by line.
         <br>
-<!--
-        You can add some tags for your recipes here:<br>
-        <input name="tags" type="text"><br>
+
+        You can add some tags to your recipes here:<br>
+        <!--<input name="tags" type="text"><br>
         <p>Please seperate tags using comma.</p>-->
-		<input class="btn btn-primary" name="type" type="submit" value="add recipe">
+	
+	<select name="tag_id">
+		{% for tag in tags %}
+			<option value="{{tag.id}}"> {{tag.detail}}</option>
+		{% endfor %}
+	</select>
+
+	<input class="btn btn-primary" name="type" type="submit" value="add recipe">
 
 	</form>
 	</p>

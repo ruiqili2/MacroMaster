@@ -70,6 +70,44 @@ def get_list_tag(request):
     else:
         return render(request, 'search.html')
 
+'''
+
+def get_list_macro(request):
+    if request.method == 'POST':
+        carb = request.POST.get('carb_amt', None)
+	pro = request.POST.get('pro_amt', None)
+	fat = request.POST.get('fat_amt', None)
+
+        carb_high = carb * 1.1
+	carb_low = carb * 0.9
+	pro_high = pro * 1.1
+	pro_low = pro * 0.9
+	fat_high = fat * 1.1
+	fat_low = fat * 0.9
+
+	table_1 = Recipes.objects.filter(protein__lte = pro_high).filter(protein__gte = pro_low)
+        if len(table_1) == 0:
+                return HttpResponse("No recipe meets your input.")
+	table_2 = table_1.filter(fat__lte = fat_high).filter(fat__lte = fat_low)
+	if len(table_2) == 0:
+                return HttpResponse("No recipe meets your input.")
+        
+
+	tid = tag_table[0].id
+        con_table = contain_tag.objects.filter(t_id = tid)
+        nl = [tag.r_id.name for tag in con_table]
+        re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
+        in_table = Ingredient.objects.filter(name__in = nl)
+        if len(re_table) + len(in_table) == 0:
+            return HttpResponse("No other recipe found.")
+        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
+    else:
+        return render(request, 'search.html')
+
+
+'''
+
+
 def show_ingredient(request):
     return redirect("home.html")
 
@@ -127,7 +165,9 @@ def enter(request):
 def ai(request):
     return render(request, "add_i.html")
 def aj(request):
-    return render(request, "add_r.html")
+    tags = Recipes_tag.objects.all()
+    diction = {'tags' : tags}
+    return render(request, "add_r.html", diction)
 def am(request):
     return render(request, "add_m.html")
 
@@ -145,12 +185,15 @@ def pour(request):
        	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
+	    tag_id = request.POST.get('tag_id')
             instructions = request.POST.get('message')
        	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
             id = r.rid
             r_d = Recipes_detail(r_id = r, instructions= instructions)
             r_d.save()
+	    t = contain_tag(r_id = r, t_id = tag_id)
+	    t.save()
        	if kind == "add meal":
        	    m = Meals(name = name,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    m.save()
@@ -182,4 +225,4 @@ def contact(request):
 
 def about(request):
     return render(request, "about.html")
-
+ 
