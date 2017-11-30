@@ -75,9 +75,7 @@ def get_list_tag(request):
     #    in_table = Ingredient.objects.filter(name__in = nl)
     if len(re_table) + len(in_table) == 0:
             return HttpResponse("No other recipe found.")
-        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
-    else:
-        return render(request, 'search.html')
+    return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
 
 def show_ingredient(request):
     return redirect("home.html")
