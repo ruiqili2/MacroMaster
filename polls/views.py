@@ -116,7 +116,7 @@ def show_result(request):
     tags = [item[1] for item in result]
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
     cursor.close()
-    #hit_count = HitCount.objects.get_for_object(rec)
+    hit_count = HitCount.objects.get_for_object(rec)
     diction = {"myFavorites": False,
         "table":table,
         "name":rname,
@@ -126,7 +126,7 @@ def show_result(request):
         "recipeID": id,
         "tags" : tags,
         "rating_display" : rating_display,
-#"hit_count" : hit_count,
+        "hit_count" : hit_count,
         "rec" : rec
     }
     diction["myFavorites"] = len(f) != 0
