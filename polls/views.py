@@ -114,21 +114,21 @@ def show_result(request):
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
     tags = [item[1] for item in result]
+    f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
+    cursor.close()
     hit_count = HitCount.objects.get_for_object(rec)
     diction = {"myFavorites": False,
-               "table":table,
-               "name":rname,
-               "rating_w":rating,
-               "rating": raw_rate,
-               "creator":creator,
-               "recipeID": id,
-               "tags" : tags,
-               "rating_display" : rating_display,
-               "hit_count" : hit_count
+        "table":table,
+        "name":rname,
+        "rating_w":rating,
+        "rating": raw_rate,
+        "creator":creator,
+        "recipeID": id,
+        "tags" : tags,
+        "rating_display" : rating_display,
+        "hit_count" : hit_count
     }
-    f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
     diction["myFavorites"] = len(f) != 0
-    cursor.close()
     return render(request, "show_result.html", diction)  
 
 
