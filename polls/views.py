@@ -12,6 +12,13 @@ import django_tables2 as tables
 import wikipedia
 import math
 
+from hitcount.views import HitCountDetailView
+
+class RecipesCountHitDetailView(HitCountDetailView):
+    model = Recipes
+    count_hit = True
+
+
 class RecipeTable(tables.Table):
     class Meta:
         model =  Recipes

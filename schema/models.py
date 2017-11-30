@@ -44,6 +44,9 @@ class Recipes(models.Model, HitCountMixin):
     fat = models.IntegerField()
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
+    hit_count_generic = GenericRelation(
+        HitCount, object_id_field = rid,
+        related_query_name='hit_count_generic_relation')
 
     def _str_(self):
         return self.name
