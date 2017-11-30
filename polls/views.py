@@ -65,7 +65,7 @@ def get_list_tag(request):
         tname = request.POST.get('tag_name', None)
         tag = Recipes_tag.objects.get(detail = tname)
     #tid = tag_table[0].id
-	con_table = contain_tag.objects.get(t_id = tag)
+	con_table = contain_tag.objects.filter(t_id = tag)
     re_table = [tag.r_id for tag in con_table]
     in_table = {}
     #nl = [tag.r_id.name for tag in con_table]
