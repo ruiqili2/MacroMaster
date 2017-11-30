@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'polls',
     'users',
     'django_tables2',
-   ## 'crispy_forms',
+    'hitcount',
 ]
 
 MIDDLEWARE = [
