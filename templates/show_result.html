@@ -12,10 +12,13 @@
             <div>
                 <div class="four-cols">
                     <div class="four-cols-left">
-                        <img src='{% static "images/food2.png" %}'/>
+                        <img src='{% static "images/carb.png" %}'/>
+                    </div>
+		    <div class="four-cols-left">
+                        <img src='{% static "images/pro.png" %}'/>
                     </div>
                     <div class="four-cols-left">
-                        <img src='{% static "images/food1.png" %}'/>
+                        <img src='{% static "images/cal.png" %}'/>
                     </div>
                     <div class="four-cols-left">
                         <img src='{% static "images/oil.png" %}'/>
@@ -23,6 +26,7 @@
                     <div class="four-cols-left">
                         <img src='{% static "images/salt.png" %}'/>
                     </div>
+	
                 </div>
 
                 <div class="four-cols">
@@ -54,7 +58,7 @@
             {%endif%}
             <div>
                 <div class="star-ratings">
-                    <div class="star-ratings top" style="width: {{rating}}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="star-ratings top" style="width: {{rating_w}};"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                     <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                 </div>
                 <div id="rating-avg">Average Rating: {{rating_display}} </div>
@@ -91,11 +95,16 @@
                 {% endif %}
             </div>
             <div>
-                Tags on this recipe:
+		<form method='POST' action="../result_tag/">
+                {% csrf_token %}
+		Tags on this recipe:
                 {%for value in tags %}
-                <button class="btn btn-default disabled">{{value}}</button>
+			<input class="btn btn-default" type='submit' value='{{value}}'>
+                	<input name = 'tag_name' type = "hidden" value = '{{value}}'>
+
                 <!-- <br> -->
                 {%endfor%}
+		</form>
             </div>
             {%if user.username == creator %}
             <p>
@@ -131,7 +140,7 @@
                 flex-direction: column !important;
                 align-items: center !important;
                 float: left !important;
-                width: 25% !important;
+                width: 20% !important;
             }
             .four-cols-left img {
                 width: 100px;
