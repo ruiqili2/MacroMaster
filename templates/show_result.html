@@ -125,6 +125,34 @@
             </p>
             {%endif%}
         </div>
+
+<div>
+    Comments on this recipe:
+    {% for comment in comments %}
+        <p>
+        {{comment.comment}}
+        </p>
+    {%endfor%}
+</div>
+
+<div>
+    Make a comment!
+    <form class="form-inline" method='POST' action='../../accounts/user/comment'>
+        {% csrf_token %}
+        <div class='user-rating'>
+            <div class="star-ratings mutable inline">
+                <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            </div>
+            <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+        </div>
+        <textarea name="comment_txt" required="required" rows="10" cols="50">comment here</textarea>
+        <input name='recipeID' type='hidden'value={{recipeID}}>
+        <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
+    </form>
+</div>
+
+
         <script src="{% static 'styles/main.js' %}"></script>
         <style>
             .four-cols {

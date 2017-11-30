@@ -120,6 +120,7 @@ def show_result(request):
     hit_count += 1
     r_hit.hitcount = hit_count
     r_hit.save()
+    comments = Recipes_Comment.objects.filter(recipe = rec)
     diction = {"myFavorites": False,
         "table":table,
         "name":rname,
@@ -130,6 +131,7 @@ def show_result(request):
         "tags" : tags,
         "rating_display" : rating_display,
         "hit_count" : hit_count
+        "comments" : comments
     }
     diction["myFavorites"] = len(f) != 0
     cursor.close()
