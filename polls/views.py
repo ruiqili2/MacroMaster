@@ -64,8 +64,6 @@ def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
         tag = Recipes_tag.objects.get(detail = tname)
-	if len(tag) == 0:
-		return HttpResponse("No such tag exist.")
     #tid = tag_table[0].id
 	con_table = contain_tag.objects.get(t_id = tag)
     re_table = [tag.r_id for tag in con_table]
