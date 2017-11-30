@@ -120,7 +120,7 @@ def show_result(request):
     hit_count += 1
     r_hit.hitcount = hit_count
     r_hit.save()
-    comments = Recipes_Comment.objects.filter(recipe = rec)
+    comments = Recipes_Comment.objects.order_by('up_vote').filter(recipe = rec)
     diction = {"myFavorites": False,
         "table":table,
         "name":rname,
