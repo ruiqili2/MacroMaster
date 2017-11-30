@@ -91,11 +91,11 @@ def show_result(request):
     raw_rate = rec.rating
     carb = int(math.ceil((cal - pro * 4.0 + fat * 9.0) / 4.0))
     if carb < 0:
-	carb = 0.0
+	    carb = 0.0
 # rating = str(raw_rate) + "%"
     rating_display = str(raw_rate)
     rating = str(raw_rate*10) + "%"
-    print rating
+#     print rating
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
