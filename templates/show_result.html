@@ -139,6 +139,11 @@
     Make a comment!
     <form class="form-inline" method='POST' action='../../accounts/user/comment'>
         {% csrf_token %}
+        <div class="star-ratings">
+            <div class="star-ratings top" style="width: {{rating_w}};"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+        <div id="rating-avg">Average Rating: {{rating_display}} </div>
         <div class='user-rating'>
             <div class="star-ratings mutable inline">
                 <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
