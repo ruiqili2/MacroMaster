@@ -3,12 +3,11 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag
+from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag, Recipes_HitCount
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
 from django.db import connection
-from hitcount.models import HitCount
 import django_tables2 as tables
 import wikipedia
 import math
@@ -115,8 +114,11 @@ def show_result(request):
     result = cursor.fetchall()
     tags = [item[1] for item in result]
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
-    cursor.close()
-    hit_count = HitCount.objects.get_for_object(rec)
+##  One more hit
+    r_hit, created = Recipes_HitCount.objects.get_or_create(recipe = rec)
+    r_hit += 1
+    r_hit.save()
+    hit_count = r_hit.hitcount
     diction = {"myFavorites": False,
         "table":table,
         "name":rname,
@@ -126,10 +128,10 @@ def show_result(request):
         "recipeID": id,
         "tags" : tags,
         "rating_display" : rating_display,
-        "hit_count" : hit_count,
-        "rec" : rec
+        "hit_count" : hit_count
     }
     diction["myFavorites"] = len(f) != 0
+    cursor.close()
     return render(request, "show_result.html", diction)  
 
 

@@ -2,8 +2,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation
-from hitcount.models import HitCount, HitCountMixin
 
 
 import uuid
@@ -44,9 +42,6 @@ class Recipes(models.Model, HitCountMixin):
     fat = models.IntegerField()
     sodium = models.IntegerField()
     creator = models.CharField(max_length = 50, default = 'admin')
-    hit_count_generic = GenericRelation(
-        HitCount, object_id_field = 'object_pk',
-        related_query_name='hit_count_generic_relation')
 
     def _str_(self):
         return self.name
@@ -84,4 +79,8 @@ class Recipes_tag(models.Model):
 class contain_tag(models.Model):
     r_id = models.ForeignKey(Recipes, null = True)
     t_id = models.ForeignKey(Recipes_tag, null = True)
+
+class Recipes_HitCount(models.Model):
+    recipe = models.ForeignKey(Recipes, null = True)
+    hitcount = models.IntegerField(default = 0)
 
