@@ -63,14 +63,16 @@ def get_list(request):
 def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
-        tag_table = Recipes_tag.objects.filter(detail = tname)
+        tag = Recipes_tag.objects.get(detail = tname)
 	if len(tag_table) == 0:
 		return HttpResponse("No such tag exist.")
-	tid = tag_table[0].id
-	con_table = contain_tag.objects.filter(t_id = tid)
-	nl = [tag.r_id.name for tag in con_table]
-        re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
-        in_table = Ingredient.objects.filter(name__in = nl)
+    #tid = tag_table[0].id
+	con_table = contain_tag.objects.get(t_id = tag)
+    re_table = [tag.r_id for tag in con_table]
+    in_table = {}
+    #nl = [tag.r_id.name for tag in con_table]
+    #    re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
+    #    in_table = Ingredient.objects.filter(name__in = nl)
 	if len(re_table) + len(in_table) == 0:
             return HttpResponse("No other recipe found.")
         return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
