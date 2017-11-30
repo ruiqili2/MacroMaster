@@ -152,8 +152,8 @@ def comment(request):
 def recommend(request):
 ## first check how many favorites.
     user = request.user
-    result = like_recipe.objects.get(user_id = user)
-    if len(result) < 10:
+    favorites = like_recipe.objects.get(user_id = user)
+    if len(favorites) < 10:
         error_message = "Sorry, we need at least 10 favorite recipes"
         return render(request, 'error.html', {"erro_message": error_message})
     return render(request, 'success.html')
