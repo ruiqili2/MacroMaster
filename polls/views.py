@@ -113,7 +113,7 @@ def show_result(request):
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
     tags = [item[1] for item in result]
-    hit_count = HitCount.objects.get_for_object(rec)
+    hit_count = rec.hit_count.hits
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
