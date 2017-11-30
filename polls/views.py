@@ -73,7 +73,7 @@ def get_list_tag(request):
     #nl = [tag.r_id.name for tag in con_table]
     #    re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
     #    in_table = Ingredient.objects.filter(name__in = nl)
-	if len(re_table) + len(in_table) == 0:
+    if len(re_table) + len(in_table) == 0:
             return HttpResponse("No other recipe found.")
         return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
