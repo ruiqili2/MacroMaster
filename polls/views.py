@@ -130,7 +130,7 @@ def show_result(request):
         "recipeID": id,
         "tags" : tags,
         "rating_display" : rating_display,
-        "hit_count" : hit_count
+        "hit_count" : hit_count,
         "comments" : comments
     }
     diction["myFavorites"] = len(f) != 0
