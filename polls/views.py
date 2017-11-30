@@ -71,7 +71,6 @@ def show_result(request):
     creator = rec.creator
     rname = rec.name
     raw_rate = rec.rating
-# rating = str(raw_rate) + "%"
     rating_display = str(raw_rate) + ""
     rating = str(raw_rate*10) + "%"
     table = {"Calories":cal,
@@ -83,6 +82,7 @@ def show_result(request):
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
     tags = [item[1] for item in result]
+    hit_count = HitCount.objects.get_for_object(rec)
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
@@ -91,7 +91,8 @@ def show_result(request):
                "creator":creator,
                "recipeID": id,
                "tags" : tags,
-               "rating_display" : rating_display
+               "rating_display" : rating_display,
+               "hit_count" : hit_count
     }
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
     diction["myFavorites"] = len(f) != 0
