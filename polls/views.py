@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag, Recipes_HitCount
+from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag, Recipes_HitCount, Recipes_Comment
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
