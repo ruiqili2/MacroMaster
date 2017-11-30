@@ -8,6 +8,7 @@ from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
 from django.db import connection
+from hitcount.models import HitCount
 import django_tables2 as tables
 import wikipedia
 import math
@@ -113,7 +114,7 @@ def show_result(request):
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
     tags = [item[1] for item in result]
-    hit_count = rec.hit_count.hits
+    hit_count = HitCount.objects.get_for_object(rec)
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
