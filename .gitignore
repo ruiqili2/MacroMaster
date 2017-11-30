@@ -3,5 +3,6 @@
 *.log
 *.txt
 *.csv
+*.swp
 data/
 running_pid.txt

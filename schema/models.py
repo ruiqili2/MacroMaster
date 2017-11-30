@@ -74,6 +74,9 @@ class Recipes_detail(models.Model):
 
 class Recipes_tag(models.Model):
     detail = models.CharField(max_length=50)
+    def get_info(self):
+	ret = "id: " + self.id + "\ndetail: " + self.detail
+	return ret;
 
 class contain_tag(models.Model):
     r_id = models.ForeignKey(Recipes, null = True)
