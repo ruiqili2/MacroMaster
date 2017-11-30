@@ -8,12 +8,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
 from schema.models import like_recipe, Recipes, Recipes_detail
+from django.core.exceptions import ObjectDoesNotExist
 from models import UserProfile
 
 @login_required
 def get_user_home(request):
     cur = request.user
-    img = request.user.profile.avatar
+    try:
+        img = request.user.profile.avatar
+    except ObjectDoesNotExist:
+        pf = UserProfile(user = cur)
+        pf.save()
     txt = '/pictures/UserPhoto'
     context = {'avatar': txt}
     return render(request, "user_home.html", context)
@@ -23,14 +28,15 @@ def signup(request):
 	form = UserCreationForm(request.POST)
 	if form.is_valid():
 	    form.save()
-	   # username = form.cleaned_data.get('username')
-	   # passwd = form.cleaned_data.get('password')
-	   # user = authenticate(username=username, password=passwd)
-	   # login(self.request, user)
-	    return redirect('home')
+        #username = form.cleaned_data.get('username')
+        #passwd = form.cleaned_data.get('password')
+        #user = authenticate(username=username, password=passwd)
+        #pf = UserProfile(user = user)
+        #pf.save()
+        return redirect('home')
     else:
-	form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
 
 
 def get_my_recipes(request):

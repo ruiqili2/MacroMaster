@@ -91,11 +91,11 @@ def show_result(request):
     raw_rate = rec.rating
     carb = int(math.ceil((cal - pro * 4.0 + fat * 9.0) / 4.0))
     if carb < 0:
-	carb = 0.0
+	    carb = 0.0
 # rating = str(raw_rate) + "%"
     rating_display = str(raw_rate)
     rating = str(raw_rate*10) + "%"
-    print rating
+#     print rating
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
@@ -106,6 +106,7 @@ def show_result(request):
     cursor.callproc("sp_getRecipeTags",[id, ])
     result = cursor.fetchall()
     tags = [item[1] for item in result]
+    hit_count = HitCount.objects.get_for_object(rec)
     diction = {"myFavorites": False,
                "table":table,
                "name":rname,
@@ -114,7 +115,8 @@ def show_result(request):
                "creator":creator,
                "recipeID": id,
                "tags" : tags,
-               "rating_display" : rating_display
+               "rating_display" : rating_display,
+               "hit_count" : hit_count
     }
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
     diction["myFavorites"] = len(f) != 0

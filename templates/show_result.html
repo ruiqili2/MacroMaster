@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load hitcount_tags %}s
 {% block content%}
 <div>
     <h1>
@@ -77,6 +78,9 @@
                 </form>
                 
                 
+            </div>
+            <div>
+                Total hit is : {{hit_count}}
             </div>
             <div>
                 {% if user.is_authenticated  %}

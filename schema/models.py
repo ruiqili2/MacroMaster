@@ -2,6 +2,10 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
+from hitcount.models import HitCount, HitCountMixin
+
+
 import uuid
 
 # Create your models here.
@@ -30,7 +34,7 @@ class Ingredient(models.Model):
     def get_id(self):
         return self.iid
 
-class Recipes(models.Model):
+class Recipes(models.Model, HitCountMixin):
     rid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     rating = models.DecimalField(decimal_places=3, max_digits=4)
