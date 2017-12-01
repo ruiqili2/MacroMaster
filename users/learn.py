@@ -24,7 +24,7 @@ def recommend_engine(favorites_recipes, time_tag, user):
     all_recipe = Recipes.objects.all()
     result_list = []
     print("...fetched all recipe...")
-    print(len(all_recipes))
+    print(len(all_recipe))
     for target in all_recipe:
         if target not in favorites:
 	    total = 0
