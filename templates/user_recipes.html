@@ -5,7 +5,7 @@
 <div class="jumbotron">
 		{%if not favorite%}
 		{%for row in table %}
-		<form method='POST' action="../../polls/show/">
+		<form method='POST' action="../../../polls/show/">
 			{% csrf_token %}
 			<input name='recipeID' type='hidden' value={{row.rid}}>
 			<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
@@ -13,7 +13,7 @@
 		{%endfor%}
 		{%else%}
 		{%for row in table %}
-		<form method='POST' action="../../polls/show/">
+		<form method='POST' action="../../../polls/show/">
 				{% csrf_token %}
 				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.1}}'>
 				<input name='recipeID' type='hidden' value={{row.0}}>
@@ -25,7 +25,7 @@
 <div class="jumbotron">
 	<div>
 <!--		Result for Ingredients:-->
-		<form method='POST' action="../../polls/show_ingredient/">
+		<form method='POST' action="../../../polls/show_ingredient/">
 			{% csrf_token %}
 			<input name='already' type='hidden' value="True">
 			<input name='in_table' type='hidden' value={{in_table}}>
@@ -46,7 +46,7 @@
 		Result for Recipes:
 		{%for row in re_table %}
 		<p>
-			<form method='POST' action="../../polls/show/">
+			<form method='POST' action="../../../polls/show/">
 				{% csrf_token %}
 				<input name='recipeID' type='hidden' value='{{row.rid}}'>
 				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.name}}'>

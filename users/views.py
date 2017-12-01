@@ -140,6 +140,7 @@ def comment(request):
     user = request.user
     comment_txt = request.POST.get("comment_txt")
     rating = request.POST.get("rating-user")
+    rating
     recipeID = request.POST.get("recipeID")
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
