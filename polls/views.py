@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag
+from schema.models import Recipes, Ingredient, Meals, like_recipe, Recipes_detail, Recipes_tag, contain_tag, Recipes_HitCount, Recipes_Comment
 from django.core.exceptions import *
 from django.template.loader import render_to_string, get_template
 from django_tables2 import RequestConfig
@@ -11,6 +11,13 @@ from django.db import connection
 import django_tables2 as tables
 import wikipedia
 import math
+
+from hitcount.views import HitCountDetailView
+
+class RecipesCountHitDetailView(HitCountDetailView):
+    model = Recipes
+    count_hit = True
+
 
 class RecipeTable(tables.Table):
     class Meta:
@@ -56,19 +63,13 @@ def get_list(request):
 def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
-        tag_table = Recipes_tag.objects.filter(detail = tname)
-	if len(tag_table) == 0:
-		return HttpResponse("No such tag exist.")
-	tid = tag_table[0].id
-	con_table = contain_tag.objects.filter(t_id = tid)
-	nl = [tag.r_id.name for tag in con_table]
-        re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
-        in_table = Ingredient.objects.filter(name__in = nl)
-	if len(re_table) + len(in_table) == 0:
+        tag = Recipes_tag.objects.get(detail = tname)
+    con_table = contain_tag.objects.filter(t_id = tag)[:10]
+    re_table = [tag.r_id for tag in con_table]
+    in_table = []
+    if len(re_table) + len(in_table) == 0:
             return HttpResponse("No other recipe found.")
-        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
-    else:
-        return render(request, 'search.html')
+    return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
 
 '''
 
@@ -129,34 +130,44 @@ def show_result(request):
     raw_rate = rec.rating
     carb = int(math.ceil((cal - pro * 4.0 + fat * 9.0) / 4.0))
     if carb < 0:
-	carb = 0.0
+	    carb = 0.0
 # rating = str(raw_rate) + "%"
     rating_display = str(raw_rate)
     rating = str(raw_rate*10) + "%"
-    print rating
+#     print rating
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
              "Sodium":sod,
 	     "Carb": carb
     }
-    cursor = connection.cursor()
-    cursor.callproc("sp_getRecipeTags",[id, ])
-    result = cursor.fetchall()
-    tags = [item[1] for item in result]
-    diction = {"myFavorites": False,
-               "table":table,
-               "name":rname,
-               "rating_w":rating,
-               "rating": raw_rate,
-               "creator":creator,
-               "recipeID": id,
-               "tags" : tags,
-               "rating_display" : rating_display
-    }
+    #    cursor = connection.cursor()
+#cursor.callproc("sp_getRecipeTags",[id, ])
+    #result = cursor.fetchall()
+    result = contain_tag.objects.filter(r_id = rec)
+    tags = [item.t_id.detail for item in result]
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
+##  One more hit
+    r_hit, created = Recipes_HitCount.objects.get_or_create(recipe = rec)
+    hit_count = r_hit.hitcount
+    hit_count += 1
+    r_hit.hitcount = hit_count
+    r_hit.save()
+    comments = Recipes_Comment.objects.order_by('up_vote').filter(recipe = rec)
+    diction = {"myFavorites": False,
+        "table":table,
+        "name":rname,
+        "rating_w":rating,
+        "rating": raw_rate,
+        "creator":creator,
+        "recipeID": id,
+        "tags" : tags,
+        "rating_display" : rating_display,
+        "hit_count" : hit_count,
+        "comments" : comments
+    }
     diction["myFavorites"] = len(f) != 0
-    cursor.close()
+#cursor.close()
     return render(request, "show_result.html", diction)  
 
 

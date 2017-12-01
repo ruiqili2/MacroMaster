@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load hitcount_tags %}s
 {% block content%}
 <div>
     <h1>
@@ -61,11 +62,10 @@
                     <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                 </div>
                 <div id="rating-avg">Average Rating: {{rating_display}} </div>
-
+<!--
                 <form class="form-inline" method="post" action="../../accounts/user/rating">
                     {% csrf_token %}
                     <div class='user-rating'>
-                        <!-- <p for="rating-user inline">My rating: </p> -->
                         <div class="star-ratings mutable inline">
                             <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                             <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -75,8 +75,10 @@
                         <input class="btn btn-default inline" type='submit', value='Rate this recipe!'>
                     </div>
                 </form>
-                
-                
+-->
+            </div>
+            <div>
+                Total hit is : {{hit_count}}
             </div>
             <div>
                 {% if user.is_authenticated  %}
@@ -121,6 +123,37 @@
             </p>
             {%endif%}
         </div>
+
+<div>
+    Comments on this recipe:
+    {% for comment in comments %}
+        <p>
+        {{comment.comment}}
+        </p>
+    {%endfor%}
+</div>
+
+<div>
+    Make a comment!
+    <form class="form-inline" method='POST' action='../../accounts/user/comment'>
+        {% csrf_token %}
+        <div class='user-rating'>
+            <div class="star-ratings mutable inline">
+                <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            </div>
+            <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+        </div>
+        
+        <textarea name="comment_txt" required="required" rows="10" cols="50">comment here</textarea>
+        
+        <input name='recipeID' type='hidden'value={{recipeID}}>
+        
+        <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
+    </form>
+</div>
+
+
         <script src="{% static 'styles/main.js' %}"></script>
         <style>
             .four-cols {

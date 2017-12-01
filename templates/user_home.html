@@ -18,7 +18,8 @@
 	<h2>{{user.username}}'s Home Page</h2>
     <div>
        <!-- <img src='{% static "pictures/UserPhoto/default-user.png" %}' width="500px"/> -->
-        <img src="/{{user.profile.avatar}}" width="500px"/>
+       
+        <img src="/{{user.profile.avatar}}" width="50px"/>
 	My Bio: {{user.profile.bio}}
         <form method="POST" action="../change_my_profile">
             {% csrf_token %}
@@ -46,6 +47,14 @@
 		See my favorites
 		</button>
 	</form>
+    
+    <form method="POST" action="../recommend/">
+        {%csrf_token %}
+        <button class="btn btn-link btn-lg" type="submit">
+            Give me some recommendations!
+        </button>
+    </form>
+    
 	<!-- </div> -->
 	<!-- </div> -->
 </div>

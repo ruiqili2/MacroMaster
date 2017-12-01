@@ -7,13 +7,18 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
-from schema.models import like_recipe, Recipes, Recipes_detail
+from schema.models import like_recipe, Recipes, Recipes_detail, Recipes_Comment
+from django.core.exceptions import ObjectDoesNotExist
 from models import UserProfile
 
 @login_required
 def get_user_home(request):
     cur = request.user
-    img = request.user.profile.avatar
+    try:
+        img = request.user.profile.avatar
+    except ObjectDoesNotExist:
+        pf = UserProfile(user = cur)
+        pf.save()
     txt = '/pictures/UserPhoto'
     context = {'avatar': txt}
     return render(request, "user_home.html", context)
@@ -23,14 +28,15 @@ def signup(request):
 	form = UserCreationForm(request.POST)
 	if form.is_valid():
 	    form.save()
-	   # username = form.cleaned_data.get('username')
-	   # passwd = form.cleaned_data.get('password')
-	   # user = authenticate(username=username, password=passwd)
-	   # login(self.request, user)
-	    return redirect('home')
+        #username = form.cleaned_data.get('username')
+        #passwd = form.cleaned_data.get('password')
+        #user = authenticate(username=username, password=passwd)
+        #pf = UserProfile(user = user)
+        #pf.save()
+        return redirect('home')
     else:
-	form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
 
 
 def get_my_recipes(request):
@@ -126,6 +132,30 @@ def edit_profile(request):
     u.avatar = newPhoto
     u.bio = newBio
     u.save()
+    return render(request, 'success.html')
+
+def comment(request):
+    user = request.user
+    comment_txt = request.POST.get("comment_txt")
+    rating = request.POST.get("rating-user")
+    recipeID = request.POST.get("recipeID")
+    recipeID = recipeID.replace("-", "")
+    cursor = connection.cursor()
+    cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
+    cursor.close()
+    recipe = Recipes.objects.get(rid = recipeID)
+    new_comment = Recipes_Comment(user = user, recipe = recipe, rating = rating, comment = comment_txt)
+    new_comment.save()
+    return render(request, 'success.html')
+
+
+def recommend(request):
+## first check how many favorites.
+    user = request.user
+    favorites = like_recipe.objects.get(user_id = user)
+    if len(favorites) < 10:
+        error_message = "Sorry, we need at least 10 favorite recipes"
+        return render(request, 'error.html', {"erro_message": error_message})
     return render(request, 'success.html')
 
 
