@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 import datetime
 from models import UserProfile
+from learn import recommend_engine
 
 @login_required
 def get_user_home(request):
@@ -164,9 +165,10 @@ def recommend(request):
         time_tag = "dinner"
     user = request.user
     favorites = like_recipe.objects.filter(user_id = user)
-    if len(favorites) < 10:
-        error_message = "Sorry, we need at least 10 favorite recipes"
-        return render(request, 'error.html', {"erro_message": error_message})
+        #if len(favorites) < 10:
+        #error_message = "Sorry, we need at least 10 favorite recipes"
+#return render(request, 'error.html', {"erro_message": error_message})
+    print("enter recommend")
     recommended = recommend_engine(favorites, time_tag, request.user)
     diction = {'usr':False,
                'table':recommended,
