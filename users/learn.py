@@ -30,14 +30,14 @@ def recommend_engine(favorites_recipes, time_tag, user):
 	    total = 0
 	    ct = contain_tag.objects.filter(r_id = target)
 	    tags2 = list(set([t.t_id for t in ct]))
-        if len(tags2) == 0:
-            continue
+            if len(tags2) == 0:
+                continue
 	    for key, val in diction.items():
 	        total += cal_distance(val, tags2)
-            if total > 50:
-                break
+                if total > 50:
+                    break
 	    if total > 50:
-            continue
+                continue
 	    result_list.append((total, target))
     print("...finished calculation...")
     sorted_list = sorted(result_list, key=lambda tup:tup[0])
