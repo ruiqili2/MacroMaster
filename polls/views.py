@@ -131,19 +131,14 @@ def show_result(request):
     carb = int(math.ceil((cal - pro * 4.0 + fat * 9.0) / 4.0))
     if carb < 0:
 	    carb = 0.0
-# rating = str(raw_rate) + "%"
     rating_display = str(raw_rate)
     rating = str(raw_rate*10) + "%"
-#     print rating
     table = {"Calories":cal,
              "Protein":pro,
              "Fat":fat,
              "Sodium":sod,
 	     "Carb": carb
     }
-    #    cursor = connection.cursor()
-#cursor.callproc("sp_getRecipeTags",[id, ])
-    #result = cursor.fetchall()
     result = contain_tag.objects.filter(r_id = rec)
     tags = [item.t_id.detail for item in result]
     f = like_recipe.objects.filter(user_id = request.user, r_id = rec)
