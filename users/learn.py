@@ -10,7 +10,7 @@ def cal_distance(tags1, tags2):
         if tag in tags2:
         	continue
         else:
-        	diff ++
+        	diff += 1
     diff += len(tags2) - diff
     return diff
 
