@@ -7,7 +7,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
-from schema.models import like_recipe, Recipes, Recipes_detail, Recipes_Comment
+from schema.models import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 import datetime
@@ -105,6 +105,8 @@ def change_my_recipe(request):
 def delete_recipe(request):
     recipeID= request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
+    Recipes_HitCount.objects.filter(recipe = recipeID).delete()
+    Recipes_Comment.objects.filter(recipe = recipeID).delete()
     cursor = connection.cursor()
     cursor.callproc('sp_deleteRecipeRelation', [recipeID, ])
     cursor.callproc('sp_deleteRecipeTag', [recipeID, ])
@@ -169,9 +171,11 @@ def recommend(request):
         #error_message = "Sorry, we need at least 10 favorite recipes"
 #return render(request, 'error.html', {"erro_message": error_message})
     print("enter recommend")
-    recommended = recommend_engine(favorites, time_tag, request.user)
+    result = recommend_engine(favorites, time_tag, request.user)
+    recommended = [r[1] for r in result]
+    print [r.name for r in recommended]
     diction = {'usr':False,
-               'table':recommended,
+               're_table':recommended,
                'favorite':False
                }
     return render(request, 'user_recipes.html', diction)
