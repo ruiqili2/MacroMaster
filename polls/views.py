@@ -196,15 +196,18 @@ def pour(request):
        	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
-	    tag_id = request.POST.get('tag_id')
+	    tag_id = request.POST.getlist('tag_id')
+	    print "select tag: ", tag_id
             instructions = request.POST.get('message')
        	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
             id = r.rid
             r_d = Recipes_detail(r_id = r, instructions= instructions)
             r_d.save()
-	    t = contain_tag(r_id = r, t_id = tag_id)
-	    t.save()
+	    t_table = Recipes_tag.objects.filter(id__in = tag_id)
+	    for t in t_table:
+		new_t = contain_tag(r_id = r, t_id = t)
+	    	new_t.save()
        	if kind == "add meal":
        	    m = Meals(name = name,rating = 0, calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    m.save()
