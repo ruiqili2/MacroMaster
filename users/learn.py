@@ -20,7 +20,7 @@ def recommend_engine(favorites, time_tag, user):
 		tags = contain_tag.objects.filter(r_id = recipe)
 		diction[recipe] = tags
     print("...created tags dictionay...")
-	all_recipe = Recipes.objects.all()
+    all_recipe = Recipes.objects.all()
 	result_list = []
     print("...fetched all recipe...")
 	for target in all_recipe:
