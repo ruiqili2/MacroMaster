@@ -9,6 +9,8 @@ from django.contrib.auth import login, authenticate
 from django.db import connection
 from schema.models import like_recipe, Recipes, Recipes_detail, Recipes_Comment
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
+import datetime
 from models import UserProfile
 
 @login_required
@@ -151,11 +153,20 @@ def comment(request):
 
 def recommend(request):
 ## first check how many favorites.
+    hour = datetime.datetime.now().hour
+    time_tag = None
+    if 6 <= hour and hour <= 9:
+        time_tag = "breakfast"
+    elif 10 <= hour and hour <= 13:
+        time_tag = "lunch"
+    elif 14 <= hour and hour <= 20:
+        time_tag = "dinner"
     user = request.user
-    favorites = like_recipe.objects.get(user_id = user)
+    favorites = like_recipe.objects.filter(user_id = user)
     if len(favorites) < 10:
         error_message = "Sorry, we need at least 10 favorite recipes"
         return render(request, 'error.html', {"erro_message": error_message})
+
     return render(request, 'success.html')
 
 
