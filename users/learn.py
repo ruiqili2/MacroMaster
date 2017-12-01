@@ -19,7 +19,7 @@ def recommend_engine(favorites_recipes, time_tag, user):
     favorites = [fr.r_id for fr in favorites_recipes]
     for recipe in favorites:
 	ct = contain_tag.objects.filter(r_id = recipe)
-	diction[recipe] = [t.t_id for t in ct]
+	diction[recipe] = list(set([t.t_id for t in ct]))
     print("...created tags dictionay...")
     all_recipe = Recipes.objects.all()
     result_list = []
@@ -29,13 +29,15 @@ def recommend_engine(favorites_recipes, time_tag, user):
         if target not in favorites:
 	    total = 0
 	    ct = contain_tag.objects.filter(r_id = target)
-	    tags2 = [t.t_id for t in ct]
+	    tags2 = list(set([t.t_id for t in ct]))
+        if len(tags2) == 0:
+            continue
 	    for key, val in diction.items():
 	        total += cal_distance(val, tags2)
-		if total > 50:
-		    break
+            if total > 50:
+                break
 	    if total > 50:
-		continue
+            continue
 	    result_list.append((total, target))
     print("...finished calculation...")
     sorted_list = sorted(result_list, key=lambda tup:tup[0])
