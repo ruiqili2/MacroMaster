@@ -26,11 +26,12 @@
         <!--<input name="tags" type="text"><br>
         <p>Please seperate tags using comma.</p>-->
 	
-	<select name="tag_id" multiple>
+	<!--<select name="tag_id" multiple>-->
 		{% for tag in tags %}
-			<option value="{{tag.id}}"> {{tag.detail}}</option>
+			<input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}}<br>
+			<!-- <option value="{{tag.id}}"> {{tag.detail}}</option>-->
 		{% endfor %}
-	</select>
+	<!--</select>-->
 
 	<input class="btn btn-primary" name="type" type="submit" value="add recipe">
 
