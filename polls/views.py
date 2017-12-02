@@ -55,7 +55,8 @@ def get_list(request):
         in_table = Ingredient.objects.filter(name = rname)
        	re_table = Recipes.objects.filter(name__icontains = rname).order_by("rating")[:10]
 	if len(re_table) + len(in_table) == 0:
-            return HttpResponse("no such recipe nor ingredient")          
+	        error_message = "Sorry, no recipe nor ingredient found in our database."
+        	return render(request, 'error.html', {"error_message": error_message})
         return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
         return render(request, 'search.html')
@@ -67,11 +68,13 @@ def get_list_tag(request):
     	con_table = contain_tag.objects.filter(t_id = tag)[:10]
     	re_table = [tag.r_id for tag in con_table]
     	in_table = []
-    	if len(re_table) + len(in_table) == 0:
-            	return HttpResponse("No other recipe found.")
+	if len(re_table) + len(in_table) == 0:
+                error_message = "Sorry, no recipe nor ingredient found in our database."
+                return render(request, 'error.html', {"error_message": error_message})
     	return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
 	return render(request, "search.html")
+
 '''
 
 def get_list_macro(request):
@@ -105,7 +108,6 @@ def get_list_macro(request):
         return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
     else:
         return render(request, 'search.html')
-
 
 '''
 
@@ -235,4 +237,3 @@ def contact(request):
 
 def about(request):
     return render(request, "about.html")
- 
