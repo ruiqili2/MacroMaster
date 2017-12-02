@@ -10,9 +10,9 @@ def cal_distance(tags1, tags2, diction):
     for tag in tags1:
         if tag in tags2:
             factor = factor * diction[tag]
-        	continue
+            continue
         else:
-        	diff += 1
+            diff += 1
     if len(tags2) > (len(tags1) - diff):
         diff += len(tags2) - len(tags1) + diff
     return diff * 1.0 / factor
@@ -21,17 +21,17 @@ def cal_distance(tags1, tags2, diction):
 
 def recommend_engine(favorites_recipes, time_tag, user):
     diction = {}
-    _diction = {}
+    w_diction = {}
     favorites = [fr.r_id for fr in favorites_recipes]
     for recipe in favorites:
-	    ct = contain_tag.objects.filter(r_id = recipe)
+	ct = contain_tag.objects.filter(r_id = recipe)
         tag_list = list(set([t.t_id for t in ct]))
-	    diction[recipe] = tag_list
+	diction[recipe] = tag_list
         for tag in tag_list:
-            if w_diction[tag]:
-                w_diction[tag] += 1
-            else:
+            if not tag in w_diction:
                 w_diction[tag] = 1
+            else:
+                w_diction[tag] += 1
     print("...created tags dictionay...")
     all_recipe = Recipes.objects.all()
     result_list = []
