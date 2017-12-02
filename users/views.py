@@ -98,18 +98,29 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     instructions = request.POST.get('message')
-    tag_id = request.POST.get('tag_id')
+    tag_id = request.POST.getlist('tag_id[]')
+    print "\n\n\nchange to ->: ", tag_id, "\n\n\n"
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipes',[rid, name, cal, pro, fat, sod,])
     cursor.callproc('sp_updateRecipeDetail', [rid, instructions,])
     # delete old recipe-tag tuple
-    cursor.callproc('sp_deleteContainTag', [rid,])
+    #cursor.callproc('sp_deleteContainTag', [rid,])
     # add new recipe-tag tuple
-    for t_id in tag_id:
+    '''for t_id in tag_id:
 	tid = int(t_id)
-	cursor.callproc('sp_updateContainTag', [rid, tid,])
-
+	cursor.callproc('sp_insertContainTag', [rid, tid,])
+    '''
     cursor.close()
+
+    contain_tag.objects.filter(r_id = rid).delete()
+    r = Recipes.objects.filter(rid = rid)[0]
+    t_table = Recipes_tag.objects.filter(id__in = tag_id)
+    for t in t_table:
+	print "t:", t.detail
+        new_t = contain_tag(r_id = r, t_id = t)
+        new_t.save()
+ 
+    
     return render(request, 'success.html')
 
 def delete_recipe(request):
