@@ -11,7 +11,7 @@
 		<form  method="POST" action="../../accounts/user/change_my_recipe">
 			{% csrf_token %}
 			<input type="hidden" name="recipeID" value={{recipeID}}>
-                Recipe name: <input type="text" name="name" value={{recipe.name}}  required="required"><br>
+                Recipe name: <input type="text" name="name" value='{{recipe.name}}'  required="required"><br>
 			Calories: <input type="number" name="calorie" value={{recipe.calories}} required="required"><br>
 			Protein: <input type="number" name="protein" value={{recipe.protein}} required="required"><br>
 			Fat: <input type="number" name="fat" value={{recipe.fat}} required="required"><br>
