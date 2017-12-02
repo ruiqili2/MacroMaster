@@ -367,5 +367,40 @@ CREATE PROCEDURE sp_updateRecipeDetail
 
 
 
+DELIMITER //
+CREATE PROCEDURE sp_deleteContainTag
+  (
+    IN recipeID varchar(32)
+    )
+
+  BEGIN
+  START TRANSACTION;
+
+  DELETE
+  FROM schema_contain_tag
+  WHERE r_id_id  = recipeID;
+
+  commit;
+  END;
+//
+
+
+DELIMITER //
+CREATE PROCEDURE sp_updateContainTag
+  (
+    IN recipeID varchar(32),
+    IN tag_id	int(11)
+  )
+
+    BEGIN
+    START TRANSACTION;
+
+    INSERT INTO schema_contain_tag (r_id_id, t_id_id)
+	VALUES (recipeID, tag_id);
+    commit;
+    END;
+//
+
+
 
 

@@ -7,7 +7,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.db import connection
-from schema.models import like_recipe, Recipes, Recipes_detail, Recipes_Comment
+from schema.models import like_recipe, Recipes, Recipes_detail, Recipes_Comment, Recipes_tag
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 import datetime
@@ -83,7 +83,9 @@ def go_to_change_page(request):
     recipeID = recipeID.replace("-", "")
     recipe = Recipes.objects.get(rid = recipeID)
     instructions = Recipes_detail.objects.get(r_id = recipe)
-    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions})
+    tags = Recipes_tag.objects.all()
+
+    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions, 'tags': tags})
 
 def change_my_recipe(request):
     rid = request.POST.get('recipeID')
@@ -95,9 +97,17 @@ def change_my_recipe(request):
     fat = request.POST.get('fat')
     sod = request.POST.get('sodium')
     instructions = request.POST.get('message')
+    tag_id = request.POST.get('tag_id')
     cursor = connection.cursor()
     cursor.callproc('sp_updateRecipes',[rid, name, cal, pro, fat, sod,])
     cursor.callproc('sp_updateRecipeDetail', [rid, instructions,])
+    # delete old recipe-tag tuple
+    cursor.callproc('sp_deleteContainTag', [rid,])
+    # add new recipe-tag tuple
+    for t_id in tag_id:
+	tid = int(t_id)
+	cursor.callproc('sp_updateContainTag', [rid, tid,])
+
     cursor.close()
     return render(request, 'success.html')
 

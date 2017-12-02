@@ -64,13 +64,14 @@ def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
         tag = Recipes_tag.objects.get(detail = tname)
-    con_table = contain_tag.objects.filter(t_id = tag)[:10]
-    re_table = [tag.r_id for tag in con_table]
-    in_table = []
-    if len(re_table) + len(in_table) == 0:
-            return HttpResponse("No other recipe found.")
-    return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
-
+    	con_table = contain_tag.objects.filter(t_id = tag)[:10]
+    	re_table = [tag.r_id for tag in con_table]
+    	in_table = []
+    	if len(re_table) + len(in_table) == 0:
+            	return HttpResponse("No other recipe found.")
+    	return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
+    else:
+	return render(request, "search.html")
 '''
 
 def get_list_macro(request):
@@ -192,7 +193,7 @@ def pour(request):
        	    i.save()
        	if kind == "add recipe":
 	    tag_id = request.POST.getlist('tag_id')
-	    print "select tag: ", tag_id
+	    print "\n\n\nselect tag: ", tag_id, "\n\n\n"
             instructions = request.POST.get('message')
        	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
        	    r.save()
