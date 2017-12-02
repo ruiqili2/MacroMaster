@@ -64,7 +64,12 @@ def get_list(request):
 def get_list_tag(request):
     if request.method == 'POST':
         tname = request.POST.get('tag_name', None)
-        tag = Recipes_tag.objects.get(detail = tname)
+	try:
+        	tag = Recipes_tag.objects.get(detail = tname)
+    	except Recipes_tag.DoesNotExist:
+		error_message = "Sorry, we are not able to find your tag in out database."
+		return render(request, 'error.html', {"error_message": error_message})
+        
     	con_table = contain_tag.objects.filter(t_id = tag)[:10]
     	re_table = [tag.r_id for tag in con_table]
     	in_table = []
