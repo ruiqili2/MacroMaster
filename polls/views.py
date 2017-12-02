@@ -192,7 +192,7 @@ def pour(request):
        	    i = Ingredient(name = name, calories = cal,protein = pro,fat = fat,sodium = sod, creator = username)
        	    i.save()
        	if kind == "add recipe":
-	    tag_id = request.POST.getlist('tag_id')
+	    tag_id = request.POST.getlist('tag_id[]')
 	    print "\n\n\nselect tag: ", tag_id, "\n\n\n"
             instructions = request.POST.get('message')
        	    r = Recipes(name = name,rating = 0,calories = cal,protein = pro,fat = fat, sodium = sod, creator = username)
