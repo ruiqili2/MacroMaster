@@ -11,7 +11,7 @@ from django.db import connection
 import django_tables2 as tables
 import wikipedia
 import math
-
+from macro import macro_recommend
 from hitcount.views import HitCountDetailView
 
 class RecipesCountHitDetailView(HitCountDetailView):
@@ -87,10 +87,31 @@ def get_list_macro(request):
 	# breakfast = 360
 	# lunch = 75
 	# dinner = 35
+	
 	cal = float(request.POST.get('cal', None))
         breakfast = float(request.POST.get('breakfast', None))
 	lunch = float(request.POST.get('lunch', None))
 	dinner = float(request.POST.get('dinner', None))
+        
+	if breakfast + lunch + dinner != 10:
+                error_message = "Sorry, the sum of ratio has to be 10."
+                return render(request, 'error.html', {"error_message": error_message})
+	
+	break_table = []
+	lunch_table = []
+	dinner_table = []
+
+	macro_recommend(cal, breakfast, lunch, dinner, break_table, lunch_table, dinner_table, request)
+	if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+		error_message = "Sorry, no recipe matches to your input. please try another one."
+                return render(request, 'error.html', {"error_message": error_message})
+        return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+
+    else:
+        return render(request, 'search.html')
+
+
+'''
 	if cal == 0.0:
 		break_table = Recipes.objects.filter(calories = cal).order_by("rating")[:3]
 		break_id = [b.rid for b in break_table]
@@ -194,9 +215,7 @@ def get_list_macro(request):
                         error_message = "Sorry, no recipe matches to your input. please try another one."
                         return render(request, 'error.html', {"error_message": error_message})
 		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
-
-    else:
-        return render(request, 'search.html')
+'''
 
 
 
