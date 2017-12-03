@@ -28,7 +28,7 @@
 	
 	<!--<select name="tag_id" multiple>-->
 		{% for tag in tags %}
-			<input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}}<br>
+			<input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}}
 			<!-- <option value="{{tag.id}}"> {{tag.detail}}</option>-->
 		{% endfor %}
 	<!--</select>-->
