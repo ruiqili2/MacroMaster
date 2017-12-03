@@ -32,7 +32,7 @@ def recommend_engine(favorites_recipes, time_tag, user):
                 w_diction[tag] = 1
             else:
                 w_diction[tag] += 1
-    print("...created tags dictionay...")
+    print("...created tags dictionary...")
     all_recipe = Recipes.objects.all()
     result_list = []
     print("...fetched all recipe...")

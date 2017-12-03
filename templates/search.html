@@ -20,6 +20,20 @@
                         <button class="btn btn-primary" type="submit">Go Tags!!</button>
                 </div>
         </form>
+
+	<p>Have a calories goal? Type in your calories consumption and ideal ratio for three meals!</p>
+        <form class="form-inline" method="POST" action="../result_macro/">
+                {% csrf_token %}
+                <div class="form-group">
+                        <input class="form-control" type="text" name="cal"> = 
+			<input class="form-control" type="text" name="breakfast">:
+			<input class="form-control" type="text" name="lunch">:
+			<input class="form-control" type="text" name="dinner">
+                        <input name="onlyMacro" type="hidden" value=False>
+                        <button class="btn btn-primary" type="submit">Go Macro!!</button>
+                </div>
+        </form>
+
 	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
 
 

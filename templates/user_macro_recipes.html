@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load hitcount_tags %}
+{%block content %}
+{%if usr%}
+<div class="jumbotron">
+		{%if not favorite%}
+		{%for row in table %}
+		<form method='POST' action="../../../polls/show/">
+			{% csrf_token %}
+			<input name='recipeID' type='hidden' value={{row.rid}}>
+			<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
+		</form>
+		{%endfor%}
+		{%else%}
+		{%for row in table %}
+		<form method='POST' action="../../../polls/show/">
+				{% csrf_token %}
+				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{row.1}}'>
+				<input name='recipeID' type='hidden' value={{row.0}}>
+		</form>
+	{%endfor%}
+</div>
+{%endif%}
+{%else%}
+<div class="jumbotron">
+	<div>
+<!--		Result for Ingredients:-->
+		<form method='POST' action="../../../polls/show_ingredient/">
+			{% csrf_token %}
+			<input name='already' type='hidden' value="True">
+			<input name='in_table' type='hidden' value={{in_table}}>
+			{%for row in in_table %}
+			<p>
+				<input name='rating' type='hidden' value={{row.rating}}>
+				<input name='cal' type='hidden' value={{row.calories}}>
+				<input name='pro' type='hidden' value={{row.protein}}>
+				<input name='fat' type='hidden' value={{row.fat}}>
+				<input name='sod' type='hidden' value={{row.sodium}}>
+				<input name='creator' type='hidden' value={{row.creator}}>
+				<input class="btn btn-link btn-lg" name='check'  type='submit' value='{{row.name}}'>
+			</p>
+			{%endfor%}
+		</form>
+	</div>
+	<div>
+		Here is the recommandations based on your input:
+		
+		<br>
+		Breakfast:
+		{%for break in break_table %}
+		<p>
+			<form method='POST' action="../../../polls/show/">
+				{% csrf_token %}
+				<input name='recipeID' type='hidden' value='{{break.rid}}'>
+				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{break.name}}'>
+				Calories: {{break.calories}}
+
+			</form>
+		</p>
+		{%endfor%}
+		<br>
+		Lunch:
+		<br>
+		{%for lunch in lunch_table %}
+                <p>
+                        <form method='POST' action="../../../polls/show/">
+                                {% csrf_token %}
+                                <input name='recipeID' type='hidden' value='{{lunch.rid}}'>
+				<input class="btn btn-link btn-lg" name='check' type='submit' value='{{lunch.name}}'>
+				Calories: {{lunch.calories}}
+
+				
+                        </form>
+                </p>
+                {%endfor%}
+		<br>
+		Dinner:
+                <br>
+                {%for dinner in dinner_table %}
+                <p>
+                        <form method='POST' action="../../../polls/show/">
+                                {% csrf_token %}
+                                <input name='recipeID' type='hidden' value='{{dinner.rid}}'>
+                                <input class="btn btn-link btn-lg" name='check' type='submit' value='{{dinner.name}}'>
+				Calories: {{dinner.calories}}
+
+                        </form>
+                </p>
+                {%endfor%}
+
+	</div>
+</div>
+
+{%endif %}
+
+{%endblock content%}

@@ -80,41 +80,123 @@ def get_list_tag(request):
     else:
 	return render(request, "search.html")
 
-'''
+
 
 def get_list_macro(request):
     if request.method == 'POST':
-        carb = request.POST.get('carb_amt', None)
-	pro = request.POST.get('pro_amt', None)
-	fat = request.POST.get('fat_amt', None)
+	# breakfast = 360
+	# lunch = 75
+	# dinner = 35
+	cal = float(request.POST.get('cal', None))
+        breakfast = float(request.POST.get('breakfast', None))
+	lunch = float(request.POST.get('lunch', None))
+	dinner = float(request.POST.get('dinner', None))
+	if cal == 0.0:
+		break_table = Recipes.objects.filter(calories = cal).order_by("rating")[0]
+		lunch_table = Recipes.objects.filter(calories = cal).order_by("rating")[1]
+		dinner_table = Recipes.objects.filter(calories = cal).order_by("rating")[2]
+		
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	elif breakfast + lunch + dinner != 10:
+		error_message = "Sorry, the sum of ratio has to be 10."
+		return render(request, 'error.html', {"error_message": error_message})
 
-        carb_high = carb * 1.1
-	carb_low = carb * 0.9
-	pro_high = pro * 1.1
-	pro_low = pro * 0.9
-	fat_high = fat * 1.1
-	fat_low = fat * 0.9
+	elif breakfast == 0.0 and lunch != 0.0 and dinner != 0.0:
+		lunch_cal = cal * (lunch / (lunch + dinner))
+		dinner_cal = cal - lunch_cal
+		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).order_by("rating")[:10]
+                lunch_id = [l.rid for l in lunch_table]
+		dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = lunch_id).order_by("rating")[:10]
+		break_table = []
+		
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
 
-	table_1 = Recipes.objects.filter(protein__lte = pro_high).filter(protein__gte = pro_low)
-        if len(table_1) == 0:
-                return HttpResponse("No recipe meets your input.")
-	table_2 = table_1.filter(fat__lte = fat_high).filter(fat__lte = fat_low)
-	if len(table_2) == 0:
-                return HttpResponse("No recipe meets your input.")
-        
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
 
-	tid = tag_table[0].id
-        con_table = contain_tag.objects.filter(t_id = tid)
-        nl = [tag.r_id.name for tag in con_table]
-        re_table = Recipes.objects.filter(name__in = nl).order_by("rating")[:10]
-        in_table = Ingredient.objects.filter(name__in = nl)
-        if len(re_table) + len(in_table) == 0:
-            return HttpResponse("No other recipe found.")
-        return render(request, "user_recipes.html", {"in_table":in_table, "re_table":re_table, "usr":False})
+	elif lunch == 0.0 and breakfast != 0.0 and dinner != 0.0:
+                break_cal = cal * (breakfast / (breakfast + dinner))
+                dinner_cal = cal - break_cal
+                break_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).order_by("rating")[:10]
+                break_id = [b.rid for b in break_table]
+                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = break_id).order_by("rating")[:10]
+                lunch_table = []
+                
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	elif dinner == 0.0 and breakfast != 0.0 and lunch != 0.0:
+                lunch_cal = cal * (lunch / (lunch + breakfast))
+                break_cal = cal - lunch_cal
+                lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).order_by("rating")[:10]
+                lunch_id = [l.rid for l in lunch_table]
+		breakfast_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).exclude(rid__in = lunch_id).order_by("rating")[:10]
+                dinner_table = []
+                
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	elif breakfast != 0.0 and lunch == 0.0 and dinner == 0.0:
+                lunch_table = []
+                dinner_table = []
+                break_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+		
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	elif lunch != 0.0 and breakfast == 0.0 and dinner == 0.0:
+                break_table = []
+                dinner_table = []
+                lunch_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+		
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+                return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	elif lunch == 0.0 and breakfast == 0.0 and dinner != 0.0:
+                break_table = []
+                lunch_table = []
+                dinner_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+                return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+	
+	else:
+		#everything is filled in
+		break_cal = cal * (breakfast / (breakfast + lunch + dinner))
+		lunch_cal = cal * (lunch / (breakfast + lunch + dinner))
+		dinner_cal = cal - lunch_cal - break_cal
+		assert(dinner_cal >= 0)
+		break_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).order_by("rating")[:10]
+		break_id = [b.rid for b in break_table]
+		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).exclude(rid__in = break_id).order_by("rating")[:10]
+		lunch_id = [l.rid for l in lunch_table]
+                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = lunch_id)[:10]
+		
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+                        error_message = "Sorry, no recipe matches to your input. please try another one."
+                        return render(request, 'error.html', {"error_message": error_message})
+		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
+
     else:
         return render(request, 'search.html')
 
-'''
+
 
 
 def show_ingredient(request):
