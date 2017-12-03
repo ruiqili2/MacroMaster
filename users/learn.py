@@ -4,41 +4,54 @@ from django.utils import timezone
 import datetime
 from models import UserProfile
 
-def cal_distance(tags1, tags2):
+def cal_distance(tags1, tags2, diction):
     diff = 0
+    factor = 1
     for tag in tags1:
         if tag in tags2:
-        	continue
+            factor = factor * diction[tag]
+            continue
         else:
-        	diff += 1
-    diff += len(tags2) - diff
-    return diff
+            diff += 1
+    if len(tags2) > (len(tags1) - diff):
+        diff += len(tags2) - len(tags1) + diff
+    return diff * 1.0 / factor
+
+
 
 def recommend_engine(favorites_recipes, time_tag, user):
     diction = {}
+    w_diction = {}
     favorites = [fr.r_id for fr in favorites_recipes]
     for recipe in favorites:
 	ct = contain_tag.objects.filter(r_id = recipe)
-	diction[recipe] = list(set([t.t_id for t in ct]))
+        tag_list = list(set([t.t_id for t in ct]))
+	diction[recipe] = tag_list
+        for tag in tag_list:
+            if not tag in w_diction:
+                w_diction[tag] = 1
+            else:
+                w_diction[tag] += 1
     print("...created tags dictionay...")
     all_recipe = Recipes.objects.all()
     result_list = []
     print("...fetched all recipe...")
-    print(len(all_recipe))
     for target in all_recipe:
         if target not in favorites:
-	    total = 0
-	    ct = contain_tag.objects.filter(r_id = target)
-	    tags2 = list(set([t.t_id for t in ct]))
+            if target.creator == user.username:
+                continue
+            total = 0
+            ct = contain_tag.objects.filter(r_id = target)
+            tags2 = list(set([t.t_id for t in ct]))
             if len(tags2) == 0:
                 continue
-	    for key, val in diction.items():
-	        total += cal_distance(val, tags2)
+            for key, val in diction.items():
+                total += cal_distance(val, tags2, w_diction)
                 if total > 50:
                     break
-	    if total > 50:
+            if total > 50:
                 continue
-	    result_list.append((total, target))
+        result_list.append((total, target))
     print("...finished calculation...")
     sorted_list = sorted(result_list, key=lambda tup:tup[0])
     print sorted_list[:10]

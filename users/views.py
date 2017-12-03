@@ -22,9 +22,7 @@ def get_user_home(request):
     except ObjectDoesNotExist:
         pf = UserProfile(user = cur)
         pf.save()
-    txt = '/pictures/UserPhoto'
-    context = {'avatar': txt}
-    return render(request, "user_home.html", context)
+    return render(request, "user_home.html")
 
 def signup(request):
     if request.method == 'POST':
