@@ -1,9 +1,12 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
 
     <div class="jumbotron" id="home-container">
-        {% if user.is_authenticated  %}
+	<video playsinline autoplay muted loop id="bgvid">
+		<source src="{% static "videos/welcome2.mp4" %}" type="video/mp4">	
+	</video> 
+	{% if user.is_authenticated  %}
         <h1>
             欢迎, {{user.username}}.
         </h1>
@@ -24,11 +27,24 @@
         </p>
         {% endif %}
 
-
-
-
-
-        
-
     </div>
+
+<style>
+	video#bgvid { 
+	    position: fixed;
+	    top: 50%;
+	    left: 50%;
+	    min-width: 100%;
+	    min-height: 100%;
+	    width: auto;
+	    height: auto;
+	    z-index: -100;
+	    -ms-transform: translateX(-50%) translateY(-50%);
+	    -moz-transform: translateX(-50%) translateY(-50%);
+	    -webkit-transform: translateX(-50%) translateY(-50%);
+	    transform: translateX(-50%) translateY(-50%);
+	    background: url(polina.jpg) no-repeat;
+	    background-size: cover; 
+	}
+</style>
 {% endblock content %}
