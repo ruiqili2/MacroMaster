@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from schema.models import *
 from django.shortcuts import render, redirect
 
-def macro_recommend(cal, breakfast, lunch, dinner, break_table, lunch_table, dinner_tablei, request):
+def macro_recommend(cal, breakfast, lunch, dinner, break_table, lunch_table, dinner_table, request):
 	if cal == 0.0:
 		break_table += Recipes.objects.filter(calories = cal).order_by("rating")[:3]
 		break_id = [b.rid for b in break_table]

@@ -82,9 +82,11 @@ def go_to_change_page(request):
     recipeID = recipeID.replace("-", "")
     recipe = Recipes.objects.get(rid = recipeID)
     instructions = Recipes_detail.objects.get(r_id = recipe)
-    tags = Recipes_tag.objects.all()
+    result = contain_tag.objects.filter(r_id = recipe)
+    old_tags = [item.t_id.detail for item in result]
+    new_tags = Recipes_tag.objects.all()
 
-    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions, 'tags': tags})
+    return render(request, 'change_recipe.html', {'rname':rname, 'recipeID':recipeID, 'recipe' : recipe, 'instructions':instructions.instructions, 'old_tags': old_tags, 'new_tags': new_tags})
 
 def change_my_recipe(request):
     rid = request.POST.get('recipeID')

@@ -20,10 +20,16 @@
 			Instructions:
 			<textarea name="message" required="required" rows="10" cols="50">{{instructions}}</textarea>
 			<br>
-			Tags:
-			{% for tag in tags %}
-                	        <input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}}<br>
-                        <!-- <option value="{{tag.id}}"> {{tag.detail}}</option>-->
+			
+
+			Old tags:
+			{%for value in old_tags %}
+				<button class="btn btn-default disabled">{{value}}</button>
+                	{%endfor%}
+			<br>	
+			New Tags:
+			{% for tag in new_tags %}
+                	        <input name="tag_id[]" type="checkbox" value="{{tag.id}}" {% if tag.detail in old_tags %} checked="checked" {% endif %}> {{tag.detail}}<br>
         	        {% endfor %}
 		
 			<input class="btn btn-default" name="type" type="submit" value="change recipe">
