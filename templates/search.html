@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <div class="jumbotron">
 	<p>Looking for some delicious recipes?</p>
@@ -22,9 +23,9 @@
         </form>
 
 	<p>Have a calories goal? Type in your calories consumption and ideal ratio for three meals!</p>
-        <form class="form-inline" method="POST" action="../result_macro/">
+        <form method="POST" action="../result_macro/">
                 {% csrf_token %}
-                <div class="form-group">
+                <div style="display: flex !important;" class="form-group">
                         <input class="form-control" type="text" name="cal"> = 
 			<input class="form-control" type="text" name="breakfast">:
 			<input class="form-control" type="text" name="lunch">:
@@ -38,4 +39,20 @@
 
 
 </div>
+        <script src="{% static 'styles/main.js' %}"></script>
+
+	<style>
+        .flex-container {
+		display: flex !important;
+		flex-wrap: wrap;
+	}
+	.flex-container::after {
+		content: '';
+	  	width: 100%;
+	}
+	.flex-item: nth-child(n + 6){ /* or `:nth-child(n + 4)` */
+		order: 1;
+	}
+	</style>
 {% endblock content %}
+

@@ -92,13 +92,15 @@ def get_list_macro(request):
 	lunch = float(request.POST.get('lunch', None))
 	dinner = float(request.POST.get('dinner', None))
 	if cal == 0.0:
-		break_table = Recipes.objects.filter(calories = cal).order_by("rating")[0]
-		lunch_table = Recipes.objects.filter(calories = cal).order_by("rating")[1]
-		dinner_table = Recipes.objects.filter(calories = cal).order_by("rating")[2]
+		break_table = Recipes.objects.filter(calories = cal).order_by("rating")[:3]
+		break_id = [b.rid for b in break_table]
+		lunch_table = Recipes.objects.filter(calories = cal).order_by("rating").exclude(rid__in = break_id)[:3]
+		lunch_id = [l.rid for l in lunch_table]
+		dinner_table = Recipes.objects.filter(calories = cal).order_by("rating").exclude(rid__in = lunch_id)[:3]
 		
-		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
+		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:	
                         error_message = "Sorry, no recipe matches to your input. please try another one."
-                        return render(request, 'error.html', {"error_message": error_message})
+                	return render(request, 'error.html', {"error_message": error_message})
 		return render(request, "user_macro_recipes.html", {"break_table":break_table, "lunch_table":lunch_table, "dinner_table": dinner_table, "usr":False})
 	
 	elif breakfast + lunch + dinner != 10:
@@ -108,9 +110,9 @@ def get_list_macro(request):
 	elif breakfast == 0.0 and lunch != 0.0 and dinner != 0.0:
 		lunch_cal = cal * (lunch / (lunch + dinner))
 		dinner_cal = cal - lunch_cal
-		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).order_by("rating")[:10]
+		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 5).filter(calories__gte = lunch_cal - 5).order_by("rating")[:10]
                 lunch_id = [l.rid for l in lunch_table]
-		dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = lunch_id).order_by("rating")[:10]
+		dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 5).filter(calories__gte = dinner_cal - 5).exclude(rid__in = lunch_id).order_by("rating")[:10]
 		break_table = []
 		
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
@@ -122,9 +124,9 @@ def get_list_macro(request):
 	elif lunch == 0.0 and breakfast != 0.0 and dinner != 0.0:
                 break_cal = cal * (breakfast / (breakfast + dinner))
                 dinner_cal = cal - break_cal
-                break_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).order_by("rating")[:10]
+                break_table = Recipes.objects.filter(calories__lte = break_cal + 5).filter(calories__gte = break_cal - 5).order_by("rating")[:10]
                 break_id = [b.rid for b in break_table]
-                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = break_id).order_by("rating")[:10]
+                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 5).filter(calories__gte = dinner_cal - 5).exclude(rid__in = break_id).order_by("rating")[:10]
                 lunch_table = []
                 
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
@@ -136,9 +138,9 @@ def get_list_macro(request):
 	elif dinner == 0.0 and breakfast != 0.0 and lunch != 0.0:
                 lunch_cal = cal * (lunch / (lunch + breakfast))
                 break_cal = cal - lunch_cal
-                lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).order_by("rating")[:10]
+                lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 5).filter(calories__gte = lunch_cal - 5).order_by("rating")[:10]
                 lunch_id = [l.rid for l in lunch_table]
-		breakfast_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).exclude(rid__in = lunch_id).order_by("rating")[:10]
+		breakfast_table = Recipes.objects.filter(calories__lte = break_cal + 5).filter(calories__gte = break_cal - 5).exclude(rid__in = lunch_id).order_by("rating")[:10]
                 dinner_table = []
                 
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
@@ -149,7 +151,7 @@ def get_list_macro(request):
 	elif breakfast != 0.0 and lunch == 0.0 and dinner == 0.0:
                 lunch_table = []
                 dinner_table = []
-                break_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+                break_table = Recipes.objects.filter(calories__lte = cal + 5).filter(calories__gte = cal - 5).order_by("rating")[:10]
 		
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
                         error_message = "Sorry, no recipe matches to your input. please try another one."
@@ -159,7 +161,7 @@ def get_list_macro(request):
 	elif lunch != 0.0 and breakfast == 0.0 and dinner == 0.0:
                 break_table = []
                 dinner_table = []
-                lunch_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+                lunch_table = Recipes.objects.filter(calories__lte = cal + 5).filter(calories__gte = cal - 5).order_by("rating")[:10]
 		
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
                         error_message = "Sorry, no recipe matches to your input. please try another one."
@@ -169,7 +171,7 @@ def get_list_macro(request):
 	elif lunch == 0.0 and breakfast == 0.0 and dinner != 0.0:
                 break_table = []
                 lunch_table = []
-                dinner_table = Recipes.objects.filter(calories__lte = cal + 10).filter(calories__gte = cal - 10).order_by("rating")[:10]
+                dinner_table = Recipes.objects.filter(calories__lte = cal + 5).filter(calories__gte = cal - 5).order_by("rating")[:10]
 
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
                         error_message = "Sorry, no recipe matches to your input. please try another one."
@@ -182,11 +184,11 @@ def get_list_macro(request):
 		lunch_cal = cal * (lunch / (breakfast + lunch + dinner))
 		dinner_cal = cal - lunch_cal - break_cal
 		assert(dinner_cal >= 0)
-		break_table = Recipes.objects.filter(calories__lte = break_cal + 10).filter(calories__gte = break_cal - 10).order_by("rating")[:10]
+		break_table = Recipes.objects.filter(calories__lte = break_cal + 5).filter(calories__gte = break_cal - 5).order_by("rating")[:10]
 		break_id = [b.rid for b in break_table]
-		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 10).filter(calories__gte = lunch_cal - 10).exclude(rid__in = break_id).order_by("rating")[:10]
+		lunch_table = Recipes.objects.filter(calories__lte = lunch_cal + 5).filter(calories__gte = lunch_cal - 5).exclude(rid__in = break_id).order_by("rating")[:10]
 		lunch_id = [l.rid for l in lunch_table]
-                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 10).filter(calories__gte = dinner_cal - 10).exclude(rid__in = lunch_id)[:10]
+                dinner_table = Recipes.objects.filter(calories__lte = dinner_cal + 5).filter(calories__gte = dinner_cal - 5).exclude(rid__in = lunch_id)[:10]
 		
 		if len(break_table) + len(lunch_table) + len(dinner_table) == 0:
                         error_message = "Sorry, no recipe matches to your input. please try another one."
