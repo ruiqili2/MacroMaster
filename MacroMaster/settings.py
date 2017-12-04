@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'New.apps.NewConfig',
-    'schema',
-    'polls',
-    'users',
-    'django_tables2',
-    'hitcount',
+     #'New.apps.NewConfig',
+     'django_social_share',
+     'schema',
+     'polls',
+     'users',
+     'django_tables2',
+     'hitcount',
 ]
 
 MIDDLEWARE = [

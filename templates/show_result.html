@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load hitcount_tags %}
+{% load social_share %}
 {% block content%}
 <div>
     <h1>
@@ -151,6 +152,15 @@
         
         <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
     </form>
+    <div style="display: inline;">
+
+   	 <button class="btn btn-default">{% post_to_facebook object_or_url "Post to Facebook!" %}</button>
+   	 <button class="btn btn-default"> {% post_to_twitter "Nice recipe: {{name}}. Check it out!" object_or_url "Post to Twitter" %}</button>
+   	 <button class="btn btn-default"> {% post_to_gplus object_or_url "Post to Google+!" %}</button>
+   	 <button class="btn btn-default"> {% post_to_linkedin name object_or_url "Post to LinkedIn" %}</button>
+   	 <button class="btn btn-default"> {% send_email name "Nice recipe: {{name}}. Check it out!" object_or_url "Share via email" %}</button>
+   	 <button class="btn btn-default"> {% post_to_reddit "Nice recipe: {{name}}" %}</button> 
+    </div>
 </div>
 
 
