@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+	<video playsinline autoplay muted id="bgvid">
+                <source src="{% static "videos/trial3.mp4" %}" type="video/mp4"> 
+        </video>
 
     <div class="jumbotron" id="home-container">
-	<video playsinline autoplay muted id="bgvid">
-		<source src="{% static "videos/trial3.mp4" %}" type="video/mp4">	
-	</video> 
 	{% if user.is_authenticated  %}
         <h1>
             欢迎, {{user.username}}.
