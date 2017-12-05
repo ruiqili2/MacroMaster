@@ -13,6 +13,7 @@ import wikipedia
 import math
 from macro import macro_recommend
 from hitcount.views import HitCountDetailView
+from django_select2.forms import Select2MultipleWidget
 
 class RecipesCountHitDetailView(HitCountDetailView):
     model = Recipes
@@ -30,6 +31,7 @@ class IngreTable(tables.Table):
 class MealTable(tables.Table):
     class Meta:
         model =  Meals
+
 
 
 def index(request):

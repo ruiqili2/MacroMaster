@@ -9,161 +9,182 @@
     </h1>
 </div>
 {% if user.is_authenticated  %}
-    <div class="jumbotron">
-            <div>
-                <div class="four-cols">
-                    <div class="four-cols-left">
-                        <img src='{% static "images/carb.png" %}'/>
-                    </div>
-		    <div class="four-cols-left">
-                        <img src='{% static "images/pro.png" %}'/>
-                    </div>
-                    <div class="four-cols-left">
-                        <img src='{% static "images/cal.png" %}'/>
-                    </div>
-                    <div class="four-cols-left">
-                        <img src='{% static "images/oil.png" %}'/>
-                    </div>
-                    <div class="four-cols-left">
-                        <img src='{% static "images/salt.png" %}'/>
-                    </div>
-	
-                </div>
-
-                <div class="four-cols">
-                    {%for key, value in table.items %}
-                    <div class="four-cols-left">
-                        <h3>{{key}} : {{value}}</h3>
-                    </div>
-                    {%endfor%}
-                </div>
+<div class="jumbotron">
+    <div>
+        <div class="four-cols">
+            <div class="four-cols-left">
+                <img src='{% static "images/carb.png" %}'/>
             </div>
-        <p>
-            {% if myFavorites != True %}
-                <form method='POST' action='../../accounts/user/add_to_my_favorite/'>
-                    {% csrf_token %}
-                    <input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
-                    <input name ='recipeName' type = 'hidden' value = '{{name}}'>
-                    <input name='recipeID' type='hidden'value={{recipeID}}>
-                </form>
-                {%else %}
-                My Favorite Dish
-                <form method='POST' action='../../accounts/user/del_from_my_favorite/'>
-                    {% csrf_token %}
-                    <input class="btn btn-primary" type='submit', value='Not any more'>
-                    <input name ='recipeName' type = 'hidden' value = '{{name}}'>
-                    <input name='recipeID' type='hidden'value={{recipeID}}>
-                </form>
-                {%endif%}
-            </p>
-            {%endif%}
-            <div>
-                <div class="star-ratings">
-                    <div class="star-ratings top" style="width: {{rating_w}};"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                    <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                </div>
-                <div id="rating-avg">Average Rating: {{rating_display}} </div>
-<!--
-                <form class="form-inline" method="post" action="../../accounts/user/rating">
-                    {% csrf_token %}
-                    <div class='user-rating'>
-                        <div class="star-ratings mutable inline">
-                            <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                            <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                        </div>
-                        <input name='recipeID' type='hidden' value={{recipeID}}>
-                        <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
-                        <input class="btn btn-default inline" type='submit', value='Rate this recipe!'>
-                    </div>
-                </form>
--->
+            <div class="four-cols-left">
+                <img src='{% static "images/pro.png" %}'/>
             </div>
-            <div>
-                Total hit is : {{hit_count}}
+            <div class="four-cols-left">
+                <img src='{% static "images/cal.png" %}'/>
             </div>
-            <div>
-                {% if user.is_authenticated  %}
-                    <form method='POST' action='../../recipe/detail'>
-                        {% csrf_token %}
-                        <input class="btn btn-info" type='submit' value='Check how to cook it'>
-                        <input name = 'recipeName' type = "hidden" value = '{{name}}'>
-                        <input name='recipeID' type='hidden'value={{recipeID}}>
-                    </form>
-                {% else %}
-                    <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
-                {% endif %}
+            <div class="four-cols-left">
+                <img src='{% static "images/oil.png" %}'/>
             </div>
-            <div>
-		<form method='POST' action="../result_tag/">
-                {% csrf_token %}
-		Tags on this recipe:
-                {%for value in tags %}
-			<input class="btn btn-default" type='submit' value='{{value}}'>
-                	<input name = 'tag_name' type = "hidden" value = '{{value}}'>
-
-                <!-- <br> -->
-                {%endfor%}
-		</form>
+            <div class="four-cols-left">
+                <img src='{% static "images/salt.png" %}'/>
             </div>
-            {%if user.username == creator %}
-            <p>
-                <form method='POST' action='../../accounts/user/change_page'>
-                    {% csrf_token %}
-                    <input class="btn btn-default" name='botton' type='submit', value='change'>
-                    <input name = 'recipeName2' type = "hidden" value = {{name}}>
-                    <input name='recipeID' type='hidden'value={{recipeID}}>
-                </form>
-            </p>
-            <p>
-                <form method='POST' action='../../accounts/user/delete'>
-                    {% csrf_token %}
-                    <input name='recipeID' type='hidden'value={{recipeID}}>
-                    <input class="btn btn-default" name='botton' type='submit' value='delete'>
-                    <input name='recipeName2' type="hidden" value = {{name}}>
-                </form>
-            </p>
-            {%endif%}
+            
         </div>
-
-<div>
-    Comments on this recipe:
-    {% for comment in comments %}
-        <p>
-        {{comment.comment}}
+        <div class="four-cols">
+            {%for key, value in table.items %}
+            <div class="four-cols-left">
+                <h3>{{key}} : {{value}}</h3>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    <p>
+        {% if myFavorites != True %}
+            <form method='POST' action='../../accounts/user/add_to_my_favorite/'>
+                {% csrf_token %}
+                <input class="btn btn-primary" type='submit', value='Add to My Favoite !'>
+                <input name ='recipeName' type = 'hidden' value = '{{name}}'>
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+            </form>
+            {%else %}
+            My Favorite Dish
+            <form method='POST' action='../../accounts/user/del_from_my_favorite/'>
+                {% csrf_token %}
+                <input class="btn btn-primary" type='submit', value='Not any more'>
+                <input name ='recipeName' type = 'hidden' value = '{{name}}'>
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+            </form>
+            {%endif%}
         </p>
-    {%endfor%}
-</div>
-
-<div>
-    Make a comment!
-    <form class="form-inline" method='POST' action='../../accounts/user/comment/'>
-        {% csrf_token %}
-        <div class='user-rating'>
-            <div class="star-ratings mutable inline">
-                <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        {%endif%}
+        <div>
+            <div class="star-ratings">
+                <div class="star-ratings top" style="width: {{rating_w}};"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
                 <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
             </div>
-            <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+            <div id="rating-avg">Average Rating: {{rating_display}} </div>
+            <!--
+            <form class="form-inline" method="post" action="../../accounts/user/rating">
+                {% csrf_token %}
+                <div class='user-rating'>
+                    <div class="star-ratings mutable inline">
+                        <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    </div>
+                    <input name='recipeID' type='hidden' value={{recipeID}}>
+                    <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+                    <input class="btn btn-default inline" type='submit', value='Rate this recipe!'>
+                </div>
+            </form>
+            -->
         </div>
-        
-        <textarea name="comment_txt" required="required" rows="10" cols="50">comment here</textarea>
-        
-        <input name='recipeID' type='hidden'value={{recipeID}}>
-        
-        <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
-    </form>
-    <br>
-    <div style="display: inline;">
-
-   	 <button class="btn btn-default"> {% post_to_facebook object_or_url "Post to Facebook!" %}</button>
-   	 <button class="btn btn-default"> {% post_to_twitter "Nice recipe: {{name}}. Check it out!" object_or_url "Post to Twitter" %}</button>
-   	 <button class="btn btn-default"> {% post_to_gplus object_or_url "Post to Google+!" %}</button>
-   	 <button class="btn btn-default"> {% post_to_linkedin name object_or_url "Post to LinkedIn" %}</button>
-   	 <button class="btn btn-default"> {% send_email name "Nice recipe: {{name}}. Check it out!" object_or_url "Share via email" %}</button>
-   	 <button class="btn btn-default"> {% post_to_reddit "Nice recipe: {{name}}" %}</button> 
+        <div>
+            Total hit is : {{hit_count}}
+        </div>
+        <div>
+            {% if user.is_authenticated  %}
+                <form method='POST' action='../../recipe/detail'>
+                    {% csrf_token %}
+                    <input class="btn btn-info" type='submit' value='Check how to cook it'>
+                    <input name = 'recipeName' type = "hidden" value = '{{name}}'>
+                    <input name='recipeID' type='hidden'value={{recipeID}}>
+                </form>
+            {% else %}
+                <a  href="{% url 'user_login' %}">Log in</a> to check how to cook it!
+            {% endif %}
+        </div>
+        <div>
+            <form method='POST' action="../result_tag/">
+                {% csrf_token %}
+                Tags on this recipe:
+                {%for value in tags %}
+                <input class="btn btn-default" type='submit' value='{{value}}'>
+                <input name = 'tag_name' type = "hidden" value = '{{value}}'>
+                <!-- <br> -->
+                {%endfor%}
+            </form>
+        </div>
+        {%if user.username == creator %}
+        <p>
+            <form method='POST' action='../../accounts/user/change_page'>
+                {% csrf_token %}
+                <input class="btn btn-default" name='botton' type='submit', value='change'>
+                <input name = 'recipeName2' type = "hidden" value = {{name}}>
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+            </form>
+        </p>
+        <p>
+            <form method='POST' action='../../accounts/user/delete'>
+                {% csrf_token %}
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+                <input class="btn btn-default" name='botton' type='submit' value='delete'>
+                <input name='recipeName2' type="hidden" value = {{name}}>
+            </form>
+        </p>
+        {%endif%}
+        <div>
+        Comments on this recipe:
+        {% for comment in comments %}
+            <p>
+                {{comment.comment}}
+            </p>
+            {%endfor%}
+        </div>
     </div>
-</div>
 
+    <div class="jumbotron">
+        <div>
+            <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#commentModal">Make a comment!</button> -->
+            Make a comment:
+            <form class="form-inline" method='POST' action='../../accounts/user/comment/'>
+                {% csrf_token %}
+                <div class='user-rating'>
+                    <div class="star-ratings mutable inline">
+                        <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                        <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    </div>
+                    <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+                </div>
+                
+                <textarea name="comment_txt" required="required" rows="10" cols="50" placeholder="Please enter comment here"></textarea>
+                <br>
+                <input name='recipeID' type='hidden'value={{recipeID}}>
+                <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
+            </form>
+            <!-- <br> -->
+        </div>
+        <div style="display: inline;">
+            <button class="btn btn-default"> {% post_to_facebook object_or_url "Post to Facebook!" %}</button>
+            <button class="btn btn-default"> {% post_to_twitter "Nice recipe: {{name}}. Check it out!" object_or_url "Post to Twitter" %}</button>
+            <button class="btn btn-default"> {% post_to_gplus object_or_url "Post to Google+!" %}</button>
+            <button class="btn btn-default"> {% post_to_linkedin name object_or_url "Post to LinkedIn" %}</button>
+            <button class="btn btn-default"> {% send_email name "Nice recipe: {{name}}. Check it out!" object_or_url "Share via email" %}</button>
+            <button class="btn btn-default"> {% post_to_reddit "Nice recipe: {{name}}" %}</button>
+        </div>
+    </div>
+<!--     <div id="commentModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-inline" method='POST' action='../../accounts/user/comment/'>
+                        {% csrf_token %}
+                        <div class='user-rating'>
+                            <div class="star-ratings mutable inline">
+                                <div class="star-ratings top mutable": style="width: 0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                                <div class="star-ratings bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                            </div>
+                            <input id="rating-user" type="hidden" name="rating-user" value=0 min_value=0 max_value=10 readonly='readonly'>
+                        </div>
+                        
+                        <textarea name="comment_txt" required="required" rows="10" cols="50" placeholder="Please enter comment here"></textarea>
+                        <br>
+                        <input name='recipeID' type='hidden'value={{recipeID}}>
+                        <input class="btn btn-default inline" type='submit', value='Comment this recipe!'>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    
 
         <script src="{% static 'styles/main.js' %}"></script>
         <style>
