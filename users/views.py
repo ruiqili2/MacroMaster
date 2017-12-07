@@ -166,7 +166,7 @@ def comment(request):
     comment_txt = request.POST.get("comment_txt")
     rating = request.POST.get("rating-user")
     print "\n\n\n", rating, "\n\n\n"
-    
+    rating = round(float(rating), 3) 
     recipeID = request.POST.get("recipeID")
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
