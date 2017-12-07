@@ -23,19 +23,18 @@
         <br>
 
         You can add some tags to your recipes here (Press Ctrl to select multiple tags):<br>
-        <!--<input name="tags" type="text"><br>
-        <p>Please seperate tags using comma.</p>-->
-	
-	<!--<select name="tag_id" multiple>-->
+	<select multiple="multiple" id="tag_id" name="tag_id[]" size="10">
 		{% for tag in tags %}
-			<input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}}
-			<!-- <option value="{{tag.id}}"> {{tag.detail}}</option>-->
+			<option value="{{tag.id}}">{{tag.detail}}</option>
 		{% endfor %}
-	<!--</select>-->
-
+	</select>
 	<input class="btn btn-primary" name="type" type="submit" value="add recipe">
 
 	</form>
 	</p>
 
+<script>
+	$('select[name="tag_id[]"]').multiSelect();
+
+</script>
 {% endblock content %}
