@@ -365,6 +365,11 @@ CREATE PROCEDURE sp_updateRecipeDetail
     END;
 //
 
+ALTER TABLE Recipes ADD INDEX idx_recipes_cal (calories DESC)
+ALTER TABLE Recipes ADD INDEX idx_recipes_rat (rating DESC)
+ALTER TABLE Recipes ADD FULLTEXT ftxt_recipes_name (name)
+
+
 
 
 
