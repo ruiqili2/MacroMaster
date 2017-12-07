@@ -141,7 +141,16 @@ def rate_recipe(request):
     recipeID = request.POST.get('recipeID')
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
+    query = """  SELECT rating, rating_num INTO @current, @current_NUM
+               FROM schema_recipes
+               WHERE rid = %s;
+               
+               SET @new = (@current * @current_NUM + new_rating) / (@current_NUM + 1);
+
+               UPDATE schema_recipes
+               SET rating = @new, rating_num = @current_NUM + 1
+               WHERE rid = recipeID;"""
+    cursor.execute(query, [recipeID])
     cursor.close()
     return render(request, 'success.html')
 
@@ -166,7 +175,17 @@ def comment(request):
     recipeID = request.POST.get("recipeID")
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
-    cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
+    #cursor.callproc('sp_updateRecipesRating', [recipeID, rating,])
+    query = """  SELECT rating, rating_num INTO @current, @current_NUM
+        FROM schema_recipes
+        WHERE rid = %s;
+        
+        SET @new = (@current * @current_NUM + new_rating) / (@current_NUM + 1);
+        
+        UPDATE schema_recipes
+        SET rating = @new, rating_num = @current_NUM + 1
+        WHERE rid = recipeID;"""
+    cursor.execute(query, [recipeID])
     cursor.close()
     recipe = Recipes.objects.get(rid = recipeID)
     new_comment = Recipes_Comment(user = user, recipe = recipe, rating = rating, comment = comment_txt)
