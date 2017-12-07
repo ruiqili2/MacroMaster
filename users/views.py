@@ -160,10 +160,13 @@ def edit_profile(request):
     return render(request, 'success.html')
 
 def comment(request):
+    if request.method == 'GET':
+	return
     user = request.user
     comment_txt = request.POST.get("comment_txt")
     rating = request.POST.get("rating-user")
-    rating
+    print "\n\n\n", rating, "\n\n\n"
+    
     recipeID = request.POST.get("recipeID")
     recipeID = recipeID.replace("-", "")
     cursor = connection.cursor()
