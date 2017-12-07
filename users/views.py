@@ -184,8 +184,8 @@ def comment(request):
         
         UPDATE schema_recipes
         SET rating = @new, rating_num = @current_NUM + 1
-        WHERE rid = recipeID;"""
-    cursor.execute(query, [recipeID, rating])
+        WHERE rid = %s;"""
+    cursor.execute(query, [recipeID, rating, recipeID])
     cursor.close()
     recipe = Recipes.objects.get(rid = recipeID)
     new_comment = Recipes_Comment(user = user, recipe = recipe, rating = rating, comment = comment_txt)
