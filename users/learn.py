@@ -27,14 +27,15 @@ def recommend_engine(favorites_recipes, time_tag, user):
     for recipe in favorites:
         ct = contain_tag.objects.filter(r_id = recipe)
         tag_list = list(set([t.t_id for t in ct]))
-        big_list = list(set(big_list.append(tag_list)))
         diction[recipe] = tag_list
         for tag in tag_list:
+            big_list.append(tag)
             if not tag in w_diction:
                 w_diction[tag] = 1
             else:
                 w_diction[tag] += 1
     print("...created tags dictionay...")
+    big_list = list(set(big_list))
     all_poss = contain_tag.objects.filter(t_id__in = big_list)
     all_recipe = set([ct.r_id for ct in all_poss])
     result_list = []
