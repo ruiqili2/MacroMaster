@@ -127,9 +127,15 @@
         </div>
         {% for comment in comments %}
             <div class="commentItem">
-                {{comment.user}}: {{comment.comment}}
+                {{comment.user}}
+                <div class="star-ratings cmt" style="text-align: left; margin: 0; display:inline-block;">
+                    <div class="star-ratings top cmt" rating={{comment.rating}}><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                    <div class="star-ratings bottom cmt"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+                </div>
+                <br>
+                "{{comment.comment}}"
             </div>
-            {%endfor%}
+        {%endfor%}
         </div>
     </div>
 
@@ -190,6 +196,13 @@
     
 
         <script src="{% static 'styles/main.js' %}"></script>
+        <script>
+            let comments = document.querySelectorAll(".star-ratings.cmt");
+            comments.forEach(function(curr, index) {
+                curr.style.width = String(curr.getAttribute('rating')) * 10 + "%";
+                console.log("width of stars",curr.style.width);
+            });
+        </script>
         <style>
             .commentItem {
                 border-bottom: 1px solid #ccc;  

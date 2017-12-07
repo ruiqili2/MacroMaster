@@ -1,59 +1,89 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="jumbotron">
-	<p>Looking for some delicious recipes?</p>
-	<form class="form-inline" method="POST" action="../result/">
-		{% csrf_token %}
-		<div class="form-group">
-			<input class="form-control" type="text" name="recipe_name">
-			<input name="onlyRecipe" type="hidden" value=False>
-			<button class="btn btn-primary" type="submit">Go Recipes!!</button>
+	<div class="jumbotron">
+		<p>Looking for some delicious recipes?</p>
+		<form class="form-inline" method="POST" action="../result/">
+			{% csrf_token %}
+			<div class="form-group">
+				<input class="form-control" type="text" name="recipe_name">
+				<input name="onlyRecipe" type="hidden" value=False>
+				<button class="btn btn-primary" type="submit">Go Recipes!!</button>
+			</div>
+		</form>
+		<p>Couldn't remember the name? Try search the tags!</p>
+		<form class="form-inline" method="POST" action="../result_tag/">
+			{% csrf_token %}
+			<div class="form-group">
+				<input class="form-control" type="text" name="tag_name">
+				<input name="onlyTag" type="hidden" value=False>
+				<button class="btn btn-primary" type="submit">Go Tags!!</button>
+			</div>
+		</form>
+		<p>Have a calories goal? Type in your calories consumption and ideal ratio for three meals (ratio sum to 10)!</p>
+
+		<div class="four-cols">
+			<div class="four-cols-left">
+				Total Calories
+			</div>
+			<div class="four-cols-left">
+				Breakfast
+			</div>
+			<div class="four-cols-left">
+				Lunch
+			</div>
+			<div class="four-cols-left">
+				Dinner
+			</div>
 		</div>
-	</form>
 
-	<p>Couldn't remember the name? Try search the tags!</p>
-	<form class="form-inline" method="POST" action="../result_tag/">
-                {% csrf_token %}
-                <div class="form-group">
-                        <input class="form-control" type="text" name="tag_name">
-                        <input name="onlyTag" type="hidden" value=False>
-                        <button class="btn btn-primary" type="submit">Go Tags!!</button>
-                </div>
-        </form>
-
-	<p>Have a calories goal? Type in your calories consumption and ideal ratio for three meals!</p>
-        <form method="POST" action="../result_macro/">
-                {% csrf_token %}
-
-                <div style="display: flex !important;" class="form-group">
-                        <input class="form-control" type="text" name="cal"> = 
-			<input class="form-control" type="text" name="breakfast">:
-			<input class="form-control" type="text" name="lunch">:
-			<input class="form-control" type="text" name="dinner">
-                        <input name="onlyMacro" type="hidden" value=False>
-                        <button class="btn btn-primary" type="submit">Go Macro!!</button>
-                </div>
-        </form>
-
-	<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
-
-
-</div>
-        <script src="{% static 'styles/main.js' %}"></script>
-
+		<form method="POST" action="../result_macro/">
+			{% csrf_token %}
+			<div class="four-cols">
+				<div class="four-cols-left">
+					<input class="form-control" type="text" name="cal">
+				</div>
+				<div class="four-cols-left">
+					<input class="form-control" type="text" name="breakfast">
+				</div>
+				<div class="four-cols-left">
+					<input class="form-control" type="text" name="lunch">
+				</div>
+				<div class="four-cols-left">
+					<input class="form-control" type="text" name="dinner">
+				</div>
+				<input name="onlyMacro" type="hidden" value=False>
+				<button class="btn btn-primary" type="submit">Go Macro!!</button>
+			</div>
+		</form>
+		<p>Couldn't find what you are looking for? Be a hero and add it <a href="{%url 'add something'%}">here</a></p>
+	</div>
+	<script src="{% static 'styles/main.js' %}"></script>
 	<style>
-        .flex-container {
+	.four-cols {
+	margin: 0;
+	/*height: 100px;*/
+	width: 100%;
+	position: relative;
+	}
+	.four-cols-left {
+	height: 100% !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	float: left !important;
+	width: 25% !important;
+	}
+	/*        .flex-container {
 		display: flex !important;
 		flex-wrap: wrap;
 	}
 	.flex-container::after {
 		content: '';
-	  	width: 100%;
+		width: 100%;
 	}
 	.flex-item: nth-child(n + 6){ /* or `:nth-child(n + 4)` */
 		order: 1;
-	}
+	}*/
 	</style>
 {% endblock content %}
-
