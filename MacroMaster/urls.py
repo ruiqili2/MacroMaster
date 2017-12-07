@@ -41,6 +41,10 @@ urlpatterns += [
     url(r'^recipe/detail', check_recipe_ins),
 ]
 
+urlpatterns += [
+    url(r'^select2/', include('django_select2.urls')),
+]
+
 
 
 

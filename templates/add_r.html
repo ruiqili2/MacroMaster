@@ -1,37 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-	<h3>
-		Add Your Recipe
-	</h3>
-	{% if form.errors %}
-		<p class="text-warning">Please fill the required area</p>
-	{% endif %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
-	<p> 
-	<form  method="POST" action="../pour/">
-	{% csrf_token %}
+<h3>
+Add Your Recipe
+</h3>
+{% if form.errors %}
+	<p class="text-warning">Please fill the required area</p>
+{% endif %}
+<p>
+	<form method="POST" action="../pour/">
+		{% csrf_token %}
 		Recipe name: <input type="text" name="name" required="required"><br>
 		Calories: <input type="number" name="calorie" required="required" min='0'><br>
 		Protein: <input type="number" name="protein" required="required" min='0'><br>
 		Fat: <input type="number" name="fat" required="required" min='0'><br>
 		Sodium: <input type="number" name="sodium" required="required" min='0'><br>
-        
-        
-        <textarea name="message" required="required" rows="10" cols="50">How to cook this?</textarea>
-        <br>
-        Please seperate steps by line.
-        <br>
-
-        You can add some tags to your recipes here (Press Ctrl to select multiple tags):<br>
-	<select multiple="multiple" id="tag_id" name="tag_id[]" size="10">
-		{% for tag in tags %}
-			<option value="{{tag.id}}">{{tag.detail}}</option>
-		{% endfor %}
-	</select>
-	<input class="btn btn-primary" name="type" type="submit" value="add recipe">
-
+		
+		
+		<textarea name="message" required="required" rows="10" cols="50">How to cook this?</textarea>
+		<br>
+		Please seperate steps by line.
+		<br>
+		You can add some tags to your recipes here (Press Ctrl to select multiple tags):<br>
+		<!--<input name="tags" type="text"><br>
+		<p>Please seperate tags using comma.</p>-->
+		<select class="select_field_class" name="tag_id[]" id="option" multiple="multiple">
+			<option value="">Enter the option</option>
+			{% for tag in tags %}
+				<!-- <input name="tag_id[]" type="checkbox" value="{{tag.id}}"> {{tag.detail}} -->
+				<option value="{{tag.id}}"> {{tag.detail}}</option>
+			{% endfor %}
+		</select>
+		<input class="btn btn-primary" name="type" type="submit" value="add recipe">
 	</form>
-	</p>
+</p>
+
+<script type="text/javascript">
+	$('.select_field_class').select2( { placeholder: "Select here", maximumSelectionSize: 100  } );
+</script>
 
 <script>
 	$('select[name="tag_id[]"]').multiSelect();
