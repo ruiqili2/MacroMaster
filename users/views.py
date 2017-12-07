@@ -180,12 +180,12 @@ def comment(request):
         FROM schema_recipes
         WHERE rid = %s;
         
-        SET @new = (@current * @current_NUM + new_rating) / (@current_NUM + 1);
+        SET @new = (@current * @current_NUM + %s) / (@current_NUM + 1);
         
         UPDATE schema_recipes
         SET rating = @new, rating_num = @current_NUM + 1
         WHERE rid = recipeID;"""
-    cursor.execute(query, [recipeID])
+    cursor.execute(query, [recipeID, rating])
     cursor.close()
     recipe = Recipes.objects.get(rid = recipeID)
     new_comment = Recipes_Comment(user = user, recipe = recipe, rating = rating, comment = comment_txt)
