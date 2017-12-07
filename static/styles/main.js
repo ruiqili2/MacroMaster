@@ -19,8 +19,7 @@ let ratingPosLeft = rating.offsetLeft;
 // console.log("rating left:", ratingPosLeft);
 function ratingMoveHandler(e) {
     realTimeRating = Math.round(((e.clientX - ratingPosLeft)/rating.clientWidth)*10);
-    console.log("data: mouse", e.clientX, "rating position left:", ratingPosLeft, "rating client width", rating.clientWidth);
-    console.log("rating data:", realTimeRating);
+    // console.log("rating data:", realTimeRating);
     realTimeRatingStr = String(realTimeRating*10) + '%';
 
     // ratingData = ratingData / rating.width
@@ -42,10 +41,7 @@ function ratingClickHandler() {
 function absoluteLeft(element) {
     let left = 0;
     while (element) {
-        console.log("I am ", element, ".my left is ", element.offsetLeft);
         left += element.offsetLeft;
-        console.log("My style:", element.style);
-        console.log("Which is why my parent is", element.offsetParent);
         element = element.offsetParent;
     }
     return left;
