@@ -23,8 +23,8 @@
 {%endif%}
 {%else%}
 <div class="jumbotron">
-	<div>
-<!--		Result for Ingredients:-->
+<!--	<div>
+
 		<form method='POST' action="../../../polls/show_ingredient/">
 			{% csrf_token %}
 			<input name='already' type='hidden' value="True">
@@ -42,6 +42,7 @@
 			{%endfor%}
 		</form>
 	</div>
+-->
 	<div>
 		Result for Recipes:
 		{%for row in re_table %}
