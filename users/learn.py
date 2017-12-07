@@ -23,7 +23,7 @@ def recommend_engine(favorites_recipes, time_tag, user):
     diction = {}
     w_diction = {}
     favorites = [fr.r_id for fr in favorites_recipes]
-    big_list = list()
+    big_list = []
     for recipe in favorites:
         ct = contain_tag.objects.filter(r_id = recipe)
         tag_list = list(set([t.t_id for t in ct]))
