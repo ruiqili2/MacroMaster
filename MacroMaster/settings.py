@@ -45,8 +45,6 @@ INSTALLED_APPS = [
      'users',
      'django_tables2',
      'hitcount',
-     'django_select2',
-     'jquery',
 ]
 
 MIDDLEWARE = [
