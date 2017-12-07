@@ -177,6 +177,8 @@ def comment(request):
 
 def recommend(request):
 ## first check how many favorites.
+    if request.method == 'GET':
+        return
     hour = datetime.datetime.now().hour
     time_tag = None
     if 6 <= hour and hour <= 9:
