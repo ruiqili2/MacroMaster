@@ -89,12 +89,18 @@ def get_list_macro(request):
 	# breakfast = 360
 	# lunch = 75
 	# dinner = 35
-	
-	cal = float(request.POST.get('cal', None))
-        breakfast = float(request.POST.get('breakfast', None))
-	lunch = float(request.POST.get('lunch', None))
-	dinner = float(request.POST.get('dinner', None))
-        
+	cal = request.POST.get('cal', None)
+	breakfast = request.POST.get('breakfast', None)
+	lunch = request.POST.get('lunch', None)
+	dinner = request.POST.get('dinner', None)
+
+	if cal=="" or breakfast=="" or lunch == "" or dinner == "":
+		error_message = "Sorry, you have to fill out all the required area."
+                return render(request, 'error.html', {"error_message": error_message})
+        cal = float(cal)
+	breakfast = float(breakfast)
+	lunch = float(lunch)
+	dinner = float(dinner)
 	if breakfast + lunch + dinner != 10:
                 error_message = "Sorry, the sum of ratio has to be 10."
                 return render(request, 'error.html', {"error_message": error_message})
