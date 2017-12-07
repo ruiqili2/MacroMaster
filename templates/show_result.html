@@ -122,11 +122,13 @@
         </p>
         {%endif%}
         <div>
-        Comments on this recipe:
+        <div class="commentItem">
+            Comments on this recipe:
+        </div>
         {% for comment in comments %}
-            <p>
-                {{comment.comment}}
-            </p>
+            <div class="commentItem">
+                {{comment.user}}: {{comment.comment}}
+            </div>
             {%endfor%}
         </div>
     </div>
@@ -189,6 +191,11 @@
 
         <script src="{% static 'styles/main.js' %}"></script>
         <style>
+            .commentItem {
+                border-bottom: 1px solid #ccc;  
+                text-align: left;
+            }
+
             .four-cols {
                 margin: 0;
                 height: 100px;
